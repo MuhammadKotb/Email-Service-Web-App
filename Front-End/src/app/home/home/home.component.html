@@ -1,1 +1,82 @@
-<p>{{path}}</p>
+<div class = "home_container">
+
+    <div class = "tool_bar">
+
+        <label for="filter_container">Filter:</label>
+        <div class = "filter_container">
+            <select name="filter_menu" id="filter_menu">
+                <option value="subject">Subject</option>
+                <option value="sender">Sender</option>
+                <option value="trash">Trash</option>
+                <option value="draft">Draft</option>
+              </select>
+            <input type = "text" id = "filter_text">
+            <button type = "button" value = "Filter">Filter</button>
+
+        </div>
+
+        <label for="sort_container">Sort:</label>
+        <div class = "sort_container">
+            <select name="sort_menu" id="sort_menu">
+                <option value="date">Date</option>
+                <option value="importance">Importance</option>
+                <option value="body">Body</option>
+                <option value="attachements">attachements</option>
+              </select>
+            <input type = "text" id = "sort_text">
+            <button type = "button" value = "Sort">Sort</button>
+        </div>
+
+        <label for="search_container">Search:</label>
+        <div class = "search_container">
+            <select name="search_menu" id="search_menu">
+                <option value="sender">Sender</option>
+                <option value="recievers">Recievers</option>
+                <option value="subject">Subject</option>
+                <option value="body">Body</option>
+                <option value="attachements">attachements</option>
+              </select>
+            <input type = "text" id = "search_text">
+            <button type = "button" value = "Search">Search</button>
+        </div>
+
+        <div class = "account_container">
+            <button type = "button" value = "LogOut">Log Out</button>
+        </div>
+
+    </div>
+
+    <div class = "nav_bar">
+            <div>
+                <button type = "button" value = "Send Email">Send E-mail</button>
+            </div>
+
+            <div>
+                <button type = "button" value = "Contacts">Contacts</button>
+            </div>
+       
+            <div>
+                <button type = "button" value = "Inbox">Inbox</button>
+            </div>
+
+            <div>
+                <button type = "button" value = "Sent">Sent</button>
+            </div>
+
+            <div>
+                <button type = "button" value = "Draft">Draft</button>
+            </div>
+            
+            <div>
+                <button type = "button" value = "Trash">Trash</button>
+            </div>
+
+    </div>
+
+    <div class = "body">
+
+    </div>
+
+
+
+</div>
