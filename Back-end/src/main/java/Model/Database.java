@@ -54,13 +54,16 @@ public class Database {
     }
 
 
-    public Folder getFolderbyName(String folderName){
+    public Folder getFolderbyName(String folderName)throws Exception{
         Folder folder = null;
         for(int i = 0; i < size; i++){
             if(folderName.equals(dataBaseFolder.get(i).getFolderName())){
                 System.out.println("INSIDE GET FOLDER BY NAME");
                 folder = dataBaseFolder.get(i);
             }
+        }
+        if(folder == null){
+            throw new Exception("COULD NOT FIND FOLDER BY THIS NAME");
         }
         return folder;
     }

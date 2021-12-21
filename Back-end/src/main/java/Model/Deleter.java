@@ -7,11 +7,11 @@ public class Deleter {
     public static Deleter getInstance(){
         if(instance == null){
             instance = new Deleter();
+            System.out.println("CREATED DELETER");
         }
-        System.out.println("CREATED DELETER");
+
         return instance;
     }
-    private final String databaePath = "src/main/java/Model/Database/";
 
 
     public void deleteFolder(Folder folder){

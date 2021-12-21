@@ -16,7 +16,7 @@ public class EmailServiceController {
 
     @PostMapping("/createFolder")
     String createFolder(@RequestBody String folderName){
-        String ret = "COULD NOT CREATE FOLDER";
+        String ret ;
         try{
             Database database =  Database.getInstance();
             System.out.println("INSIDE CREATE FOLDER");
@@ -26,13 +26,14 @@ public class EmailServiceController {
         }
         catch (Exception e){
             System.out.println(e);
+            ret = e.getMessage();
         }
         return ret;
     }
 
     @PostMapping("/deleteFolder")
     String deleteFolder(@RequestBody String folderName){
-        String ret = "COULD NOT DELETE FOLDER";
+        String ret;
         try{
             Database database =  Database.getInstance();
             System.out.println("INSIDE DELETE FOLDER");
@@ -42,13 +43,14 @@ public class EmailServiceController {
         }
         catch (Exception e){
             System.out.println(e);
+            ret = e.getMessage();
         }
         return ret;
     }
 
     @GetMapping("/getFolder")
     String getFolder(@RequestBody String folderName){
-        String ret = "COULD NOT FIND FOLDER";
+        String ret ;
         try{
             Database database =  Database.getInstance();
             System.out.println("INSIDE GET FOLDER");
@@ -56,6 +58,7 @@ public class EmailServiceController {
         }
         catch (Exception e){
             System.out.println(e);
+            ret = e.getMessage();
         }
         return ret;
     }
