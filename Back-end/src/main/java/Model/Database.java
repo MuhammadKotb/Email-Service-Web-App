@@ -70,15 +70,18 @@ public class Database {
     public void addFolder(String folderName) throws Exception{
         Creator creator = Creator.getInstance();
         if(size > 0){
-            if(getFolderbyName(folderName) == null) {
+            try {
+                if (getFolderbyName(folderName) != null) {
+
+                    throw new Exception("FOLDER WITH SAME NAME AND PATH EXISTS");
+                }
+            }catch (Exception e){
                 Folder folder = creator.createFolder(databasePath.concat(folderName), folderName);
                 dataBaseFolder.add(folder);
                 size++;
                 creator.createFolderData(folder);
             }
-            else{
-                throw new Exception("FOLDER WITH SAME NAME AND PATH EXISTS");
-            }
+
         }
         else {
             Folder folder = creator.createFolder(databasePath.concat(folderName), folderName);
