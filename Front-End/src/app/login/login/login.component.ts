@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
         this.router.navigate(["/home"]);
       }else if(container.toUpperCase() == "FOLDER WITH SAME NAME AND PATH EXISTS"){
-        alert("these username and password are already exist")
+        alert("These username and password already exists")
       }
     });
   }
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     var password :string = (<HTMLInputElement> document.getElementById("password")).value;
     var container :string;
 
-    this.server.loginToAccount(username+password).subscribe((response:string)=>{
+    this.server.loginToAccount(username.concat(password)).subscribe((response:string)=>{
       container = response;
       if(container.toUpperCase() == "COULD NOT FIND FOLDER BY THIS NAME"){
         alert("There is no account by such credintials");

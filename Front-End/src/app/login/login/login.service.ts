@@ -9,10 +9,12 @@ export class LoginService {
 
   constructor(private http : HttpClient) { }
 
-  createAccount(accountDetails:string):Observable<string>{
-    return this.http.post<string>("http://localhost:8080/createFolder", accountDetails);
+  createAccount(accountDetails:string) : Observable<string>{
+
+    return this.http.post("http://localhost:8080/createFolder", accountDetails, {responseType : "text"});
   }
-  loginToAccount(accountDetails:string):Observable<string>{
-    return this.http.post<string>("http://localhost:8080/getFolder", accountDetails);
+  loginToAccount(accountDetails:string) : Observable<string>{
+
+    return this.http.post("http://localhost:8080/getFolder", accountDetails, {responseType : "text"});
   }
 }
