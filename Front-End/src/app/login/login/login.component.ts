@@ -1,5 +1,7 @@
+import { HomeComponent } from './../../home/home/home.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,14 +9,39 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private server: LoginService, private home :HomeComponent) { }
 
   ngOnInit(): void {
   }
   create(){
-    this.router.navigate(["/home"])
+    var username :string = (<HTMLInputElement> document.getElementById("username")).value;
+    var password :string = (<HTMLInputElement> document.getElementById("password")).value;
+    var container :string;
+    this.server.createAccount(username+password).subscribe((response:string)=>{
+      container = response;
+      console.log(container)
+      if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
+        this.router.navigate(["/home"]);
+      }else if(container.toUpperCase() == "FOLDER WITH SAME NAME AND PATH EXISTS"){
+        alert("these username and password are already exist")
+      }
+    });
   }
+
   login(){
-    this.router.navigate(["/home"])
+    var username :string = (<HTMLInputElement> document.getElementById("username")).value;
+    var password :string = (<HTMLInputElement> document.getElementById("password")).value;
+    var container :string;
+
+    this.server.loginToAccount(username+password).subscribe((response:string)=>{
+      container = response;
+      if(container.toUpperCase() == "COULD NOT FIND FOLDER BY THIS NAME"){
+        alert("There is no account by such credintials");
+      }else{
+        this.home.path=container;
+        this.router.navigate(["/home"]);
+      }
+    });
+
   }
 }

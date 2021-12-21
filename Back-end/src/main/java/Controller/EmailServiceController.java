@@ -48,7 +48,7 @@ public class EmailServiceController {
         return ret;
     }
 
-    @GetMapping("/getFolder")
+    @PostMapping("/getFolder")
     String getFolder(@RequestBody String folderName){
         String ret;
         try{

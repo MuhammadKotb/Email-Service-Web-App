@@ -12,7 +12,9 @@
   top: 150px;
   left: 600px;
 }
-
+label{
+  font-size: medium;
+}
 input{
   border-radius: 10px;
   width: 200px;
