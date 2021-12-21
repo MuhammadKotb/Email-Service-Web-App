@@ -50,7 +50,7 @@ public class EmailServiceController {
 
     @GetMapping("/getFolder")
     String getFolder(@RequestBody String folderName){
-        String ret ;
+        String ret;
         try{
             Database database =  Database.getInstance();
             System.out.println("INSIDE GET FOLDER");
