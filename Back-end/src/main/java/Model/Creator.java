@@ -1,7 +1,10 @@
 package Model;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
+import java.io.FileWriter;
 
 public class Creator {
 
@@ -61,7 +64,16 @@ public class Creator {
 
         return profileBuilder.getProfile();
 
+    }
 
+    public void createDataFile(ProfileI profile) throws Exception{
+        File file = new File(profile.getDataContainer().getDataContainerPath().concat("/PROFILE.json"));
+        if(!file.createNewFile()){
+            throw new Exception("COULD CREATE PROFILE DATA FILE");
+        }
+        FileWriter fileWriter = new FileWriter(file);
+        ObjectMapper map = new ObjectMapper();
+        map.writeValue(file, profile);
     }
 
 

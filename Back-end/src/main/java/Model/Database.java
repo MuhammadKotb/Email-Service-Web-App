@@ -120,6 +120,14 @@ public class Database {
         }
     }
 
+    public void createDataFile(String encryption) throws Exception{
+        Creator creator = Creator.getInstance();
+        if(getProfilebyEncryption(encryption) == null){
+            throw new Exception("THERE IS NO SUCH PROFILE");
+        }
+        creator.createDataFile(getProfilebyEncryption(encryption));
+    }
+
 
 
     public void printDatabase(){

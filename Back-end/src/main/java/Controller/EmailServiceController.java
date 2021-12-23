@@ -47,20 +47,6 @@ public class EmailServiceController {
         return ret;
     }
 
-    @PostMapping("/getProfile")
-    String getProfile(@RequestBody String encryption){
-        String ret;
-        try{
-            Database database =  Database.getInstance();
-            System.out.println("INSIDE GET dataContainer");
-            ret = database.getProfilebyEncryption(encryption).getPassWord();
-        }
-        catch (Exception e){
-            System.out.println(e);
-            ret = e.getMessage();
-        }
-        return ret;
-    }
 
     @GetMapping("/getDatabaseSize")
     int getSize() {
@@ -75,6 +61,41 @@ public class EmailServiceController {
         }
         return ret;
     }
+    @GetMapping("/getDataContainer")
+    DataContainerI getDataContainer(@RequestBody String encryption){
+        try{
+            Database database = Database.getInstance();
+            return database.getProfilebyEncryption(encryption).getDataContainer();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @GetMapping("/getProfile")
+    ProfileI getProfile(@RequestBody String encryption){
+        try{
+            Database database = Database.getInstance();
+            return database.getProfilebyEncryption(encryption);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @PostMapping("saveProfileData")
+    String saveProfile(@RequestBody String encryption){
+        try{
+            Database.getInstance().createDataFile(encryption);
+            return "CREATED DATA FILE SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
 
    /* @PostMapping("/changedataContainerName")
     String changedataContainerName(@RequestBody String olddataContainerName, @RequestBody String newdataContainerName){
