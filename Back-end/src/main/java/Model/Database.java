@@ -3,13 +3,18 @@ package Model;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Database {
 
     private final static String databasePath = "src/main/java/Model/Database/";
     private static Database instance;
     private static int size = 0;
+    private static List<ProfileI> dataBaseList;
+
     private Database() throws Exception{
+        dataBaseList = new ArrayList<>();
         setDatabase();
     }
 
@@ -21,9 +26,9 @@ public class Database {
         return instance;
     }
 
-    private static ArrayList<Folder> dataBaseFolder = new ArrayList<>();
 
     private static void setDatabase() throws Exception{
+        Creator creator = Creator.getInstance();
         File file = new File(databasePath);
         File[] files = file.listFiles(new FileFilter() {
             @Override
@@ -35,14 +40,8 @@ public class Database {
             throw new Exception("NO SUCH DIRECTORY");
         }
         size = files.length;
-
         for(int i = 0; i < size; i++){
-            Folder folder = new Folder(files[i].getPath(), files[i].getName(), files[i]);
-            folder.setInboxFolder(new Folder(folder.getFolderPath().concat("/Inbox"), "Inbox", new File(folder.getFolderPath().concat("/Inbox"))));
-            folder.setTrashFolder(new Folder(folder.getFolderPath().concat("/Trash"), "Trash", new File(folder.getFolderPath().concat("/Trash"))));
-            folder.setSpamFolder(new Folder(folder.getFolderPath().concat("/Spam"), "Spam", new File(folder.getFolderPath().concat("/Spam"))));
-            folder.setOutboxFolder(new Folder(folder.getFolderPath().concat("/Outbox"), "Outbox", new File(folder.getFolderPath().concat("/Outbox"))));
-            dataBaseFolder.add(folder);
+            dataBaseList.add(creator.setProfile(databasePath, files[i].getName()));
         }
     }
     public int getSize(){
@@ -54,53 +53,67 @@ public class Database {
     }
 
 
-    public Folder getFolderbyName(String folderName)throws Exception{
-        Folder folder = null;
+    public ProfileI getProflebyUsername(String encryption, String username){
+        if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
+        ProfileI profile = null;
+        System.out.println(username);
         for(int i = 0; i < size; i++){
-            if(folderName.equals(dataBaseFolder.get(i).getFolderName())){
-                System.out.println("INSIDE GET FOLDER BY NAME");
-                folder = dataBaseFolder.get(i);
+            if(username.equals(dataBaseList.get(i).getUsername())){
+                System.out.println("INSIDE GET PROFILE BY USERNAME");
+                profile = dataBaseList.get(i);
+                System.out.println(profile.getUsername());
             }
         }
-        if(folder == null){
-            throw new Exception("COULD NOT FIND FOLDER BY THIS NAME");
-        }
-        return folder;
+        return profile;
     }
-    public void addFolder(String folderName) throws Exception{
+    public ProfileI getProfilebyEncryption(String encryption)throws Exception{
+        ProfileI profile = null;
+        for(int i = 0; i < size; i++){
+            if(encryption.equals(dataBaseList.get(i).getEncryption())){
+                System.out.println("INSIDE GET PROFILE BY USERNAME");
+                profile = dataBaseList.get(i);
+            }
+        }
+        if(profile == null){
+            throw new Exception("COULD NOT FIND PROFILE BY THIS USERNAME");
+        }
+        return profile;
+    }
+
+
+    public void addProfile(String encryption) throws Exception{
         Creator creator = Creator.getInstance();
         if(size > 0){
-            try {
-                if (getFolderbyName(folderName) != null) {
-
-                    throw new Exception("FOLDER WITH SAME NAME AND PATH EXISTS");
-                }
-            }catch (Exception e){
-                Folder folder = creator.createFolder(databasePath.concat(folderName), folderName);
-                dataBaseFolder.add(folder);
-                size++;
-                creator.createFolderData(folder);
+            if (getProflebyUsername(encryption, "") != null) {
+                System.out.println(getProflebyUsername(encryption, ""));
+                throw new Exception("PROFILE WITH SAME NAME EXISTS");
             }
-
+            else{
+                System.out.println("AFTER CATCH");
+                ProfileI profile = creator.createProfile(databasePath, encryption);
+                dataBaseList.add(profile);
+                size++;
+            }
         }
-        else {
-            Folder folder = creator.createFolder(databasePath.concat(folderName), folderName);
-            dataBaseFolder.add(folder);
+        else{
+            System.out.println(encryption);
+            ProfileI profile = creator.createProfile(databasePath, encryption);
+            dataBaseList.add(profile);
             size++;
-            creator.createFolderData(folder);
+
         }
     }
-    public void deleteFolder(String folderName) throws Exception{
+    public void removeProfile(String encryption) throws Exception{
         Deleter deleter = Deleter.getInstance();
-        Folder folder = getFolderbyName(folderName);
+        ProfileI profile = getProflebyUsername(encryption, "");
         if(size > 0){
-            if(folder != null){
-                deleter.deleteFolder(folder);
-                dataBaseFolder.remove(folder);
+            if(profile != null){
+                deleter.deleteProfile(profile);
+                dataBaseList.remove(profile);
                 size--;
             }
             else{
-                throw new Exception("COULD NOT FIND FOLDER TO DELETE");
+                throw new Exception("COULD NOT FIND PROFILE TO DELETE");
             }
         }
         else{
@@ -108,12 +121,78 @@ public class Database {
         }
     }
 
+    public void createDataFile(String encryption) throws Exception{
+        Creator creator = Creator.getInstance();
+        if(getProfilebyEncryption(encryption) == null){
+            throw new Exception("THERE IS NO SUCH PROFILE");
+        }
+        creator.createDataFile(getProfilebyEncryption(encryption));
+    }
+
+    public void sendEmail(EmailI email) throws Exception{
+
+        if(getProflebyUsername("", email.getSenderUsername()) == null){
+            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
+        }
+        if(getProflebyUsername("", email.getRecieverUsername()) == null){
+            throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
+        }
+        ProfileI sender = getProflebyUsername("", email.getSenderUsername());
+        ProfileI reciever = getProflebyUsername("", email.getRecieverUsername());
+        Creator creator = Creator.getInstance();
+        String ID = UUID.randomUUID().toString();
+        reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, ID));
+        sender.getOutbox().addEmail(creator.createEmailDataOutbox(email, sender, ID));
+    }
+
+    public void movetoTrash(EmailI email) throws Exception{
+        if(getProflebyUsername("", email.getOwner()) == null){
+            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
+        }
+        System.out.println("INSIDE MOVE TO TRASH");
+
+        ProfileI owner = getProflebyUsername("", email.getOwner());
+        System.out.println("INSIDE MOVE TO TRASH AFTER PROFILE GET");
+
+        if(email.getEmailType().equals("Inbox")){
+            System.out.println("INSIDE INBOX MOVE TO TRASH");
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleleEmailDataInbox(email, owner);
+            owner.getInbox().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+        }
+        if(email.getEmailType().equals("Outbox")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataOutbox(email, owner);
+            owner.getOutbox().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
+        if(email.getEmailType().equals("Draft")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataDraft(email, owner);
+            owner.getDraft().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
+        if(email.getEmailType().equals("Spam")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataSpam(email, owner);
+            owner.getSpam().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
+    }
+
 
 
     public void printDatabase(){
         for(int i = 0; i < size; i++){
-            System.out.println("Folder Path ==> ".concat(dataBaseFolder.get(i).getFolderPath()));
-            System.out.println("Folder Name ==> ".concat(dataBaseFolder.get(i).getFolderName()));
+            System.out.println("PROFILE Encyrption ==> ".concat(dataBaseList.get(i).getEncryption()));
+            System.out.println("PROFILE UserName ==> ".concat(dataBaseList.get(i).getUsername()));
+            System.out.println("PROFILE passWord ==> ".concat(dataBaseList.get(i).getPassWord()));
+            System.out.println("PROFILE DataContainer Name ==> ".concat(dataBaseList.get(i).getDataContainer().getDataContainerName()));
+            System.out.println("PROFILE DataContainer Path ==> ".concat(dataBaseList.get(i).getDataContainer().getDataContainerPath()));
         }
     }
 

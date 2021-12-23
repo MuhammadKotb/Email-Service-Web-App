@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     var username :string = (<HTMLInputElement> document.getElementById("username")).value;
     var password :string = (<HTMLInputElement> document.getElementById("password")).value;
     var container :string;
-    this.server.createAccount(username+password).subscribe((response:string)=>{
+    this.server.createAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
       if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     var password :string = (<HTMLInputElement> document.getElementById("password")).value;
     var container :string;
 
-    this.server.loginToAccount(username.concat(password)).subscribe((response:string)=>{
+    this.server.loginToAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
       if(container.toUpperCase() == "COULD NOT FIND FOLDER BY THIS NAME"){

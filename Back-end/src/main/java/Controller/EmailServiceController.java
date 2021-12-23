@@ -14,15 +14,14 @@ public class EmailServiceController {
 
 
 
-    @PostMapping("/createFolder")
-    String createFolder(@RequestBody String folderName){
-        String ret ;
+    @PostMapping("/createProfile")
+    String createProfile(@RequestBody String encryption){
+        String ret;
         try{
             Database database =  Database.getInstance();
-            System.out.println("INSIDE CREATE FOLDER");
-            database.addFolder(folderName);
+            database.addProfile(encryption);
             database.printDatabase();
-            ret = "CREATED FOLDER SUCCESSFULLY";
+            ret = "CREATED DataContainer SUCCESSFULLY";
         }
         catch (Exception e){
             System.out.println(e);
@@ -31,13 +30,13 @@ public class EmailServiceController {
         return ret;
     }
 
-    @PostMapping("/deleteFolder")
-    String deleteFolder(@RequestBody String folderName){
+    @DeleteMapping("/deleteProfile")
+    String deleteProfile(@RequestBody String encryption){
         String ret;
         try{
             Database database =  Database.getInstance();
-            System.out.println("INSIDE DELETE FOLDER");
-            database.deleteFolder(folderName);
+            System.out.println("INSIDE DELETE dataContainer");
+            database.removeProfile(encryption);
             database.printDatabase();
             ret = "DELETED SUCCESSFULLY";
         }
@@ -48,20 +47,6 @@ public class EmailServiceController {
         return ret;
     }
 
-    @PostMapping("/getFolder")
-    String getFolder(@RequestBody String folderName){
-        String ret;
-        try{
-            Database database =  Database.getInstance();
-            System.out.println("INSIDE GET FOLDER");
-            ret = database.getFolderbyName(folderName).getFolderPath();
-        }
-        catch (Exception e){
-            System.out.println(e);
-            ret = e.getMessage();
-        }
-        return ret;
-    }
 
     @GetMapping("/getDatabaseSize")
     int getSize() {
@@ -76,10 +61,68 @@ public class EmailServiceController {
         }
         return ret;
     }
+    @GetMapping("/getDataContainer")
+    DataContainerI getDataContainer(@RequestBody String encryption){
+        try{
+            Database database = Database.getInstance();
+            return database.getProfilebyEncryption(encryption).getDataContainer();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @GetMapping("/getProfile")
+    ProfileI getProfile(@RequestBody String encryption){
+        try{
+            Database database = Database.getInstance();
+            return database.getProfilebyEncryption(encryption);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
-   /* @PostMapping("/changeFolderName")
-    String changeFolderName(@RequestBody String oldFolderName, @RequestBody String newFolderName){
-        String ret = "COULD NOT CHANGE FOLDER NAME";
+    @PostMapping("saveProfileData")
+    String saveProfile(@RequestBody String encryption){
+        try{
+            Database.getInstance().createDataFile(encryption);
+            return "CREATED DATA FILE SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    @PostMapping("sendEmail")
+    String sendEmail(@RequestBody Email email){
+        try{
+            Database.getInstance().sendEmail(email);
+            return "SENT EMAIL SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+    @PostMapping("movetoTrash")
+    String movetoTrash(@RequestBody Email email){
+        try{
+            Database.getInstance().movetoTrash(email);
+            return "MOVED TO TRASH SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+
+   /* @PostMapping("/changedataContainerName")
+    String changedataContainerName(@RequestBody String olddataContainerName, @RequestBody String newdataContainerName){
+        String ret = "COULD NOT CHANGE dataContainer NAME";
         try{
             Database database = Database.getInstance();
 

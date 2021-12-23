@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.File;
+
 public class Deleter {
     private static Deleter instance;
     private Deleter(){}
@@ -14,16 +16,70 @@ public class Deleter {
     }
 
 
-    public void deleteFolder(Folder folder){
-        try{
-            folder.getOutboxFolder().getFile().delete();
-            folder.getTrashFolder().getFile().delete();
-            folder.getInboxFolder().getFile().delete();
-            folder.getSpamFolder().getFile().delete();
-            folder.getFile().delete();
+    private static void deleteDataContainer(DataContainerI dataContainer) throws Exception{
+        boolean deletedFile = dataContainer.getFile().delete();
+        if(!deletedFile){
+            throw new Exception("COULD NOT DELETE DATACONTAINER");
         }
-        catch (Exception e){
-            System.out.println(e);
+    }
+
+    public void deleteProfile(ProfileI profile) throws Exception{
+        deleteDataContainer(profile.getTrash().getTrashDataContainer());
+        deleteDataContainer(profile.getSpam().getSpamDataContainer());
+        deleteDataContainer(profile.getDraft().getDraftDataContainer());
+        deleteDataContainer(profile.getInbox().getInboxDataContainer());
+        deleteDataContainer(profile.getOutbox().getOutboxDataContainer());
+        deleteDataContainer(profile.getDataContainer());
+
+    }
+
+    public void deleleEmailDataInbox(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getInbox().getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getInbox().getInboxDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
+
+    }
+    public void deleteEmailDataOutbox(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getOutbox().getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getOutbox().getOutboxDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
+
+    }
+    public void deleteEmailDataSpam(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getSpam().getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getSpam().getSpamDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
+
+    }
+    public void deleteEmailDataDraft(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getDraft().getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getDraft().getDraftDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
+
+    }
+    public void deleteEmailDataTrash(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getTrash().getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
         }
 
     }
