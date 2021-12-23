@@ -117,6 +117,7 @@ public class Creator {
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
         }
         trashEmail.setEmailID(ID);
+        trashEmail.setOwner(email.getOwner());
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, trashEmail);
         return trashEmail;
