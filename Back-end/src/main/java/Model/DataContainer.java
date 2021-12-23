@@ -8,7 +8,7 @@ import java.util.IllegalFormatException;
 public class DataContainer implements DataContainerI {
     private String dataContainerPath;
     private String dataContainerName;
-    File file;
+    private File file;
 
 
     public DataContainer(){}

@@ -4,18 +4,18 @@ import java.time.LocalTime;
 
 public class Email implements EmailI{
 
-    String subject;
-    String body;
+    private String subject;
+    private String body;
 
-    String owner;
-    String senderUsername;
-    String recieverUsername;
+    private String owner;
+    private String senderUsername;
+    private String recieverUsername;
 
 
-    String timeSent;
-    String emailID;
+    private String timeSent;
+    private String emailID;
 
-    String emailType;
+    private String emailType;
 
 
     public Email(){}

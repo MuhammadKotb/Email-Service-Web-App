@@ -33,7 +33,7 @@ public class Deleter {
 
     }
 
-    public void deleleEmailDataInbox(EmailI email, ProfileI profile) throws Exception{
+    public void deleteEmailDataInbox(EmailI email, ProfileI profile) throws Exception{
         if(profile.getInbox().getEmailbyID(email.getEmailID()) == null){
             throw new Exception("NO SUCH EMAIL TO DELETE");
         }

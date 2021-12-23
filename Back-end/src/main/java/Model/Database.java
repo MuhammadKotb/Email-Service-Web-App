@@ -158,7 +158,7 @@ public class Database {
         if(email.getEmailType().equals("Inbox")){
             System.out.println("INSIDE INBOX MOVE TO TRASH");
             Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-            Deleter.getInstance().deleleEmailDataInbox(email, owner);
+            Deleter.getInstance().deleteEmailDataInbox(email, owner);
             owner.getInbox().removeEmailbyID(email.getEmailID());
             owner.getTrash().addEmail(email);
         }
