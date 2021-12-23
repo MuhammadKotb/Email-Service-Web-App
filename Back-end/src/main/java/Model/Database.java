@@ -53,7 +53,7 @@ public class Database {
     }
 
 
-    public ProfileI getProflebyUsername(String encryption, String username){
+    public ProfileI getProfilebyUsername(String encryption, String username){
         if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
         ProfileI profile = null;
         System.out.println(username);
@@ -84,8 +84,8 @@ public class Database {
     public void addProfile(String encryption) throws Exception{
         Creator creator = Creator.getInstance();
         if(size > 0){
-            if (getProflebyUsername(encryption, "") != null) {
-                System.out.println(getProflebyUsername(encryption, ""));
+            if (getProfilebyUsername(encryption, "") != null) {
+                System.out.println(getProfilebyUsername(encryption, ""));
                 throw new Exception("PROFILE WITH SAME NAME EXISTS");
             }
             else{
@@ -105,7 +105,7 @@ public class Database {
     }
     public void removeProfile(String encryption) throws Exception{
         Deleter deleter = Deleter.getInstance();
-        ProfileI profile = getProflebyUsername(encryption, "");
+        ProfileI profile = getProfilebyUsername(encryption, "");
         if(size > 0){
             if(profile != null){
                 deleter.deleteProfile(profile);
@@ -131,14 +131,14 @@ public class Database {
 
     public void sendEmail(EmailI email) throws Exception{
 
-        if(getProflebyUsername("", email.getSenderUsername()) == null){
+        if(getProfilebyUsername("", email.getSenderUsername()) == null){
             throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
         }
-        if(getProflebyUsername("", email.getRecieverUsername()) == null){
+        if(getProfilebyUsername("", email.getRecieverUsername()) == null){
             throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
         }
-        ProfileI sender = getProflebyUsername("", email.getSenderUsername());
-        ProfileI reciever = getProflebyUsername("", email.getRecieverUsername());
+        ProfileI sender = getProfilebyUsername("", email.getSenderUsername());
+        ProfileI reciever = getProfilebyUsername("", email.getRecieverUsername());
         Creator creator = Creator.getInstance();
         String ID = UUID.randomUUID().toString();
         reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, ID));
@@ -146,12 +146,12 @@ public class Database {
     }
 
     public void movetoTrash(EmailI email) throws Exception{
-        if(getProflebyUsername("", email.getOwner()) == null){
+        if(getProfilebyUsername("", email.getOwner()) == null){
             throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
         }
         System.out.println("INSIDE MOVE TO TRASH");
 
-        ProfileI owner = getProflebyUsername("", email.getOwner());
+        ProfileI owner = getProfilebyUsername("", email.getOwner());
         System.out.println("INSIDE MOVE TO TRASH AFTER PROFILE GET");
 
         if(email.getEmailType().equals("Inbox")){

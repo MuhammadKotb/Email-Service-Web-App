@@ -20,10 +20,10 @@ export class LoginComponent implements OnInit {
     this.server.createAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
-      if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
-        this.router.navigate([{outlets:{registeration:['/home']}}]);
+      if(container == "CREATED DataContainer SUCCESSFULLY"){
+        this.router.navigate([{outlets:{registeration:['home']}}]);
       }else {
-        alert("These username and password already exists")
+        alert("This username is already used")
       }
     });
   }
@@ -36,11 +36,11 @@ export class LoginComponent implements OnInit {
     this.server.loginToAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
-      if(container.toUpperCase() == "COULD NOT FIND FOLDER BY THIS NAME"){
+      if(container == "COULD NOT FIND PROFILE BY THIS USERNAME"){
         alert("There is no account by such credintials");
       }else{
         this.home.path=container;
-        this.router.navigate([{outlets:{registeration:['/home']}}]);
+        this.router.navigate([{outlets:{registeration:['home']}}]);
       }
     });
 

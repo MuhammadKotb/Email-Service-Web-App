@@ -72,7 +72,7 @@ public class EmailServiceController {
             return null;
         }
     }
-    @GetMapping("/getProfile")
+    @PostMapping("/getProfile")
     ProfileI getProfile(@RequestBody String encryption){
         try{
             Database database = Database.getInstance();

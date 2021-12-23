@@ -11,8 +11,31 @@ export class HomeComponent implements OnInit {
   constructor(private router:Router) { }
   path:string = ""
   ngOnInit(): void {
-    this.router.navigate([{outlets:{branching:['/home/inbox']}}]);
+    this.router.navigate([{outlets:{branching:['inbox']}}]);
 
   }
+  switchToSendEmail(){
+    this.router.navigate([{outlets:{branching:['sendEmail']}}]);
 
+  }
+  switchToSent(){
+    this.router.navigate([{outlets:{branching:['sent']}}]);
+
+  }
+  switchToInbox(){
+    this.router.navigate([{outlets:{branching:['inbox']}}]);
+
+  }
+  switchToTrash(){
+    this.router.navigate([{outlets:{branching:['trash']}}]);
+
+  }
+  switchToDraft(){
+    this.router.navigate([{outlets:{branching:['draft']}}]);
+
+  }
+  switchToContacts(){
+    this.router.navigate([{outlets:{branching:['contacts']}}]);
+
+  }
 }
