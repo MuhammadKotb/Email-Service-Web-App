@@ -14,18 +14,20 @@ public class Deleter {
     }
 
 
-    public void deleteFolder(Folder folder){
+    private static void deleteDataContainer(DataContainerI dataContainer) throws Exception{
+        boolean deletedFile = dataContainer.getFile().delete();
+        if(!deletedFile){
+            throw new Exception("COULD NOT DELETE DATACONTAINER");
+        }
+    }
+
+    public void deleteProfile(ProfileI profile) throws Exception{
         try{
-            folder.getOutboxFolder().getFile().delete();
-            folder.getTrashFolder().getFile().delete();
-            folder.getInboxFolder().getFile().delete();
-            folder.getSpamFolder().getFile().delete();
-            folder.getFile().delete();
+            deleteDataContainer(profile.getDataContainer());
         }
         catch (Exception e){
-            System.out.println(e);
+            throw e;
         }
-
     }
 
 }

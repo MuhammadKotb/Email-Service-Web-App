@@ -16,28 +16,35 @@ public class Creator {
         return instance;
     }
 
-    public Folder createFolder(String folderPath, String folderName) throws Exception{
-        Folder folder = new Folder();
-        folder.newFolder(folderPath, folderName);
-        System.out.println("CREATED FOLDER");
-        return folder;
+    public static DataContainerI createDataContainer(String dataContainerPath, String dataContainerName) throws Exception{
+        File file = new File(dataContainerPath);
+        boolean createdFile = file.mkdir();
+        if(createdFile){
+            return new DataContainer(dataContainerPath, dataContainerName, file);
+        }
+        else{
+            throw new Exception("COULD NOT CREATE DATA CONTAINER");
+        }
     }
 
-    public void createFolderData(Folder folder){
-        try{
-            folder.setInboxFolder(new Folder(folder.getFolderPath().concat("/Inbox"), "Inbox", new File(folder.getFolderPath().concat("/Inbox"))));
-            folder.getInboxFolder().newFolder(folder.getFolderPath().concat("/Inbox"), "Inbox");
-            folder.setTrashFolder(new Folder(folder.getFolderPath().concat("/Trash"), "Trash", new File(folder.getFolderPath().concat("/Trash"))));
-            folder.getTrashFolder().newFolder(folder.getFolderPath().concat("/Trash"), "Trash");
-            folder.setSpamFolder(new Folder(folder.getFolderPath().concat("/Spam"), "Trash", new File(folder.getFolderPath().concat("/Spam"))));
-            folder.getSpamFolder().newFolder(folder.getFolderPath().concat("/Spam"), "Spam");
-            folder.setOutboxFolder(new Folder(folder.getFolderPath().concat("/Outbox"), "Outbox", new File(folder.getFolderPath().concat("/Spam"))));
-            folder.getOutboxFolder().newFolder(folder.getFolderPath().concat("/Outbox"), "Outbox");
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
+
+    public ProfileI createProfile(String dataBasePath, String encryption) throws Exception{
+        ProfileBuilderI profileBuilder = new ProfileBuilder();
+        ProfileDirector profileDirector = new ProfileDirector();
+
+        profileDirector.buildProfileData(profileBuilder, encryption);
+        profileDirector.buildDataContainer(profileBuilder, createDataContainer(dataBasePath.concat(encryption), encryption));
+
+        profileDirector.buildInbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox"));
+        profileDirector.buildOutbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox"));
+        profileDirector.buildSpam(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam"));
+        profileDirector.buildDraft(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft"));
+        profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
+
+        return profileBuilder.getProfile();
+
     }
+
 
 
 
