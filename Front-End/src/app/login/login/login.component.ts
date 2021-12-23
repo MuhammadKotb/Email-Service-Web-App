@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     this.server.createAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
-      if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
+      if(container.toUpperCase() == "CREATED PROFILE SUCCESSFULLY"){
         this.router.navigate([{outlets:{registeration:['/home']}}]);
       }else if(container.toUpperCase() == "FOLDER WITH SAME NAME AND PATH EXISTS"){
         alert("These username and password already exists")

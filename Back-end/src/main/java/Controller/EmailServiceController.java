@@ -21,7 +21,7 @@ public class EmailServiceController {
             Database database =  Database.getInstance();
             database.addProfile(encryption);
             database.printDatabase();
-            ret = "CREATED DataContainer SUCCESSFULLY";
+            ret = "CREATED PROFILE SUCCESSFULLY";
         }
         catch (Exception e){
             System.out.println(e);
@@ -35,10 +35,10 @@ public class EmailServiceController {
         String ret;
         try{
             Database database =  Database.getInstance();
-            System.out.println("INSIDE DELETE dataContainer");
+            System.out.println("INSIDE DELETE PROFILE");
             database.removeProfile(encryption);
             database.printDatabase();
-            ret = "DELETED SUCCESSFULLY";
+            ret = "DELETED PROFILE SUCCESSFULLY";
         }
         catch (Exception e){
             System.out.println(e);
@@ -72,7 +72,7 @@ public class EmailServiceController {
             return null;
         }
     }
-    @GetMapping("/getProfile")
+    @PostMapping("/getProfile")
     ProfileI getProfile(@RequestBody String encryption){
         try{
             Database database = Database.getInstance();
