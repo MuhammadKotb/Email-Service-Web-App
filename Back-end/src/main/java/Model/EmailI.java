@@ -5,22 +5,31 @@ import java.time.LocalTime;
 public interface EmailI {
     String subject = null;
     String body = null;
-    ProfileI sender = null;
-    ProfileI reciever = null;
+    String owner = null;
+    String senderUsername = null;
+    String recieverUsername = null;
+    String emailID = null;
+    String emailType = null;
 
-    LocalTime timeSent = null;
+    String timeSent = null;
 
-    ProfileI getSender();
-    ProfileI getReciever();
+    String getSenderUsername();
+    String getRecieverUsername();
     String getSubject();
     String getBody();
-    LocalTime getTimeSent();
+    String getEmailID();
+    String getTimeSent();
+    String getEmailType();
+    String getOwner();
 
-    void setReciever(ProfileI reciever);
-    void setSender(ProfileI sender);
+    void setRecieverUsername(String recieverUsername);
+    void setSenderUsername(String senderUsername);
     void setSubject(String subject);
-    void setTimeSent(LocalTime timeSent);
+    void setTimeSent(String timeSent);
     void setBody(String body);
+    void setEmailID(String emailID);
+    void setEmailType(String emailType);
+    void setOwner(String owner);
 
 
 

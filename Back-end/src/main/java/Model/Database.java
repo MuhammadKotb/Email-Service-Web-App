@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Database {
 
@@ -52,8 +53,8 @@ public class Database {
     }
 
 
-    public ProfileI getProflebyUsername(String encryption){
-        String username = encryption.substring(0, encryption.indexOf("$"));
+    public ProfileI getProflebyUsername(String encryption, String username){
+        if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
         ProfileI profile = null;
         System.out.println(username);
         for(int i = 0; i < size; i++){
@@ -83,8 +84,8 @@ public class Database {
     public void addProfile(String encryption) throws Exception{
         Creator creator = Creator.getInstance();
         if(size > 0){
-            if (getProflebyUsername(encryption) != null) {
-                System.out.println(getProflebyUsername(encryption));
+            if (getProflebyUsername(encryption, "") != null) {
+                System.out.println(getProflebyUsername(encryption, ""));
                 throw new Exception("PROFILE WITH SAME NAME EXISTS");
             }
             else{
@@ -104,7 +105,7 @@ public class Database {
     }
     public void removeProfile(String encryption) throws Exception{
         Deleter deleter = Deleter.getInstance();
-        ProfileI profile = getProflebyUsername(encryption);
+        ProfileI profile = getProflebyUsername(encryption, "");
         if(size > 0){
             if(profile != null){
                 deleter.deleteProfile(profile);
@@ -126,6 +127,61 @@ public class Database {
             throw new Exception("THERE IS NO SUCH PROFILE");
         }
         creator.createDataFile(getProfilebyEncryption(encryption));
+    }
+
+    public void sendEmail(EmailI email) throws Exception{
+
+        if(getProflebyUsername("", email.getSenderUsername()) == null){
+            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
+        }
+        if(getProflebyUsername("", email.getRecieverUsername()) == null){
+            throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
+        }
+        ProfileI sender = getProflebyUsername("", email.getSenderUsername());
+        ProfileI reciever = getProflebyUsername("", email.getRecieverUsername());
+        Creator creator = Creator.getInstance();
+        String ID = UUID.randomUUID().toString();
+        reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, ID));
+        sender.getOutbox().addEmail(creator.createEmailDataOutbox(email, sender, ID));
+    }
+
+    public void movetoTrash(EmailI email) throws Exception{
+        if(getProflebyUsername("", email.getOwner()) == null){
+            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
+        }
+        System.out.println("INSIDE MOVE TO TRASH");
+
+        ProfileI owner = getProflebyUsername("", email.getOwner());
+        System.out.println("INSIDE MOVE TO TRASH AFTER PROFILE GET");
+
+        if(email.getEmailType().equals("Inbox")){
+            System.out.println("INSIDE INBOX MOVE TO TRASH");
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleleEmailDataInbox(email, owner);
+            owner.getInbox().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+        }
+        if(email.getEmailType().equals("Outbox")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataOutbox(email, owner);
+            owner.getOutbox().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
+        if(email.getEmailType().equals("Draft")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataDraft(email, owner);
+            owner.getDraft().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
+        if(email.getEmailType().equals("Spam")){
+            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
+            Deleter.getInstance().deleteEmailDataSpam(email, owner);
+            owner.getSpam().removeEmailbyID(email.getEmailID());
+            owner.getTrash().addEmail(email);
+
+        }
     }
 
 

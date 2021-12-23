@@ -7,22 +7,34 @@ public class Email implements EmailI{
     String subject;
     String body;
 
-    ProfileI sender;
-    ProfileI reciever;
+    String owner;
+    String senderUsername;
+    String recieverUsername;
 
-    LocalTime timeSent;
 
-    public Email(){
-        this.timeSent = LocalTime.now();
+    String timeSent;
+    String emailID;
+
+    String emailType;
+
+
+    public Email(){}
+    public Email(String subject, String body, String senderUsername, String recieverUsername, String emailType){
+        this.senderUsername = senderUsername;
+        this.recieverUsername = recieverUsername;
+        this.subject = subject;
+        this.body = body;
+        this.timeSent = LocalTime.now().toString();
+        this.emailType = emailType;
     }
     @Override
-    public ProfileI getSender() {
-        return this.sender;
+    public String getSenderUsername() {
+        return this.senderUsername;
     }
 
     @Override
-    public ProfileI getReciever() {
-        return this.reciever;
+    public String getRecieverUsername() {
+        return this.recieverUsername;
     }
 
     @Override
@@ -36,18 +48,33 @@ public class Email implements EmailI{
     }
 
     @Override
-    public LocalTime getTimeSent() {
+    public String getEmailID() {
+        return this.emailID;
+    }
+
+    @Override
+    public String getTimeSent() {
         return this.timeSent;
     }
 
     @Override
-    public void setReciever(ProfileI reciever) {
-        this.reciever = reciever;
+    public String getEmailType() {
+        return this.emailType;
     }
 
     @Override
-    public void setSender(ProfileI sender) {
-        this.sender = sender;
+    public String getOwner() {
+        return this.owner;
+    }
+
+    @Override
+    public void setRecieverUsername(String recieverUsername) {
+        this.recieverUsername = recieverUsername;
+    }
+
+    @Override
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
     }
 
     @Override
@@ -56,7 +83,7 @@ public class Email implements EmailI{
     }
 
     @Override
-    public void setTimeSent(LocalTime timeSent) {
+    public void setTimeSent(String timeSent) {
         this.timeSent = timeSent;
     }
 
@@ -64,4 +91,21 @@ public class Email implements EmailI{
     public void setBody(String body) {
         this.body = body;
     }
+
+    @Override
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
+    }
+
+    @Override
+    public void setEmailType(String emailType) {
+        this.emailType = emailType;
+    }
+
+    @Override
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+
 }

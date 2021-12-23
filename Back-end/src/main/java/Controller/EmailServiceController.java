@@ -96,6 +96,29 @@ public class EmailServiceController {
         }
     }
 
+    @PostMapping("sendEmail")
+    String sendEmail(@RequestBody Email email){
+        try{
+            Database.getInstance().sendEmail(email);
+            return "SENT EMAIL SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+    @PostMapping("movetoTrash")
+    String movetoTrash(@RequestBody Email email){
+        try{
+            Database.getInstance().movetoTrash(email);
+            return "MOVED TO TRASH SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
 
    /* @PostMapping("/changedataContainerName")
     String changedataContainerName(@RequestBody String olddataContainerName, @RequestBody String newdataContainerName){
