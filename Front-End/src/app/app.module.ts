@@ -36,8 +36,6 @@ import { ContactsComponent } from './home/home/contacts/contacts/contacts.compon
       {path:'home/sent',component:SentComponent,outlet:'branching'},
       {path:'home/draft',component:DraftComponent,outlet:'branching'},
       {path:'home/contacts',component:ContactsComponent,outlet:'branching'},
-
-
     ]),
     AppRoutingModule,
     HttpClientModule

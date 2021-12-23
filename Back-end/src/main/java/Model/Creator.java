@@ -45,7 +45,6 @@ public class Creator {
         profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
 
         return profileBuilder.getProfile();
-
     }
 
     public ProfileI setProfile(String dataBasePath, String encryption) throws Exception{

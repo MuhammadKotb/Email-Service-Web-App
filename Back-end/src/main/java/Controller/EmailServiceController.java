@@ -76,7 +76,7 @@ public class EmailServiceController {
     ProfileI getProfile(@RequestBody String encryption){
         try{
             Database database = Database.getInstance();
-            return database.getProfilebyEncryption(encryption);
+            return Database.getProfilebyEncryption(encryption);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

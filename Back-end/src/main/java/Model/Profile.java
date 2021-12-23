@@ -1,6 +1,6 @@
 package Model;
 
-public class Profile implements ProfileI{
+public class Profile implements ProfileI {
     private String username;
     private String passWord;
     private String encryption;

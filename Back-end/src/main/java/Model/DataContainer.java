@@ -34,15 +34,18 @@ public class DataContainer implements DataContainerI {
         return file;
     }
 
+
     @Override
     public void setDataContainerPath(String dataContainerPath) {
         this.dataContainerPath = dataContainerPath;
     }
 
+
     @Override
     public void setDataContainerName(String dataContainerName) {
         this.dataContainerName = dataContainerName;
     }
+
 
     public void setFile(File file) {
         this.file = file;
