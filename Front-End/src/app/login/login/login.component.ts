@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
       container = response;
       console.log(container)
       if(container.toUpperCase() == "CREATED FOLDER SUCCESSFULLY"){
-        this.router.navigate(["/home"]);
+        this.router.navigate([{outlets:{registeration:['/home']}}]);
       }else if(container.toUpperCase() == "FOLDER WITH SAME NAME AND PATH EXISTS"){
         alert("These username and password already exists")
       }
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         alert("There is no account by such credintials");
       }else{
         this.home.path=container;
-        this.router.navigate(["/home"]);
+        this.router.navigate([{outlets:{registeration:['/home']}}]);
       }
     });
 
