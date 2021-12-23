@@ -22,12 +22,13 @@ public class Deleter {
     }
 
     public void deleteProfile(ProfileI profile) throws Exception{
-        try{
-            deleteDataContainer(profile.getDataContainer());
-        }
-        catch (Exception e){
-            throw e;
-        }
+        deleteDataContainer(profile.getTrash().getTrashDataContainer());
+        deleteDataContainer(profile.getSpam().getSpamDataContainer());
+        deleteDataContainer(profile.getDraft().getDraftDataContainer());
+        deleteDataContainer(profile.getInbox().getInboxDataContainer());
+        deleteDataContainer(profile.getOutbox().getOutboxDataContainer());
+        deleteDataContainer(profile.getDataContainer());
+
     }
 
 }

@@ -14,7 +14,7 @@ public class Database {
 
     private Database() throws Exception{
         dataBaseList = new ArrayList<>();
-        //setDatabase();
+        setDatabase();
     }
 
     public static Database getInstance() throws Exception {
@@ -40,10 +40,7 @@ public class Database {
         }
         size = files.length;
         for(int i = 0; i < size; i++){
-            ProfileI profile = creator.createProfile(databasePath, files[i].getName());
-            DataContainerI dataContainer = new DataContainer(databasePath.concat(profile.getEncryption()), profile.getEncryption(), files[i]);
-            profile.setDataContainer(dataContainer);
-            dataBaseList.add(profile);
+            dataBaseList.add(creator.setProfile(databasePath, files[i].getName()));
         }
     }
     public int getSize(){

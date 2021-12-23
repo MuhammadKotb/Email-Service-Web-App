@@ -16,7 +16,7 @@ public class Creator {
         return instance;
     }
 
-    public static DataContainerI createDataContainer(String dataContainerPath, String dataContainerName) throws Exception{
+    private static DataContainerI createDataContainer(String dataContainerPath, String dataContainerName) throws Exception{
         File file = new File(dataContainerPath);
         boolean createdFile = file.mkdir();
         if(createdFile){
@@ -42,6 +42,25 @@ public class Creator {
         profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
 
         return profileBuilder.getProfile();
+
+    }
+
+    public ProfileI setProfile(String dataBasePath, String encryption){
+        ProfileBuilderI profileBuilder = new ProfileBuilder();
+        ProfileDirector profileDirector = new ProfileDirector();
+
+        profileDirector.buildProfileData(profileBuilder, encryption);
+
+        profileDirector.buildDataContainer(profileBuilder, new DataContainer(dataBasePath.concat(encryption), encryption, new File(dataBasePath.concat(encryption))));
+
+        profileDirector.buildInbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox", new File(dataBasePath.concat(encryption).concat("/Inbox"))));
+        profileDirector.buildOutbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox", new File(dataBasePath.concat(encryption).concat("/Outbox"))));
+        profileDirector.buildSpam(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam", new File(dataBasePath.concat(encryption).concat("/Spam"))));
+        profileDirector.buildDraft(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft", new File(dataBasePath.concat(encryption).concat("/Draft"))));
+        profileDirector.buildTrash(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash", new File(dataBasePath.concat(encryption).concat("/Trash"))));
+
+        return profileBuilder.getProfile();
+
 
     }
 

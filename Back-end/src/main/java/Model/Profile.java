@@ -11,11 +11,7 @@ public class Profile implements ProfileI{
     private ProfileOutboxI outbox;
     private ProfileSpamI spam;
 
-    public Profile(String username, String passWord, DataContainerI dataContainer){
-        this.username = username;
-        this.passWord = passWord;
-        this.dataContainer = dataContainer;
-    }
+
     public Profile(){}
 
 
