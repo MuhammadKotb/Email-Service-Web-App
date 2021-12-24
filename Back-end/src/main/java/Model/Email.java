@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class Email implements EmailI{
 
@@ -9,23 +10,27 @@ public class Email implements EmailI{
 
     private String owner;
     private String senderUsername;
-    private String recieverUsername;
+    private String receiverUsername;
 
 
     private String timeSent;
     private String emailID;
 
     private String emailType;
+    List<Attachment> attachments = null;
+
+
 
 
     public Email(){}
-    public Email(String subject, String body, String senderUsername, String recieverUsername, String emailType){
+    public Email(String subject, String body, String senderUsername, String receiverUsername, String emailType, List<Attachment> attachments){
         this.senderUsername = senderUsername;
-        this.recieverUsername = recieverUsername;
+        this.receiverUsername = receiverUsername;
         this.subject = subject;
         this.body = body;
         this.timeSent = LocalTime.now().toString();
         this.emailType = emailType;
+        this.attachments = attachments;
     }
     @Override
     public String getSenderUsername() {
@@ -33,8 +38,8 @@ public class Email implements EmailI{
     }
 
     @Override
-    public String getRecieverUsername() {
-        return this.recieverUsername;
+    public String getreceiverUsername() {
+        return this.receiverUsername;
     }
 
     @Override
@@ -68,8 +73,13 @@ public class Email implements EmailI{
     }
 
     @Override
-    public void setRecieverUsername(String recieverUsername) {
-        this.recieverUsername = recieverUsername;
+    public List<Attachment> getAttachments() {
+        return this.attachments;
+    }
+
+    @Override
+    public void setreceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
     }
 
     @Override
@@ -106,6 +116,23 @@ public class Email implements EmailI{
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
+    @Override
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    @Override
+    public void addAttachment(Attachment attachment) {
+        this.attachments.add(attachment);
+    }
+
+    @Override
+    public void removeAttachment(Attachment attachment) {
+        this.attachments.remove(attachment);
+    }
+
+
 
 
 }

@@ -1,5 +1,7 @@
 package Model;
 
+import Model.ProfileBuilder.ProfileI;
+
 import java.io.File;
 
 public class Deleter {
@@ -25,7 +27,6 @@ public class Deleter {
 
     public void deleteProfile(ProfileI profile) throws Exception{
         deleteDataContainer(profile.getTrash().getTrashDataContainer());
-        deleteDataContainer(profile.getSpam().getSpamDataContainer());
         deleteDataContainer(profile.getDraft().getDraftDataContainer());
         deleteDataContainer(profile.getInbox().getInboxDataContainer());
         deleteDataContainer(profile.getOutbox().getOutboxDataContainer());
@@ -48,16 +49,6 @@ public class Deleter {
             throw new Exception("NO SUCH EMAIL TO DELETE");
         }
         File file = new File(profile.getOutbox().getOutboxDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
-        if(!file.delete()){
-            throw new Exception("COULD NOT DELETE EMAIL");
-        }
-
-    }
-    public void deleteEmailDataSpam(EmailI email, ProfileI profile) throws Exception{
-        if(profile.getSpam().getEmailbyID(email.getEmailID()) == null){
-            throw new Exception("NO SUCH EMAIL TO DELETE");
-        }
-        File file = new File(profile.getSpam().getSpamDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }

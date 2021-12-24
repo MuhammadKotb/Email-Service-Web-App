@@ -1,5 +1,7 @@
 package Model;
 
+import Model.ProfileBuilder.ProfileI;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class Database {
             dataBaseList.add(creator.setProfile(databasePath, files[i].getName()));
         }
     }
+
     public int getSize(){
         return size;
     }
@@ -53,11 +56,8 @@ public class Database {
     }
 
 
-<<<<<<< HEAD
     public static ProfileI getProfilebyUsername(String encryption, String username){
-=======
-    public ProfileI getProfilebyUsername(String encryption, String username){
->>>>>>> 6f2850b5c2a4389686fa8da46daec79a9238d4e0
+
         if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
         ProfileI profile = null;
         System.out.println(username);
@@ -138,11 +138,11 @@ public class Database {
         if(getProfilebyUsername("", email.getSenderUsername()) == null){
             throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
         }
-        if(getProfilebyUsername("", email.getRecieverUsername()) == null){
+        if(getProfilebyUsername("", email.getreceiverUsername()) == null){
             throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
         }
         ProfileI sender = getProfilebyUsername("", email.getSenderUsername());
-        ProfileI reciever = getProfilebyUsername("", email.getRecieverUsername());
+        ProfileI reciever = getProfilebyUsername("", email.getreceiverUsername());
         Creator creator = Creator.getInstance();
         String senderID = UUID.randomUUID().toString();
         String recieverID = UUID.randomUUID().toString();
@@ -180,16 +180,7 @@ public class Database {
             owner.getTrash().addEmail(email);
 
         }
-        if(email.getEmailType().equals("Spam")){
-            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-            Deleter.getInstance().deleteEmailDataSpam(email, owner);
-            owner.getSpam().removeEmailbyID(email.getEmailID());
-            owner.getTrash().addEmail(email);
-
-        }
     }
-
-
 
     public void printDatabase(){
         for(int i = 0; i < size; i++){

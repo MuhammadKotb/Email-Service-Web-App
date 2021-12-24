@@ -1,4 +1,6 @@
-package Model;
+package Model.ProfileBuilder;
+
+import Model.*;
 
 public class Profile implements ProfileI {
     private String username;
@@ -9,7 +11,6 @@ public class Profile implements ProfileI {
     private ProfileDraftI draft;
     private ProfileInboxI inbox;
     private ProfileOutboxI outbox;
-    private ProfileSpamI spam;
 
 
     public Profile(){}
@@ -60,10 +61,6 @@ public class Profile implements ProfileI {
         return this.trash;
     }
 
-    @Override
-    public ProfileSpamI getSpam() {
-        return this.spam;
-    }
 
     @Override
     public ProfileInboxI getInbox() {
@@ -88,11 +85,6 @@ public class Profile implements ProfileI {
     @Override
     public void setDraft(ProfileDraftI draft) {
         this.draft = draft;
-    }
-
-    @Override
-    public void setSpam(ProfileSpamI spam) {
-        this.spam = spam;
     }
 
     @Override

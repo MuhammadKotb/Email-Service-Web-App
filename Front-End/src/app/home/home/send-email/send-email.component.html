@@ -1,1 +1,6 @@
 <p>send-email works!</p>
+
+<form>
+    <input ([ngModel]) = "attachmentUploaded" type = "file" (change) = uploadFile(attachmentUploaded)>
+    <input type= "button" (click) = postFile() style="width: 50px;">
+</form>

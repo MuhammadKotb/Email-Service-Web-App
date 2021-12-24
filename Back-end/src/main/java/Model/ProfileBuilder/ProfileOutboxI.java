@@ -1,4 +1,7 @@
-package Model;
+package Model.ProfileBuilder;
+
+import Model.DataContainerI;
+import Model.EmailI;
 
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ public interface ProfileOutboxI {
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);
     EmailI getEmailbySenderUsername(String username);
-    EmailI getEmailbyRecieverUsername(String username);
+    EmailI getEmailbyreceiverUsername(String username);
     EmailI getEmailbyID(String ID);
 
 

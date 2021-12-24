@@ -1,28 +1,31 @@
 package Model;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public interface EmailI {
     String subject = null;
     String body = null;
     String owner = null;
     String senderUsername = null;
-    String recieverUsername = null;
+    String receiverUsername = null;
     String emailID = null;
     String emailType = null;
+    List<Attachment> attachments = null;
 
     String timeSent = null;
 
     String getSenderUsername();
-    String getRecieverUsername();
+    String getreceiverUsername();
     String getSubject();
     String getBody();
     String getEmailID();
     String getTimeSent();
     String getEmailType();
     String getOwner();
+    List<Attachment> getAttachments();
 
-    void setRecieverUsername(String recieverUsername);
+    void setreceiverUsername(String receiverUsername);
     void setSenderUsername(String senderUsername);
     void setSubject(String subject);
     void setTimeSent(String timeSent);
@@ -30,6 +33,11 @@ public interface EmailI {
     void setEmailID(String emailID);
     void setEmailType(String emailType);
     void setOwner(String owner);
+    void setAttachments(List<Attachment> attachments);
+
+    void addAttachment(Attachment attachment);
+    void removeAttachment(Attachment attachment);
+
 
 
 

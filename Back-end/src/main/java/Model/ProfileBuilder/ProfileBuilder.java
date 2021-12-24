@@ -1,4 +1,6 @@
-package Model;
+package Model.ProfileBuilder;
+
+import Model.DataContainerI;
 
 public class ProfileBuilder implements ProfileBuilderI {
 
@@ -33,10 +35,6 @@ public class ProfileBuilder implements ProfileBuilderI {
         this.profile.setTrash(trash);
     }
 
-    @Override
-    public void setSpam(ProfileSpamI spam) {
-        this.profile.setSpam(spam);
-    }
 
     @Override
     public void setDraft(ProfileDraftI draft) {

@@ -1,10 +1,13 @@
 package Model;
 
 
+import Model.ProfileBuilder.ProfileBuilder;
+import Model.ProfileBuilder.ProfileBuilderI;
+import Model.ProfileBuilder.ProfileDirector;
+import Model.ProfileBuilder.ProfileI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.FileWriter;
 
 public class Creator {
 
@@ -40,7 +43,6 @@ public class Creator {
 
         profileDirector.buildInbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox"));
         profileDirector.buildOutbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox"));
-        profileDirector.buildSpam(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam"));
         profileDirector.buildDraft(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft"));
         profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
 
@@ -57,7 +59,6 @@ public class Creator {
 
         profileDirector.buildInbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox", new File(dataBasePath.concat(encryption).concat("/Inbox"))));
         profileDirector.buildOutbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox", new File(dataBasePath.concat(encryption).concat("/Outbox"))));
-        profileDirector.buildSpam(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam", new File(dataBasePath.concat(encryption).concat("/Spam"))));
         profileDirector.buildDraft(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft", new File(dataBasePath.concat(encryption).concat("/Draft"))));
         profileDirector.buildTrash(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash", new File(dataBasePath.concat(encryption).concat("/Trash"))));
 
@@ -75,19 +76,19 @@ public class Creator {
     }
 
     public EmailI createEmailDataInbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getRecieverUsername(), "Inbox");
+        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Inbox", email.getAttachments());
         File file = new File(profile.getInbox().getInboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE INBOX EMAIL FILE");
         }
         inboxEmail.setEmailID(ID);
-        inboxEmail.setOwner(email.getRecieverUsername());
+        inboxEmail.setOwner(email.getreceiverUsername());
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, inboxEmail);
         return inboxEmail;
     }
     public EmailI createEmailDataOutbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI outboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getRecieverUsername(), "Outbox");
+        EmailI outboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Outbox", email.getAttachments());
         File file = new File(profile.getOutbox().getOutboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE OUTBOX EMAIL FILE");
@@ -99,7 +100,7 @@ public class Creator {
         return outboxEmail;
     }
     public EmailI createEmailDataDraft(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getRecieverUsername(), "Draft");
+        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Draft", email.getAttachments());
         File file = new File(profile.getDraft().getDraftDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -111,7 +112,7 @@ public class Creator {
 
     }
     public EmailI createEmailDataTrash(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getRecieverUsername(), "Trash");
+        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Trash", email.getAttachments());
         File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -123,18 +124,7 @@ public class Creator {
         return trashEmail;
 
     }
-    public EmailI createEmailDataSpam(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI spamEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getRecieverUsername(), "Spam");
-        File file = new File(profile.getSpam().getSpamDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
-        if(!file.createNewFile()){
-            throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
-        }
-        spamEmail.setEmailID(ID);
-        ObjectMapper map = new ObjectMapper();
-        map.writeValue(file, spamEmail);
-        return spamEmail;
 
-    }
 
 
 

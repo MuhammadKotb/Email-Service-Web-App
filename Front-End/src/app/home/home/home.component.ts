@@ -41,4 +41,6 @@ export class HomeComponent implements OnInit {
   logOut(){
     this.router.navigate(['']);
   }
+
+  
 }

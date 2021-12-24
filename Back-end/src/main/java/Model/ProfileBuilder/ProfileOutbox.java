@@ -1,20 +1,22 @@
-package Model;
+package Model.ProfileBuilder;
 
+import Model.DataContainerI;
+import Model.Email;
+import Model.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class ProfileInbox implements ProfileInboxI{
+public class ProfileOutbox implements ProfileOutboxI {
 
-    private DataContainerI inboxDataContainer;
+    private DataContainerI outboxDataContainer;
 
     private ArrayList<EmailI> emails;
 
-    public ProfileInbox(DataContainerI inboxDataContainer) throws Exception{
-        this.inboxDataContainer = inboxDataContainer;
+    public ProfileOutbox(DataContainerI outboxDataContainer) throws Exception{
+        this.outboxDataContainer = outboxDataContainer;
         this.emails = new ArrayList<EmailI>();
         this.setEmails();
     }
@@ -43,7 +45,7 @@ public class ProfileInbox implements ProfileInboxI{
     }
 
     private void setEmails() throws Exception {
-        File file = new File(this.inboxDataContainer.getDataContainerPath().concat("/"));
+        File file = new File(this.outboxDataContainer.getDataContainerPath().concat("/"));
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -94,10 +96,10 @@ public class ProfileInbox implements ProfileInboxI{
     }
 
     @Override
-    public EmailI getEmailbyRecieverUsername(String username) {
+    public EmailI getEmailbyreceiverUsername(String username) {
         EmailI email = null;
         for(int i = 0; i < this.emails.size(); i++){
-            if(username.equals(this.emails.get(i).getRecieverUsername())){
+            if(username.equals(this.emails.get(i).getreceiverUsername())){
                 email = this.emails.get(i);
             }
         }
@@ -114,14 +116,13 @@ public class ProfileInbox implements ProfileInboxI{
         return email;
     }
 
-
     @Override
-    public DataContainerI getInboxDataContainer() {
-        return this.inboxDataContainer;
+    public DataContainerI getOutboxDataContainer() {
+        return this.outboxDataContainer;
     }
 
     @Override
-    public void setInboxDataContainer(DataContainerI inboxDataContainer) {
-        this.inboxDataContainer = inboxDataContainer;
+    public void setOutboxDataContainer(DataContainerI outboxDataContainer) {
+        this.outboxDataContainer = outboxDataContainer;
     }
 }

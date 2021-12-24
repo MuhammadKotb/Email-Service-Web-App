@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     this.server.createAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
-      if(container == "CREATED DataContainer SUCCESSFULLY"){
+      if(container == "CREATED PROFILE SUCCESSFULLY"){
         this.router.navigate(['/home']);
       }else {
         alert("This username has already used")

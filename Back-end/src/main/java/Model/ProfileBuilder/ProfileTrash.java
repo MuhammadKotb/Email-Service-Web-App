@@ -1,10 +1,12 @@
-package Model;
+package Model.ProfileBuilder;
 
+import Model.DataContainerI;
+import Model.Email;
+import Model.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProfileTrash implements ProfileTrashI {
@@ -95,10 +97,10 @@ public class ProfileTrash implements ProfileTrashI {
     }
 
     @Override
-    public EmailI getEmailbyRecieverUsername(String username) {
+    public EmailI getEmailbyreceiverUsername(String username) {
         EmailI email = null;
         for(int i = 0; i < this.emails.size(); i++){
-            if(username.equals(this.emails.get(i).getRecieverUsername())){
+            if(username.equals(this.emails.get(i).getreceiverUsername())){
                 email = this.emails.get(i);
             }
         }

@@ -1,4 +1,6 @@
-package Model;
+package Model.ProfileBuilder;
+
+import Model.DataContainerI;
 
 public interface ProfileI {
     String username = null;
@@ -6,7 +8,6 @@ public interface ProfileI {
     String encryption = null;
     DataContainerI dataContainer = null;
     ProfileTrashI trash = null;
-    ProfileSpamI spam = null;
     ProfileDraftI draft = null;
     ProfileInboxI inbox = null;
     ProfileOutboxI outbox = null;
@@ -22,7 +23,6 @@ public interface ProfileI {
     void setDataContainer(DataContainerI dataContainer);
 
     ProfileTrashI getTrash();
-    ProfileSpamI getSpam();
     ProfileInboxI getInbox();
     ProfileDraftI getDraft();
     ProfileOutboxI getOutbox();
@@ -30,7 +30,6 @@ public interface ProfileI {
 
     void setTrash(ProfileTrashI trash);
     void setDraft(ProfileDraftI draft);
-    void setSpam(ProfileSpamI spam);
     void setInbox(ProfileInboxI inbox);
     void setOutbox(ProfileOutboxI outbox);
 

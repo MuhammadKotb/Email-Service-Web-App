@@ -1,9 +1,12 @@
-package Model;
+package Model.ProfileBuilder;
+
+import Model.DataContainerI;
+import Model.EmailI;
 
 import java.util.ArrayList;
 
-public interface ProfileTrashI {
-    DataContainerI trashDataContainer = null;
+public interface ProfileDraftI {
+    DataContainerI draftDataContainer = null;
 
     ArrayList<EmailI> emails = null;
 
@@ -15,12 +18,11 @@ public interface ProfileTrashI {
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);
     EmailI getEmailbySenderUsername(String username);
-    EmailI getEmailbyRecieverUsername(String username);
+    EmailI getEmailbyreceiverUsername(String username);
     EmailI getEmailbyID(String ID);
 
 
-    DataContainerI getTrashDataContainer();
-    void setTrashDataContainer(DataContainerI trashDataContainer);
-
+    DataContainerI getDraftDataContainer();
+    void setDraftDataContainer(DataContainerI draftDataContainer);
 
 }
