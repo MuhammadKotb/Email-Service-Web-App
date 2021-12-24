@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './home/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TrashComponent } from './trash/trash.component';
-import { InboxComponent } from './inbox/inbox.component';
-import { SendEmailComponent } from './send-email/send-email.component';
-import { SentComponent } from './sent/sent.component';
-import { DraftComponent } from './draft/draft.component';
-import { ContactsComponent } from './contacts/contacts.component';
+import { TrashComponent } from './home/home/trash/trash.component';
+import { InboxComponent } from './home/home/inbox/inbox.component';
+import { SendEmailComponent } from './home/home/send-email/send-email.component';
+import { SentComponent } from './home/home/sent/sent.component';
+import { DraftComponent } from './home/home/draft/draft.component';
+import { ContactsComponent } from './home/home/contacts/contacts.component';
 
 @NgModule({
   declarations: [

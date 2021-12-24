@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
       container = response;
       console.log(container)
       if(container == "CREATED DataContainer SUCCESSFULLY"){
-        this.router.navigate([{outlets:{registeration:['home']}}]);
+        this.router.navigate(['/home']);
       }else {
         alert("This username is already used")
       }
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         alert("There is no account by such credintials");
       }else{
         this.home.path=container;
-        this.router.navigate([{outlets:{registeration:['home']}}]);
+        this.router.navigate(['/home']);
       }
     });
 

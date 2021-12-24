@@ -7,18 +7,19 @@
   flex-direction: column;
   justify-content:space-between;
   font-family: cursive;
-  width: 300px;
-  height: 300px;
-  top: 150px;
-  left: 600px;
+  width: 400px;
+  height: 400px;
+  top: 200px;
+  left: 650px;
 }
 label{
-  font-size: medium;
+  font-size: 22px;
 }
 input{
   border-radius: 10px;
-  width: 200px;
-  height: 30px;
+  width: 300px;
+  height: 40px;
+  font-size:18px;
 }
 
 #user_name_container{
@@ -42,7 +43,7 @@ input{
 #create{
   width: 180px;
   height: 30px;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: slategrey;
   color: rgb(238, 232, 232);
   font-size: medium;
@@ -51,7 +52,8 @@ input{
 #login{
   width: 90px;
   height: 30px;
-  border-radius: 15px;
+  margin-right:36px;
+  border-radius: 10px;
   background-color:slategrey;
   color: rgb(238, 232, 232);
   font-size: medium;
