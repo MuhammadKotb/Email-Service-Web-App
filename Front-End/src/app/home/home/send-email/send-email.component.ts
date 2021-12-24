@@ -8,8 +8,8 @@ import { sendEmailService } from './send-email.services';
 })
 export class SendEmailComponent implements OnInit {
 
-  attachmentUploaded : File;
   attachmentSend : FormData = new FormData();
+  attachmentUplodad : File[] = [];
 
 
   constructor(private service:sendEmailService) {}
@@ -17,15 +17,21 @@ export class SendEmailComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  uploadFile(attachment : File){
-    this.attachmentUploaded = attachment;
-    console.log(this.attachmentUploaded);
-    this.attachmentSend.append("file", this.attachmentUploaded, this.attachmentUploaded.name);
+
+  uploadFile(input : any){
+    for(let i = 0; i < input.files.length; i++){
+      this.attachmentSend.append("file", input.files.item(i));
+    }
+    console.log(this.attachmentSend);
   }
+ 
   postFile(){
+
+    
+   
     this.service.postFile(this.attachmentSend).subscribe((data : string)=>{
       console.log(data);
-    });
-    
+    })
+
   }
 }

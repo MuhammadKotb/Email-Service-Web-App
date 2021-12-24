@@ -1,39 +1,18 @@
 package Model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Attachment {
-    String extension;
-    String name;
-    String encoded;
+
+    MultipartFile file;
     public Attachment(){}
 
-    public Attachment(String encoded, String extension, String name){
-        this.encoded = encoded;
-        this.extension = extension;
-        this.name = name;
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
-    public String getEncoded() {
-        return this.encoded;
+    public MultipartFile getFile() {
+        return file;
     }
-
-    public void setEncoded(String encoded) {
-        this.encoded = encoded;
-    }
-
-    public String getExtension() {
-        return this.extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
 }
