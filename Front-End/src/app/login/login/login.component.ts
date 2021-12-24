@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       if(container == "CREATED DataContainer SUCCESSFULLY"){
         this.router.navigate(['/home']);
       }else {
-        alert("This username is already used")
+        alert("This username has already used")
       }
     });
   }
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.server.loginToAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
       container = response;
       console.log(container)
-      if(container == "COULD NOT FIND PROFILE BY THIS USERNAME"){
+      if(container == ""){
         alert("There is no account by such credintials");
       }else{
         this.home.path=container;
