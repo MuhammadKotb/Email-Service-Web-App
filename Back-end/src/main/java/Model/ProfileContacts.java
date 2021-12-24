@@ -8,11 +8,17 @@ import java.util.ArrayList;
 
 public class ProfileContacts implements ProfileContactsI{
 
+    private DataContainerI contactsDataContainer;
 
     private ArrayList<ContactI> contacts;
 
-    public ProfileContacts() throws Exception{
+    public ProfileContacts(DataContainerI contactsDataContainer) throws Exception{
+        this.contactsDataContainer = contactsDataContainer;
         this.contacts = new ArrayList<ContactI>();
+    }
+    @Override
+    public DataContainerI getContactsDataContainer() {
+        return contactsDataContainer;
     }
 
     @Override
@@ -20,6 +26,9 @@ public class ProfileContacts implements ProfileContactsI{
         return contacts;
     }
 
+    public void setContacts(ArrayList<ContactI> contacts) {
+        this.contacts = contacts;
+    }
 
     @Override
     public void addContact(ContactI contact) {

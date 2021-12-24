@@ -3,8 +3,11 @@ package Model;
 import java.util.ArrayList;
 
 public interface ProfileContactsI {
+    DataContainerI contactsDataContainer = null;
 
     ArrayList<ContactI> contacts = null;
+
+    DataContainerI getContactsDataContainer();
 
     ArrayList<ContactI> getContacts();
 
@@ -14,6 +17,7 @@ public interface ProfileContactsI {
 
     ContactI getContact(String username);
 
+    void setContacts(ArrayList<ContactI> contacts);
 
 
 

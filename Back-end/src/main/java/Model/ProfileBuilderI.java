@@ -10,6 +10,7 @@ public interface ProfileBuilderI {
     void setDraft(ProfileDraftI draft);
     void setInbox(ProfileInboxI inbox);
     void setOutBox(ProfileOutboxI outBox);
+    void setContacts(ProfileContactsI contacts);
 
     ProfileI getProfile();
 }

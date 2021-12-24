@@ -43,6 +43,7 @@ public class Creator {
         profileDirector.buildSpam(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam"));
         profileDirector.buildDraft(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft"));
         profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
+        profileDirector.buildContacts(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Contacts"), "Contacts"));
 
         return profileBuilder.getProfile();
 
@@ -61,6 +62,7 @@ public class Creator {
         profileDirector.buildSpam(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Spam"), "Spam", new File(dataBasePath.concat(encryption).concat("/Spam"))));
         profileDirector.buildDraft(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft", new File(dataBasePath.concat(encryption).concat("/Draft"))));
         profileDirector.buildTrash(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash", new File(dataBasePath.concat(encryption).concat("/Trash"))));
+        profileDirector.buildContacts(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Contacts"), "Contacts", new File(dataBasePath.concat(encryption).concat("/Contacts"))));
 
         return profileBuilder.getProfile();
 

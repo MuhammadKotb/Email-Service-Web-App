@@ -20,6 +20,9 @@ public class ProfileDirector {
     void buildOutbox(ProfileBuilderI profileBuilder, DataContainerI dataContainer) throws Exception{
         profileBuilder.setOutBox(new ProfileOutbox(dataContainer));
     }
+    void buildContacts(ProfileBuilderI profileBuilder,DataContainerI dataContainer)throws Exception{
+        profileBuilder.setContacts(new ProfileContacts(dataContainer));
+    }
     void buildProfileData(ProfileBuilderI profileBuilder, String encryption){
         profileBuilder.setUsername(encryption.substring(0, encryption.indexOf("$")));
         profileBuilder.setPassWord(encryption.substring(encryption.indexOf("$") + 1));

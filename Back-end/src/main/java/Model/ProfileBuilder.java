@@ -54,6 +54,9 @@ public class ProfileBuilder implements ProfileBuilderI {
     }
 
     @Override
+    public void setContacts(ProfileContactsI contacts){ this.profile.setContacts(contacts);}
+
+    @Override
     public ProfileI getProfile() {
         return this.profile;
     }

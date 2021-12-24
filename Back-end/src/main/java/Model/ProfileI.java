@@ -10,6 +10,7 @@ public interface ProfileI {
     ProfileDraftI draft = null;
     ProfileInboxI inbox = null;
     ProfileOutboxI outbox = null;
+    ProfileContactsI contacts = null;
 
     String getUsername();
     String getPassWord();
@@ -26,6 +27,7 @@ public interface ProfileI {
     ProfileInboxI getInbox();
     ProfileDraftI getDraft();
     ProfileOutboxI getOutbox();
+    ProfileContactsI getContacts();
 
 
     void setTrash(ProfileTrashI trash);
@@ -33,7 +35,7 @@ public interface ProfileI {
     void setSpam(ProfileSpamI spam);
     void setInbox(ProfileInboxI inbox);
     void setOutbox(ProfileOutboxI outbox);
-
+    void setContacts(ProfileContactsI contacts);
 
 
 }
