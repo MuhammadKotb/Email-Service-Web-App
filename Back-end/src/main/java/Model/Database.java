@@ -53,7 +53,11 @@ public class Database {
     }
 
 
+<<<<<<< HEAD
     public static ProfileI getProfilebyUsername(String encryption, String username){
+=======
+    public ProfileI getProfilebyUsername(String encryption, String username){
+>>>>>>> 6f2850b5c2a4389686fa8da46daec79a9238d4e0
         if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
         ProfileI profile = null;
         System.out.println(username);

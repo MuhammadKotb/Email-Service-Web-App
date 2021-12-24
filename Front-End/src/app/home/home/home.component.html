@@ -8,7 +8,7 @@
                 <option value="sender">Sender</option>
                 <option value="trash">Trash</option>
                 <option value="draft">Draft</option>
-              </select>
+            </select>
             <input type = "text" id = "filter_text">
             <button type = "button" value = "Filter">Filter</button>
         </div>
@@ -19,7 +19,7 @@
                 <option value="importance">Importance</option>
                 <option value="body">Body</option>
                 <option value="attachements">attachements</option>
-              </select>
+            </select>
             <input type = "text" id = "sort_text">
             <button type = "button" value = "Sort">Sort</button>
         </div>
@@ -31,37 +31,37 @@
                 <option value="subject">Subject</option>
                 <option value="body">Body</option>
                 <option value="attachements">attachements</option>
-              </select>
+            </select>
             <input type = "text" id = "search_text">
             <button type = "button" value = "Search">Search</button>
         </div>
         <div class = "account_container">
-            <button type = "button" value = "LogOut">Log Out</button>
+            <button (click)="logOut()" type = "button" value = "LogOut">Log Out</button>
         </div>
     </div>
 
     <div class = "nav_bar">
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/sendEmail']}}]" type = "button" value = "Send Email">Send E-mail</button>
+                <button (click)="switchToSendEmail()" type = "button" value = "Send Email">Send E-mail</button>
             </div>
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/contacts']}}]" type = "button" value = "Contacts">Contacts</button>
+                <button (click)="switchToContacts()" type = "button" value = "Contacts">Contacts</button>
             </div>
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/inbox']}}]" type = "button" value = "Inbox">Inbox</button>
+                <button (click)="switchToInbox()" type = "button" value = "Inbox">Inbox</button>
             </div>
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/sent']}}]" type = "button" value = "Sent">Sent</button>
+                <button (click)="switchToSent()" type = "button" value = "Sent">Sent</button>
             </div>
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/draft']}}]" type = "button" value = "Draft">Draft</button>
+                <button (click)="switchToDraft()" type = "button" value = "Draft">Draft</button>
             </div>
             <div>
-                <button [routerLink]="[{outlets:{branching:['/home/trash']}}]" type = "button" value = "Trash">Trash</button>
+                <button (click)="switchToTrash()" type = "button" value = "Trash">Trash</button>
             </div>
     </div>
 
     <div class = "body">
-      <router-outlet name="branching"></router-outlet>
+        <router-outlet ></router-outlet>
     </div>
 </div>
