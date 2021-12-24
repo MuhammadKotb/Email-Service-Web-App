@@ -1,10 +1,6 @@
 package Controller;
 
-import Model.*;
-import Model.Email.Email;
-import Model.Profile.Elements.Contacts.ContactI;
-import Model.Profile.ProfileI;
-import Model.SingletonClasses.Database;
+import Controller.SingletonClasses.Database;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,21 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class EmailServiceController {
 
 
-    @PostMapping("/createProfile")
-    String createProfile(@RequestBody String encryption){
-        String ret;
-        try{
-            Database database =  Database.getInstance();
-            database.addProfile(encryption);
-            database.printDatabase();
-            ret = "CREATED PROFILE SUCCESSFULLY";
-        }
-        catch (Exception e){
-            System.out.println(e);
-            ret = e.getMessage();
-        }
-        return ret;
-    }
+
 
     @DeleteMapping("/deleteProfile")
     String deleteProfile(@RequestBody String encryption){
@@ -71,17 +53,7 @@ public class EmailServiceController {
             return null;
         }
     }
-    @PostMapping("/getProfile")
-    ProfileI getProfile(@RequestBody String encryption){
-        try{
-            Database database = Database.getInstance();
-            return Database.getProfilebyEncryption(encryption);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
+
 
     @PostMapping("saveProfileData")
     String saveProfile(@RequestBody String encryption){
@@ -95,28 +67,8 @@ public class EmailServiceController {
         }
     }
 
-    @PostMapping("sendEmail")
-    String sendEmail(@RequestBody Email email){
-        try{
-            Database.getInstance().sendEmail(email);
-            return "SENT EMAIL SUCCESSFULLY";
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
-    }
-    @PostMapping("movetoTrash")
-    String movetoTrash(@RequestBody Email email){
-        try{
-            Database.getInstance().movetoTrash(email);
-            return "MOVED TO TRASH SUCCESSFULLY";
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
-    }
+
+
     @PostMapping("/encodeFile")
     String encodeFile(@RequestBody MultipartFile file){
         try{
@@ -132,10 +84,7 @@ public class EmailServiceController {
 
 
 
-    @PostMapping("addContact")
-    void addContact(@RequestBody ContactI contactI){
 
-    }
 
 
    /* @PostMapping("/changedataContainerName")
