@@ -119,6 +119,11 @@ public class EmailServiceController {
         }
     }
 
+    @PostMapping("addContact")
+    void addContact(@RequestBody ContactI contactI){
+
+    }
+
 
    /* @PostMapping("/changedataContainerName")
     String changedataContainerName(@RequestBody String olddataContainerName, @RequestBody String newdataContainerName){
