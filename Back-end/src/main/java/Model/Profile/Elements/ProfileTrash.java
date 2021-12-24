@@ -1,22 +1,22 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements;
 
 import Model.DataContainerI;
-import Model.Email;
-import Model.EmailI;
+import Model.Email.Email;
+import Model.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-public class ProfileInbox implements ProfileInboxI{
+public class ProfileTrash implements ProfileTrashI {
 
-    private DataContainerI inboxDataContainer;
+    private DataContainerI trashDataContainer;
 
     private ArrayList<EmailI> emails;
 
-    public ProfileInbox(DataContainerI inboxDataContainer) throws Exception{
-        this.inboxDataContainer = inboxDataContainer;
+    public ProfileTrash(DataContainerI trashDataContainer) throws Exception {
+        this.trashDataContainer = trashDataContainer;
         this.emails = new ArrayList<EmailI>();
         this.setEmails();
     }
@@ -44,8 +44,9 @@ public class ProfileInbox implements ProfileInboxI{
         }
     }
 
+
     private void setEmails() throws Exception {
-        File file = new File(this.inboxDataContainer.getDataContainerPath().concat("/"));
+        File file = new File(this.trashDataContainer.getDataContainerPath().concat("/"));
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -105,6 +106,7 @@ public class ProfileInbox implements ProfileInboxI{
         }
         return email;
     }
+
     @Override
     public EmailI getEmailbyID(String ID) {
         EmailI email = null;
@@ -116,14 +118,13 @@ public class ProfileInbox implements ProfileInboxI{
         return email;
     }
 
-
     @Override
-    public DataContainerI getInboxDataContainer() {
-        return this.inboxDataContainer;
+    public DataContainerI getTrashDataContainer() {
+        return this.trashDataContainer;
     }
 
     @Override
-    public void setInboxDataContainer(DataContainerI inboxDataContainer) {
-        this.inboxDataContainer = inboxDataContainer;
+    public void setTrashDataContainer(DataContainerI trashDataContainer) {
+        this.trashDataContainer = trashDataContainer;
     }
 }

@@ -1,6 +1,12 @@
-package Model.ProfileBuilder;
+package Model.Profile.Builder;
 
 import Model.DataContainerI;
+import Model.Profile.*;
+import Model.Profile.Elements.Contacts.ProfileContactsI;
+import Model.Profile.Elements.ProfileDraftI;
+import Model.Profile.Elements.ProfileInboxI;
+import Model.Profile.Elements.ProfileOutboxI;
+import Model.Profile.Elements.ProfileTrashI;
 
 public class ProfileBuilder implements ProfileBuilderI {
 

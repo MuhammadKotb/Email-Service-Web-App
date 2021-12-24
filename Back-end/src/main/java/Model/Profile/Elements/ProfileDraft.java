@@ -1,25 +1,26 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements;
 
 import Model.DataContainerI;
-import Model.Email;
-import Model.EmailI;
+import Model.Email.Email;
+import Model.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-public class ProfileOutbox implements ProfileOutboxI {
-
-    private DataContainerI outboxDataContainer;
+public class ProfileDraft implements ProfileDraftI {
+    private DataContainerI draftDataContainer;
 
     private ArrayList<EmailI> emails;
 
-    public ProfileOutbox(DataContainerI outboxDataContainer) throws Exception{
-        this.outboxDataContainer = outboxDataContainer;
+
+    public ProfileDraft(DataContainerI draftDataContainer) throws Exception{
+        this.draftDataContainer = draftDataContainer;
         this.emails = new ArrayList<EmailI>();
         this.setEmails();
     }
+
     @Override
     public ArrayList<EmailI> getEmails() {
         return this.emails;
@@ -44,8 +45,9 @@ public class ProfileOutbox implements ProfileOutboxI {
         }
     }
 
+
     private void setEmails() throws Exception {
-        File file = new File(this.outboxDataContainer.getDataContainerPath().concat("/"));
+        File file = new File(this.draftDataContainer.getDataContainerPath().concat("/"));
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -56,6 +58,7 @@ public class ProfileOutbox implements ProfileOutboxI {
             throw new Exception("NO SUCH DIRECOTRY");
         }
         for(int i = 0; i < files.length; i++){
+            System.out.println(files[i]);
             ObjectMapper map = new ObjectMapper();
             EmailI email = map.readValue(files[i], Email.class);
             this.addEmail(email);
@@ -105,6 +108,7 @@ public class ProfileOutbox implements ProfileOutboxI {
         }
         return email;
     }
+
     @Override
     public EmailI getEmailbyID(String ID) {
         EmailI email = null;
@@ -117,12 +121,12 @@ public class ProfileOutbox implements ProfileOutboxI {
     }
 
     @Override
-    public DataContainerI getOutboxDataContainer() {
-        return this.outboxDataContainer;
+    public DataContainerI getDraftDataContainer() {
+        return this.draftDataContainer;
     }
 
     @Override
-    public void setOutboxDataContainer(DataContainerI outboxDataContainer) {
-        this.outboxDataContainer = outboxDataContainer;
+    public void setDraftDataContainer(DataContainerI draftDataContainer) {
+        this.draftDataContainer = draftDataContainer;
     }
 }

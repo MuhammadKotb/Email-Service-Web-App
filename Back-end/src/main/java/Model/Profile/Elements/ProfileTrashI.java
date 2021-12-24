@@ -1,7 +1,7 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements;
 
 import Model.DataContainerI;
-import Model.EmailI;
+import Model.Email.EmailI;
 
 import java.util.ArrayList;
 

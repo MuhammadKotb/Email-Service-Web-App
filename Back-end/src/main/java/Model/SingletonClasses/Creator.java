@@ -1,10 +1,14 @@
-package Model;
+package Model.SingletonClasses;
 
 
-import Model.ProfileBuilder.ProfileBuilder;
-import Model.ProfileBuilder.ProfileBuilderI;
-import Model.ProfileBuilder.ProfileDirector;
-import Model.ProfileBuilder.ProfileI;
+import Model.DataContainer;
+import Model.DataContainerI;
+import Model.Email.Email;
+import Model.Email.EmailI;
+import Model.Profile.Builder.ProfileBuilder;
+import Model.Profile.Builder.ProfileBuilderI;
+import Model.Profile.Builder.ProfileDirector;
+import Model.Profile.ProfileI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;

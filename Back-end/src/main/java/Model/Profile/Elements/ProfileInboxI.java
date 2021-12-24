@@ -1,12 +1,12 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements;
 
 import Model.DataContainerI;
-import Model.EmailI;
+import Model.Email.EmailI;
 
 import java.util.ArrayList;
 
-public interface ProfileDraftI {
-    DataContainerI draftDataContainer = null;
+public interface ProfileInboxI {
+    DataContainerI inboxDataContainer = null;
 
     ArrayList<EmailI> emails = null;
 
@@ -15,6 +15,7 @@ public interface ProfileDraftI {
     void addEmail(EmailI email);
     void removeEmail(EmailI email);
     void removeEmailbyID(String ID);
+
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);
     EmailI getEmailbySenderUsername(String username);
@@ -22,7 +23,8 @@ public interface ProfileDraftI {
     EmailI getEmailbyID(String ID);
 
 
-    DataContainerI getDraftDataContainer();
-    void setDraftDataContainer(DataContainerI draftDataContainer);
+    DataContainerI getInboxDataContainer();
+    void setInboxDataContainer(DataContainerI inboxDataContainer);
+
 
 }

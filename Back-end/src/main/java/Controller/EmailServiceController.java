@@ -1,11 +1,12 @@
 package Controller;
 
 import Model.*;
-import Model.ProfileBuilder.ProfileI;
+import Model.Email.Email;
+import Model.Profile.Elements.Contacts.ContactI;
+import Model.Profile.ProfileI;
+import Model.SingletonClasses.Database;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

@@ -1,6 +1,6 @@
-package Model;
+package Model.Email;
 
-import java.io.File;
+import Model.Email.Attachment;
 
 public interface EncoderI {
     Attachment encode(String path) throws Exception;

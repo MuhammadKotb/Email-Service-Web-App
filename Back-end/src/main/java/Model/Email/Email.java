@@ -1,9 +1,9 @@
-package Model;
+package Model.Email;
 
 import java.time.LocalTime;
 import java.util.List;
 
-public class Email implements EmailI{
+public class Email implements EmailI {
 
     private String subject;
     private String body;

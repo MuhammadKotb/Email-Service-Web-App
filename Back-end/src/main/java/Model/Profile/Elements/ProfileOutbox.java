@@ -1,26 +1,25 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements;
 
 import Model.DataContainerI;
-import Model.Email;
-import Model.EmailI;
+import Model.Email.Email;
+import Model.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-public class ProfileDraft implements ProfileDraftI {
-    private DataContainerI draftDataContainer;
+public class ProfileOutbox implements ProfileOutboxI {
+
+    private DataContainerI outboxDataContainer;
 
     private ArrayList<EmailI> emails;
 
-
-    public ProfileDraft(DataContainerI draftDataContainer) throws Exception{
-        this.draftDataContainer = draftDataContainer;
+    public ProfileOutbox(DataContainerI outboxDataContainer) throws Exception{
+        this.outboxDataContainer = outboxDataContainer;
         this.emails = new ArrayList<EmailI>();
         this.setEmails();
     }
-
     @Override
     public ArrayList<EmailI> getEmails() {
         return this.emails;
@@ -45,9 +44,8 @@ public class ProfileDraft implements ProfileDraftI {
         }
     }
 
-
     private void setEmails() throws Exception {
-        File file = new File(this.draftDataContainer.getDataContainerPath().concat("/"));
+        File file = new File(this.outboxDataContainer.getDataContainerPath().concat("/"));
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -58,7 +56,6 @@ public class ProfileDraft implements ProfileDraftI {
             throw new Exception("NO SUCH DIRECOTRY");
         }
         for(int i = 0; i < files.length; i++){
-            System.out.println(files[i]);
             ObjectMapper map = new ObjectMapper();
             EmailI email = map.readValue(files[i], Email.class);
             this.addEmail(email);
@@ -108,7 +105,6 @@ public class ProfileDraft implements ProfileDraftI {
         }
         return email;
     }
-
     @Override
     public EmailI getEmailbyID(String ID) {
         EmailI email = null;
@@ -121,12 +117,12 @@ public class ProfileDraft implements ProfileDraftI {
     }
 
     @Override
-    public DataContainerI getDraftDataContainer() {
-        return this.draftDataContainer;
+    public DataContainerI getOutboxDataContainer() {
+        return this.outboxDataContainer;
     }
 
     @Override
-    public void setDraftDataContainer(DataContainerI draftDataContainer) {
-        this.draftDataContainer = draftDataContainer;
+    public void setOutboxDataContainer(DataContainerI outboxDataContainer) {
+        this.outboxDataContainer = outboxDataContainer;
     }
 }

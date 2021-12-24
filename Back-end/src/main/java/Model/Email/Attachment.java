@@ -1,4 +1,4 @@
-package Model;
+package Model.Email;
 
 public class Attachment {
     String extension;

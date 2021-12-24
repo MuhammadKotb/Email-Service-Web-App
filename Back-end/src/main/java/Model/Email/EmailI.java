@@ -1,6 +1,5 @@
-package Model;
+package Model.Email;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public interface EmailI {

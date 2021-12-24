@@ -1,4 +1,4 @@
-package Model;
+package Model.Profile.Elements.Contacts;
 
 public class Contact implements ContactI {
     private String username;

@@ -1,6 +1,5 @@
-package Model.ProfileBuilder;
+package Model.Profile.Elements.Contacts;
 
-import Model.ContactI;
 import Model.DataContainerI;
 
 import java.util.ArrayList;

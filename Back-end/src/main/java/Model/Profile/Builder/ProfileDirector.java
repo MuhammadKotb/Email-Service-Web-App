@@ -1,7 +1,11 @@
-package Model.ProfileBuilder;
+package Model.Profile.Builder;
 
 import Model.DataContainerI;
-import Model.ProfileBuilder.ProfileContacts;
+import Model.Profile.Elements.Contacts.ProfileContacts;
+import Model.Profile.Elements.ProfileDraft;
+import Model.Profile.Elements.ProfileInbox;
+import Model.Profile.Elements.ProfileOutbox;
+import Model.Profile.Elements.ProfileTrash;
 
 public class ProfileDirector {
 

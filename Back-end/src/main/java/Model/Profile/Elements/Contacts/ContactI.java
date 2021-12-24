@@ -1,4 +1,4 @@
-package Model;
+package Model.Profile.Elements.Contacts;
 
 public interface ContactI {
     String username = null;

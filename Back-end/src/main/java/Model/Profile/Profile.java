@@ -1,6 +1,11 @@
-package Model.ProfileBuilder;
+package Model.Profile;
 
 import Model.*;
+import Model.Profile.Elements.Contacts.ProfileContactsI;
+import Model.Profile.Elements.ProfileDraftI;
+import Model.Profile.Elements.ProfileInboxI;
+import Model.Profile.Elements.ProfileOutboxI;
+import Model.Profile.Elements.ProfileTrashI;
 
 public class Profile implements ProfileI {
     private String username;

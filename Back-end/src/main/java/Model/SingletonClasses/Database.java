@@ -1,6 +1,7 @@
-package Model;
+package Model.SingletonClasses;
 
-import Model.ProfileBuilder.ProfileI;
+import Model.Email.EmailI;
+import Model.Profile.ProfileI;
 
 import java.io.File;
 import java.io.FileFilter;
