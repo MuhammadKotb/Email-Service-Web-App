@@ -12,6 +12,7 @@ public class Profile implements ProfileI {
     private ProfileInboxI inbox;
     private ProfileOutboxI outbox;
 
+    private ProfileContactsI contacts;
 
     public Profile(){}
 
@@ -78,6 +79,11 @@ public class Profile implements ProfileI {
     }
 
     @Override
+    public ProfileContactsI getContacts() {
+        return this.contacts;
+    }
+
+    @Override
     public void setTrash(ProfileTrashI trash) {
         this.trash = trash;
     }
@@ -97,5 +103,8 @@ public class Profile implements ProfileI {
         this.outbox = outbox;
     }
 
-
+    @Override
+    public void setContacts(ProfileContactsI contacts) {
+        this.contacts = contacts;
+    }
 }
