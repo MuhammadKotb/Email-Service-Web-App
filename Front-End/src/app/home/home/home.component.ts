@@ -14,7 +14,6 @@ export interface EmailI{
   priority: string;
 }
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,6 +22,7 @@ export interface EmailI{
 export class HomeComponent implements OnInit {
 
   constructor(private router:Router) { }
+
   path:string = ""
   ngOnInit(): void {
     this.router.navigate(['/home/inbox']);
@@ -56,4 +56,3 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-}
