@@ -38,6 +38,7 @@ export class InboxComponent implements OnInit {
       emailType: '',
       priority: 'Important'
     }
+    
     var z : EmailI = {
       senderUsername: "Qotb",
       timeSent: "هيخو",
@@ -77,39 +78,10 @@ export class InboxComponent implements OnInit {
     this.listOfEmails.push(y)
     this.listOfEmails.push(z)
     this.listOfEmails.push(w)
-    this.listOfEmails.push(q)
-    
-
     this.parseArray()
-    for (let i=0;i<this.viewArray.length;i++){
-      var node = document.createElement("tr");
-      node.style.width = "300px"
-      node.style.textAlign = "center"
-      node.style.padding = "7px"
-      node.style.margin = "50px"
-      for (let j=0;j<5;j++){
-          var node2 = document.createElement("td");
-          if (j!=4){
-            var textNode = document.createTextNode(this.viewArray[i][j]);
-            node2.appendChild(textNode);
-            node2
-          }else{
-            var node3 = document.createElement("button");
-            node3.style.marginRight = "5px"
-            var textNode = document.createTextNode("Show");
-            node3.appendChild(textNode);
-            node2.appendChild(node3);
-            textNode = document.createTextNode("Delete");
-            var node4 = document.createElement("button");
-            node4.style.marginRight = "5px"
-            node4.appendChild(textNode);
-            node2.appendChild(node4);
-          }
-          node.appendChild(node2);
-      }
-      document.getElementById("mybody")?.appendChild(node);
-  }
+    this.place(this.viewArray,5)
 }
+  
 parseArray(){
   for (let email=0; email < this.listOfEmails.length;email++){
     this.viewArray[email] = [] 
@@ -118,6 +90,38 @@ parseArray(){
     this.viewArray[email][2] = this.listOfEmails[email].subject
     this.viewArray[email][3] = this.listOfEmails[email].priority
   }
+}
+
+place(viewArray : string[][],iterationsNum: number,btnName: "Show" | "Send Email" | "Delete" = "Show"){
+  for (let i=0;i<viewArray.length;i++){
+    var node = document.createElement("tr");
+    node.style.width = "300px"
+    node.style.textAlign = "center"
+    node.style.padding = "7px"
+    node.style.margin = "50px"
+    for (let j=0;j<iterationsNum;j++){
+        var node2 = document.createElement("td");
+        if (j!=iterationsNum-1){
+          var textNode = document.createTextNode(viewArray[i][j]);
+          node2.appendChild(textNode);
+        }else{
+          if (btnName!="Delete"){
+            var node3 = document.createElement("button");
+            node3.style.marginRight = "5px"
+            var textNode = document.createTextNode(btnName);
+            node3.appendChild(textNode);
+            node2.appendChild(node3);
+          }
+          var textNode2 = document.createTextNode("Delete");
+          var node4 = document.createElement("button");
+          node4.style.marginRight = "5px"
+          node4.appendChild(textNode2);
+          node2.appendChild(node4);
+        }
+        node.appendChild(node2);
+    }
+    document.getElementById("mybody")?.appendChild(node);
+}
 }
 
 }
