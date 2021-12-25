@@ -18,20 +18,4 @@ export class SendEmailComponent implements OnInit {
   }
 
 
-  uploadFile(input : any){
-    for(let i = 0; i < input.files.length; i++){
-      this.attachmentSend.append("file", input.files.item(i));
-    }
-    console.log(this.attachmentSend);
-  }
- 
-  postFile(){
-
-    
-   
-    this.service.postFile(this.attachmentSend).subscribe((data : string)=>{
-      console.log(data);
-    })
-
-  }
 }

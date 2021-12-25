@@ -36,29 +36,4 @@ public class SendEmailPageController {
     }
 
 
-
-    @PostMapping("/attachment")
-    void attachment(@RequestParam("file") Multipart[] files) {
-        try{
-           /*for(int i = 0; i < files.length; i++){
-               ObjectMapper map = new ObjectMapper();
-               map.writeValue(new File("M:\\loltst".concat(String.valueOf(files[i].getSize())).concat(".json")), files);
-           }*/
-            files =
-            ObjectMapper map = new ObjectMapper();
-            map.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            Attachment attachment = new Attachment();
-
-            map.writeValue(new File("M:\\lololol".concat(".json")), files[0]);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    @PostMapping("/test")
-    void test(@RequestParam("test") String lol){
-        System.out.println(lol);
-    }
 }
