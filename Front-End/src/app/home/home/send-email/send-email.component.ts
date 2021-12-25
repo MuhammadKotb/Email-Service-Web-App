@@ -30,7 +30,5 @@ export class SendEmailComponent implements OnInit {
     this.viewArray[this.recieverCount][1] = ((this.recieverCount++)+1).toString()
   }
 
-  
-
 }
 

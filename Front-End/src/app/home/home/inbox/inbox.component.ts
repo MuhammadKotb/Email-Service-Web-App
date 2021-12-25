@@ -38,8 +38,9 @@ export class InboxComponent implements OnInit {
       emailType: '',
       priority: 'Important'
     }
-    var Z : EmailI = {
-      senderUsername: "otb",
+    
+    var z : EmailI = {
+      senderUsername: "Qotb",
       timeSent: "هيخو",
       subject: "birthday",
       body: '',
@@ -50,7 +51,7 @@ export class InboxComponent implements OnInit {
       priority: 'Non-essential'
     }
     var w : EmailI = {
-      senderUsername: "deffo",
+      senderUsername: "Deffo",
       timeSent: "لول",
       subject: "birthday",
       body: '',
@@ -58,21 +59,29 @@ export class InboxComponent implements OnInit {
       recieverUsername: '',
       emailID: '',
       emailType: '',
-      priority: 'Skipable'
+      priority: 'Skippable'
+    }
+
+    var q : EmailI = {
+      senderUsername: "Ahmed",
+      timeSent: "23/12/21",
+      subject: "birthday",
+      body: '',
+      owner: '',
+      recieverUsername: '',
+      emailID: '',
+      emailType: '',
+      priority: 'Important'
     }
 
     this.listOfEmails.push(x)
     this.listOfEmails.push(y)
-    this.listOfEmails.push(Z)
+    this.listOfEmails.push(z)
     this.listOfEmails.push(w)
-
     this.parseArray()
-    // width: 300px;
-    // text-align: center;
-    // padding: 7px;
-    // margin: 50px;
     this.place(this.viewArray,5)
 }
+  
 parseArray(){
   for (let email=0; email < this.listOfEmails.length;email++){
     this.viewArray[email] = [] 

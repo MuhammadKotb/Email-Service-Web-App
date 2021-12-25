@@ -13,7 +13,6 @@ export interface EmailI{
   timeSent: string;
   priority: string;
 }
-  
 
 @Component({
   selector: 'app-home',
@@ -57,4 +56,3 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-}
