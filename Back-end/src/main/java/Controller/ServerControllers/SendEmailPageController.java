@@ -3,6 +3,7 @@ package Controller.ServerControllers;
 import Controller.Email.Attachment;
 import Controller.Email.Email;
 import Controller.Email.EmailI;
+import Controller.Handlers.SendEmailHandler;
 import Controller.SingletonClasses.Database;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -26,7 +27,7 @@ public class SendEmailPageController {
     @PostMapping("/sendEmail")
     String sendEmail(@RequestBody Email email){
         try{
-            Database.getInstance().sendEmail(email);
+            SendEmailHandler.getInstance().handle("SendEmail",email);
             return "SENT EMAIL SUCCESSFULLY";
         }
         catch (Exception e){

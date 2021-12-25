@@ -1,6 +1,7 @@
 package Controller.ServerControllers;
 
 import Controller.Email.Email;
+import Controller.Handlers.SendEmailHandler;
 import Controller.SingletonClasses.Database;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ public class InboxPageController {
     @PostMapping("/movetoTrashInbox")
     String movetoTrash(@RequestBody Email email){
         try{
-            Database.getInstance().movetoTrash(email);
+            SendEmailHandler.getInstance().handle("MovetoTrash",email);
             return "MOVED TO TRASH SUCCESSFULLY";
         }
         catch (Exception e){
