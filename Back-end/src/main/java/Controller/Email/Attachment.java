@@ -6,17 +6,41 @@ import java.util.ArrayList;
 
 public class Attachment {
 
-    ArrayList<MultipartFile> file = new ArrayList<>();
-    public Attachment(){}
+    String encodedString;
+    byte[] encoded;
+    String name;
+    String type;
 
 
-    public void setFile(ArrayList<MultipartFile> file) {
-        this.file = file;
+
+    public void setEncoded(byte[] encoded) {
+        this.encoded = encoded;
     }
 
-    public ArrayList<MultipartFile> getFile() {
-        return file;
+    public String getEncodedString() {
+        return this.encodedString;
+    }
+    public byte[] getEncoded(){
+        return this.encoded;
     }
 
+    public void setEncoded(String encodedString) {
+        this.encodedString = encodedString;
+    }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

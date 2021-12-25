@@ -12,4 +12,5 @@ export class sendEmailService {
   postFile(attachment : FormData) : Observable<string>{
      return this.http.post("http://localhost:8080/attachment", attachment, {responseType :"text"});
   }
+  
 }
