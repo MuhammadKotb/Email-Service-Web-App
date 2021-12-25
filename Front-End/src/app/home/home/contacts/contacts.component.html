@@ -1,1 +1,29 @@
-<p>contacts works!</p>
+<p id = "intro">Contacts</p>
+
+<form class = "form">
+    <label for = "username">Enter Username:</label>
+    <input type ="text" id = "username">
+    <label for="phone">Enter Phone Number:</label>
+    <input type="tel" id="phone" pattern="[0-9]{11}"> 
+    <button type ="button">Add Contact</button>
+</form>
+
+<table id = "contact_table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Meniem</td>
+            <td>01204538296</td>
+            <td>
+                <button>Send E-mail</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

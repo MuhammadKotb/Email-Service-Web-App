@@ -1,6 +1,20 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
+
+export interface EmailI{
+  subject : string;
+  body : string;
+  owner : string;
+  senderUsername: string;
+  recieverUsername: string;
+  emailID: string;
+  emailType: string;
+  timeSent: string;
+  priority: string;
+}
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -41,4 +55,5 @@ export class HomeComponent implements OnInit {
   logOut(){
     this.router.navigate(['']);
   }
+
 }
