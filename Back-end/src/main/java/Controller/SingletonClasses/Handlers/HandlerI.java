@@ -1,4 +1,4 @@
-package Controller.Handlers;
+package Controller.SingletonClasses.Handlers;
 
 import Controller.Email.EmailI;
 

@@ -1,12 +1,10 @@
-package Controller.Handlers;
+package Controller.SingletonClasses.Handlers;
 
 import Controller.Email.EmailI;
 import Controller.Profile.ProfileI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
-
-import java.util.UUID;
 
 public class MovetoTrashHandler implements HandlerI{
     private String concern = "MovetoTrash";
