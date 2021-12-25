@@ -134,55 +134,6 @@ public class Database {
         creator.createDataFile(getProfilebyEncryption(encryption));
     }
 
-    public void sendEmail(EmailI email) throws Exception{
-
-        if(getProfilebyUsername("", email.getSenderUsername()) == null){
-            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
-        }
-        if(getProfilebyUsername("", email.getreceiverUsername()) == null){
-            throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
-        }
-        ProfileI sender = getProfilebyUsername("", email.getSenderUsername());
-        ProfileI reciever = getProfilebyUsername("", email.getreceiverUsername());
-        Creator creator = Creator.getInstance();
-        String senderID = UUID.randomUUID().toString();
-        String recieverID = UUID.randomUUID().toString();
-        reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, senderID));
-        sender.getOutbox().addEmail(creator.createEmailDataOutbox(email, sender, recieverID));
-    }
-
-    public void movetoTrash(EmailI email) throws Exception{
-        if(getProfilebyUsername("", email.getOwner()) == null){
-            throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
-        }
-        System.out.println("INSIDE MOVE TO TRASH");
-
-        ProfileI owner = getProfilebyUsername("", email.getOwner());
-        System.out.println("INSIDE MOVE TO TRASH AFTER PROFILE GET");
-
-        if(email.getEmailType().equals("Inbox")){
-            System.out.println("INSIDE INBOX MOVE TO TRASH");
-            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-            Deleter.getInstance().deleteEmailDataInbox(email, owner);
-            owner.getInbox().removeEmailbyID(email.getEmailID());
-            owner.getTrash().addEmail(email);
-        }
-        if(email.getEmailType().equals("Outbox")){
-            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-            Deleter.getInstance().deleteEmailDataOutbox(email, owner);
-            owner.getOutbox().removeEmailbyID(email.getEmailID());
-            owner.getTrash().addEmail(email);
-
-        }
-        if(email.getEmailType().equals("Draft")){
-            Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-            Deleter.getInstance().deleteEmailDataDraft(email, owner);
-            owner.getDraft().removeEmailbyID(email.getEmailID());
-            owner.getTrash().addEmail(email);
-
-        }
-    }
-
     public void printDatabase(){
         for(int i = 0; i < size; i++){
             System.out.println("PROFILE Encyrption ==> ".concat(dataBaseList.get(i).getEncryption()));

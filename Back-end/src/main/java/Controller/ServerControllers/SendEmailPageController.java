@@ -26,6 +26,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import Controller.SingletonClasses.Handlers.SendEmailHandler;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/home/sendEmail")
@@ -35,7 +38,7 @@ public class SendEmailPageController {
     @PostMapping("/sendEmail")
     String sendEmail(@RequestBody Email email){
         try{
-            Database.getInstance().sendEmail(email);
+            SendEmailHandler.getInstance().handle("SendEmail",email);
             return "SENT EMAIL SUCCESSFULLY";
         }
         catch (Exception e){
