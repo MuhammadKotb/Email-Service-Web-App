@@ -8,7 +8,7 @@ import Controller.SingletonClasses.Database;
 import java.util.UUID;
 
 public class SendEmailHandler implements HandlerI{
-    private String concern = "SendEmail";
+    private final String concern = "SendEmail";
     private HandlerI successor = MovetoTrashHandler.getInstance();
     private static SendEmailHandler instance = null;
 
@@ -37,7 +37,7 @@ public class SendEmailHandler implements HandlerI{
             String senderID = UUID.randomUUID().toString();
             String recieverID = UUID.randomUUID().toString();
             reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, senderID));
-            sender.getOutbox().addEmail(creator.createEmailDataOutbox(email, sender, recieverID));
+            sender.getSent().addEmail(creator.createEmailDataSent(email, sender, recieverID));
         }else{
             if(this.successor == null){
                 throw new Exception("NO HANDLER CAN HANDLE THIS CONCERN");

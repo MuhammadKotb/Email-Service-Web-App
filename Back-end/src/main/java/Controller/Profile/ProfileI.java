@@ -1,11 +1,10 @@
 package Controller.Profile;
 
 import Controller.DataContainerI;
+import Controller.Profile.Elements.*;
 import Controller.Profile.Elements.Contacts.ProfileContactsI;
-import Controller.Profile.Elements.ProfileDraftI;
-import Controller.Profile.Elements.ProfileInboxI;
-import Controller.Profile.Elements.ProfileOutboxI;
-import Controller.Profile.Elements.ProfileTrashI;
+
+import java.util.ArrayList;
 
 public interface ProfileI {
     String username = null;
@@ -15,8 +14,9 @@ public interface ProfileI {
     ProfileTrashI trash = null;
     ProfileDraftI draft = null;
     ProfileInboxI inbox = null;
-    ProfileOutboxI outbox = null;
+    ProfileSentI Sent = null;
     ProfileContactsI contacts = null;
+    ArrayList<ProfileFolderI> folders = null;
 
     String getUsername();
     String getPassWord();
@@ -31,15 +31,20 @@ public interface ProfileI {
     ProfileTrashI getTrash();
     ProfileInboxI getInbox();
     ProfileDraftI getDraft();
-    ProfileOutboxI getOutbox();
+    ProfileSentI getSent();
     ProfileContactsI getContacts();
 
 
     void setTrash(ProfileTrashI trash);
     void setDraft(ProfileDraftI draft);
     void setInbox(ProfileInboxI inbox);
-    void setOutbox(ProfileOutboxI outbox);
+    void setSent(ProfileSentI Sent);
     void setContacts(ProfileContactsI contacts);
 
+    ProfileFolderI getProfileFolderbyName(String name);
+
+    void removeFolderbyName(String name);
+    void removeFolder(ProfileFolderI profileFolder);
+    void addFolder(ProfileFolderI profileFolder);
 
 }

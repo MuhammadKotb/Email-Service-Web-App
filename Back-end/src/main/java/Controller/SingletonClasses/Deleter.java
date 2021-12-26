@@ -31,7 +31,7 @@ public class Deleter {
         deleteDataContainer(profile.getTrash().getTrashDataContainer());
         deleteDataContainer(profile.getDraft().getDraftDataContainer());
         deleteDataContainer(profile.getInbox().getInboxDataContainer());
-        deleteDataContainer(profile.getOutbox().getOutboxDataContainer());
+        deleteDataContainer(profile.getSent().getSentDataContainer());
         deleteDataContainer(profile.getContacts().getContactsDataContainer());
         deleteDataContainer(profile.getDataContainer());
 
@@ -47,11 +47,11 @@ public class Deleter {
         }
 
     }
-    public void deleteEmailDataOutbox(EmailI email, ProfileI profile) throws Exception{
-        if(profile.getOutbox().getEmailbyID(email.getEmailID()) == null){
+    public void deleteEmailDataSent(EmailI email, ProfileI profile) throws Exception{
+        if(profile.getSent().getEmailbyID(email.getEmailID()) == null){
             throw new Exception("NO SUCH EMAIL TO DELETE");
         }
-        File file = new File(profile.getOutbox().getOutboxDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        File file = new File(profile.getSent().getSentDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
@@ -75,7 +75,15 @@ public class Deleter {
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
-
+    }
+    public void deleteProfileFolder(ProfileI profile, String folderName) throws Exception{
+        if(profile.getProfileFolderbyName(folderName) == null){
+            throw new Exception("NO FOLDER BY THIS NAME BELONING TO THIS PROFILE");
+        }
+        if(!profile.getProfileFolderbyName(folderName).getFolderDataContainer().getFile().delete()){
+            throw new Exception("COULD NOT DELETE FOLDER");
+        }
+        profile.removeFolderbyName(folderName);
     }
 
 }

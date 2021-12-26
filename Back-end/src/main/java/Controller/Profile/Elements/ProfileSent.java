@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-public class ProfileOutbox implements ProfileOutboxI {
+public class ProfileSent implements ProfileSentI {
 
-    private DataContainerI outboxDataContainer;
+    private DataContainerI SentDataContainer;
 
     private ArrayList<EmailI> emails;
 
-    public ProfileOutbox(DataContainerI outboxDataContainer) throws Exception{
-        this.outboxDataContainer = outboxDataContainer;
+    public ProfileSent(DataContainerI SentDataContainer) throws Exception{
+        this.SentDataContainer = SentDataContainer;
         this.emails = new ArrayList<EmailI>();
         this.setEmails();
     }
@@ -45,7 +45,7 @@ public class ProfileOutbox implements ProfileOutboxI {
     }
 
     private void setEmails() throws Exception {
-        File file = new File(this.outboxDataContainer.getDataContainerPath().concat("/"));
+        File file = new File(this.SentDataContainer.getDataContainerPath().concat("/"));
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -117,12 +117,12 @@ public class ProfileOutbox implements ProfileOutboxI {
     }
 
     @Override
-    public DataContainerI getOutboxDataContainer() {
-        return this.outboxDataContainer;
+    public DataContainerI getSentDataContainer() {
+        return this.SentDataContainer;
     }
 
     @Override
-    public void setOutboxDataContainer(DataContainerI outboxDataContainer) {
-        this.outboxDataContainer = outboxDataContainer;
+    public void setSentDataContainer(DataContainerI SentDataContainer) {
+        this.SentDataContainer = SentDataContainer;
     }
 }

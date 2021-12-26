@@ -28,10 +28,11 @@ import java.util.Arrays;
 import java.util.List;
 import Controller.SingletonClasses.Handlers.SendEmailHandler;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/home/sendEmail")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SendEmailPageController {
     Attachment attachment = new Attachment();
 
@@ -48,23 +49,24 @@ public class SendEmailPageController {
     }
 
     @PostMapping("/attachment")
-    byte[] attachment(@RequestParam MultipartFile file){
+    void attachment(@RequestParam("file") MultipartFile file){
         try{
             this.attachment.setEncoded(file.getBytes());
             this.attachment.setType(file.getContentType());
             this.attachment.setName(file.getOriginalFilename());
             ObjectMapper map = new ObjectMapper();
             map.writeValue(new File("lol4.json"), attachment);
-            FileWriter fileWriter = new FileWriter(new File("lil5.txt"));
-            fileWriter.write(new String(Base64.encodeBase64String(file.getBytes() )));
             System.out.println(file.getSize());
-            return Base64.encodeBase64(file.getBytes());
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return null;
         }
 
+    }
+
+    @GetMapping("/getAttachment")
+    Attachment getAttachment(){
+        return this.attachment;
     }
 
 

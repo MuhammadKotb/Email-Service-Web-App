@@ -3,6 +3,12 @@ import { EmailI } from '../home.component'
 import { InboxComponent } from '../inbox/inbox.component';
 import { sendEmailService } from './send-email.services';
 
+export interface Attachmnet {
+  encoded : string,
+  name:string,
+  type:string
+}
+
 @Component({
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
@@ -11,9 +17,10 @@ import { sendEmailService } from './send-email.services';
 export class SendEmailComponent implements OnInit {
   private recieverCount : number = 0
   private viewArray : string[][] = []
+  
 
   
-  attachmentUplodad : File[] = [];
+  attachmentUplodad : File;
   attatchmentSent : FormData = new FormData();
 
 
@@ -29,9 +36,10 @@ export class SendEmailComponent implements OnInit {
   }
 
   uploadFile(input : any){
-    this.attachmentUplodad = input.files;
-    this.attatchmentSent.append("file", this.attachmentUplodad[0]);
+    this.attachmentUplodad = input.files.item(0);
+    this.attatchmentSent.append("file", this.attachmentUplodad);
     console.log(this.attatchmentSent.get("file"));
+    input = null;
   }
 
   sendFile(){
@@ -39,14 +47,12 @@ export class SendEmailComponent implements OnInit {
   }
 
   getFile(){
-
+    this.service.getAttachment().subscribe((data : Attachmnet) => {
+      console.log(data);
+      console.log(data.type)
+      document.getElementById("attachmentembed")?.setAttribute("src", "data:".concat(data.type).concat(";base64,").concat(data.encoded));
+    });
   }
-
-
-
-    
-
-  
 
   addReciever(reciever: string){
     this.viewArray[this.recieverCount] = []

@@ -7,7 +7,7 @@ import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
 
 public class MovetoTrashHandler implements HandlerI{
-    private String concern = "MovetoTrash";
+    private final String concern = "MovetoTrash";
     private HandlerI successor = null;
     private static MovetoTrashHandler instance = null;
 
@@ -39,10 +39,10 @@ public class MovetoTrashHandler implements HandlerI{
                 owner.getInbox().removeEmailbyID(email.getEmailID());
                 owner.getTrash().addEmail(email);
             }
-            if(email.getEmailType().equals("Outbox")){
+            if(email.getEmailType().equals("Sent")){
                 Creator.getInstance().createEmailDataTrash(email, owner, email.getEmailID());
-                Deleter.getInstance().deleteEmailDataOutbox(email, owner);
-                owner.getOutbox().removeEmailbyID(email.getEmailID());
+                Deleter.getInstance().deleteEmailDataSent(email, owner);
+                owner.getSent().removeEmailbyID(email.getEmailID());
                 owner.getTrash().addEmail(email);
 
             }

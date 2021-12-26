@@ -1,11 +1,8 @@
 package Controller.Profile.Builder;
 
 import Controller.DataContainerI;
+import Controller.Profile.Elements.*;
 import Controller.Profile.Elements.Contacts.ProfileContacts;
-import Controller.Profile.Elements.ProfileDraft;
-import Controller.Profile.Elements.ProfileInbox;
-import Controller.Profile.Elements.ProfileOutbox;
-import Controller.Profile.Elements.ProfileTrash;
 
 public class ProfileDirector {
 
@@ -20,8 +17,8 @@ public class ProfileDirector {
     public void buildInbox(ProfileBuilderI profileBuilder, DataContainerI dataContainer) throws Exception{
         profileBuilder.setInbox(new ProfileInbox(dataContainer));
     }
-    public void buildOutbox(ProfileBuilderI profileBuilder, DataContainerI dataContainer) throws Exception{
-        profileBuilder.setOutBox(new ProfileOutbox(dataContainer));
+    public void buildSent(ProfileBuilderI profileBuilder, DataContainerI dataContainer) throws Exception{
+        profileBuilder.setSent(new ProfileSent(dataContainer));
     }
     public void buildContacts(ProfileBuilderI profileBuilder,DataContainerI dataContainer)throws Exception{
         profileBuilder.setContacts(new ProfileContacts(dataContainer));

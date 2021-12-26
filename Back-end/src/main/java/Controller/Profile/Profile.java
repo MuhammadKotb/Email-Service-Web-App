@@ -1,13 +1,13 @@
 package Controller.Profile;
 
 import Controller.DataContainerI;
+import Controller.Profile.Elements.*;
 import Controller.Profile.Elements.Contacts.ProfileContactsI;
-import Controller.Profile.Elements.ProfileDraftI;
-import Controller.Profile.Elements.ProfileInboxI;
-import Controller.Profile.Elements.ProfileOutboxI;
-import Controller.Profile.Elements.ProfileTrashI;
+
+import java.util.ArrayList;
 
 public class Profile implements ProfileI {
+
     private String username;
     private String passWord;
     private String encryption;
@@ -15,11 +15,14 @@ public class Profile implements ProfileI {
     private ProfileTrashI trash;
     private ProfileDraftI draft;
     private ProfileInboxI inbox;
-    private ProfileOutboxI outbox;
-
+    private ProfileSentI Sent;
     private ProfileContactsI contacts;
+    private ArrayList<ProfileFolderI> folders;
 
-    public Profile(){}
+
+    public Profile(){
+        this.folders = new ArrayList<>();
+    }
 
 
     @Override
@@ -79,8 +82,8 @@ public class Profile implements ProfileI {
     }
 
     @Override
-    public ProfileOutboxI getOutbox() {
-        return this.outbox;
+    public ProfileSentI getSent() {
+        return this.Sent;
     }
 
     @Override
@@ -104,12 +107,53 @@ public class Profile implements ProfileI {
     }
 
     @Override
-    public void setOutbox(ProfileOutboxI outbox) {
-        this.outbox = outbox;
+    public void setSent(ProfileSentI Sent) {
+        this.Sent = Sent;
     }
 
     @Override
     public void setContacts(ProfileContactsI contacts) {
         this.contacts = contacts;
     }
+
+    @Override
+    public ProfileFolderI getProfileFolderbyName(String name) {
+        ProfileFolderI profileFolder = null;
+        for(int i = 0; i < this.folders.size(); i++){
+            if(name.equals(this.folders.get(i).getFolderDataContainer().getDataContainerName())){
+                profileFolder = this.folders.get(i);
+            }
+        }
+        return profileFolder;
+    }
+    @Override
+    public void removeFolderbyName(String name) {
+        ProfileFolderI profileFolder = null;
+        for(int i = 0; i < this.folders.size(); i++){
+            if(name.equals(this.folders.get(i).getFolderDataContainer().getDataContainerName())){
+                removeFolder(this.folders.get(i));
+            }
+        }
+
+    }
+
+    public void setFolders(ArrayList<ProfileFolderI> folders) {
+        this.folders = folders;
+    }
+
+    public ArrayList<ProfileFolderI> getFolders(){
+        return this.folders;
+    }
+
+    @Override
+    public void removeFolder(ProfileFolderI profileFolder) {
+        this.folders.remove(profileFolder);
+    }
+
+    @Override
+    public void addFolder(ProfileFolderI profileFolder) {
+        this.folders.add(profileFolder);
+    }
+
+
 }

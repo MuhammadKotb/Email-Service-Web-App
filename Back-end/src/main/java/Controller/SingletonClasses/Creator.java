@@ -8,10 +8,15 @@ import Controller.Email.EmailI;
 import Controller.Profile.Builder.ProfileBuilder;
 import Controller.Profile.Builder.ProfileBuilderI;
 import Controller.Profile.Builder.ProfileDirector;
+import Controller.Profile.Elements.*;
+import Controller.Profile.Elements.Contacts.ProfileContacts;
+import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 
 public class Creator {
 
@@ -46,7 +51,7 @@ public class Creator {
         profileDirector.buildDataContainer(profileBuilder, createDataContainer(dataBasePath.concat(encryption), encryption));
 
         profileDirector.buildInbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox"));
-        profileDirector.buildOutbox(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox"));
+        profileDirector.buildSent(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Sent"), "Sent"));
         profileDirector.buildDraft(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft"));
         profileDirector.buildTrash(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash"));
         profileDirector.buildContacts(profileBuilder, createDataContainer(dataBasePath.concat(encryption).concat("/Contacts"), "Contacts"));
@@ -55,20 +60,50 @@ public class Creator {
     }
 
     public ProfileI setProfile(String dataBasePath, String encryption) throws Exception{
-        ProfileBuilderI profileBuilder = new ProfileBuilder();
-        ProfileDirector profileDirector = new ProfileDirector();
+        ProfileI profile = new Profile();
 
-        profileDirector.buildProfileData(profileBuilder, encryption);
+        File file = new File(dataBasePath.concat(encryption).concat("/"));
+        File[] files = file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        profile.setDataContainer(new DataContainer(dataBasePath.concat(encryption), encryption, new File(dataBasePath.concat(encryption))));
+        profile.setEncryption(encryption);
+        profile.setUsername(encryption.substring(0, encryption.indexOf("$")));
+        profile.setPassWord(encryption.substring(encryption.indexOf("$") + 1));
+        for(int i = 0 ; i < files.length; i++){
+            System.out.println(files[i].getName());
+            if(files[i].getName().equals("Inbox")){
+                profile.setInbox(new ProfileInbox(new DataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox", new File(dataBasePath.concat(encryption).concat("/Inbox")))));
+            }
+            else if(files[i].getName().equals("Sent")){
+                profile.setSent(new ProfileSent(new DataContainer(dataBasePath.concat(encryption).concat("/Sent"), "Sent", new File(dataBasePath.concat(encryption).concat("/Sent")))));
+            }
+            else if(files[i].getName().equals("Draft")){
+                profile.setDraft(new ProfileDraft(new DataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft", new File(dataBasePath.concat(encryption).concat("/Draft")))));
+            }
+            else if(files[i].getName().equals("Trash")){
+                profile.setTrash(new ProfileTrash(new DataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash", new File(dataBasePath.concat(encryption).concat("/Trash")))));
+            }
+            else if(files[i].getName().equals("Contacts")){
+                profile.setContacts(new ProfileContacts(new DataContainer(dataBasePath.concat(encryption).concat("/Contacts"), "Contacts", new File(dataBasePath.concat(encryption).concat("/Contacts")))));
+            }
+            else{
+                profile.addFolder(new ProfileFolder(new DataContainer(dataBasePath.concat(encryption).concat("/").concat(files[i].getName()), files[i].getName(), new File(dataBasePath.concat(encryption).concat("/").concat(files[i].getName()))), files[i].getName()));
+            }
+        }
 
-        profileDirector.buildDataContainer(profileBuilder, new DataContainer(dataBasePath.concat(encryption), encryption, new File(dataBasePath.concat(encryption))));
+        return profile;
 
-        profileDirector.buildInbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Inbox"), "Inbox", new File(dataBasePath.concat(encryption).concat("/Inbox"))));
-        profileDirector.buildOutbox(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Outbox"), "Outbox", new File(dataBasePath.concat(encryption).concat("/Outbox"))));
-        profileDirector.buildDraft(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Draft"), "Draft", new File(dataBasePath.concat(encryption).concat("/Draft"))));
-        profileDirector.buildTrash(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Trash"), "Trash", new File(dataBasePath.concat(encryption).concat("/Trash"))));
-        profileDirector.buildContacts(profileBuilder, new DataContainer(dataBasePath.concat(encryption).concat("/Contacts"), "Contacts", new File(dataBasePath.concat(encryption).concat("/Contacts"))));
 
-        return profileBuilder.getProfile();
+
+    }
+
+    public void createProfileFoler(String name, ProfileI profile) throws Exception{
+        ProfileFolderI profileFolder = new ProfileFolder(createDataContainer(profile.getDataContainer().getDataContainerPath().concat("/").concat(name), name), name);
+        profile.addFolder(profileFolder);
 
     }
 
@@ -93,17 +128,17 @@ public class Creator {
         map.writeValue(file, inboxEmail);
         return inboxEmail;
     }
-    public EmailI createEmailDataOutbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI outboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Outbox", email.getAttachments());
-        File file = new File(profile.getOutbox().getOutboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
+    public EmailI createEmailDataSent(EmailI email, ProfileI profile, String ID) throws Exception{
+        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Sent", email.getAttachments());
+        File file = new File(profile.getSent().getSentDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
-            throw new Exception("COULD NOT CREATE OUTBOX EMAIL FILE");
+            throw new Exception("COULD NOT CREATE Sent EMAIL FILE");
         }
-        outboxEmail.setEmailID(ID);
-        outboxEmail.setOwner(email.getSenderUsername());
+        SentEmail.setEmailID(ID);
+        SentEmail.setOwner(email.getSenderUsername());
         ObjectMapper map = new ObjectMapper();
-        map.writeValue(file, outboxEmail);
-        return outboxEmail;
+        map.writeValue(file, SentEmail);
+        return SentEmail;
     }
     public EmailI createEmailDataDraft(EmailI email, ProfileI profile, String ID) throws Exception{
         EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Draft", email.getAttachments());
@@ -128,8 +163,25 @@ public class Creator {
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, trashEmail);
         return trashEmail;
-
     }
+
+    public EmailI createEmailDataProfileFolder(EmailI email, ProfileI profile, String folderName, String ID) throws Exception {
+        if(profile.getProfileFolderbyName(folderName) == null){
+            throw new Exception("NO FOLDER BY THIS NAME BELONING TO THIS PROFILE");
+        }
+        EmailI emailFolder = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), folderName, email.getAttachments());
+        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".jsom"));
+        if(!file.createNewFile()){
+            throw new Exception("COULD NOT CREATE FOLDER EMAIL FILE");
+        }
+        emailFolder.setEmailID(ID);
+        email.setOwner(email.getOwner());
+        ObjectMapper map = new ObjectMapper();
+        map.writeValue(file, emailFolder);
+        return emailFolder;
+    }
+
+
 
 
 

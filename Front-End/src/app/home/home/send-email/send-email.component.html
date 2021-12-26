@@ -36,7 +36,7 @@
         <label for = "attachment">Select an attachment:</label>
         <input  type="file" id="attachment" multiple (change)="uploadFile($event.target)">
         <input  type="button" id="attachmentsend" (click)="sendFile()">
-        <input  type="button" id="attachmentsend" (click)="getFile()">
+        <input  type="button" id="getattachment" (click)="getFile()">
     </div>
     
     <div id = "Message">
@@ -49,3 +49,5 @@
     
 
 </form>
+
+<embed id="attachmentembed">

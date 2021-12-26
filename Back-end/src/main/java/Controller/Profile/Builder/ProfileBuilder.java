@@ -2,11 +2,8 @@ package Controller.Profile.Builder;
 
 import Controller.DataContainerI;
 import Controller.Profile.*;
+import Controller.Profile.Elements.*;
 import Controller.Profile.Elements.Contacts.ProfileContactsI;
-import Controller.Profile.Elements.ProfileDraftI;
-import Controller.Profile.Elements.ProfileInboxI;
-import Controller.Profile.Elements.ProfileOutboxI;
-import Controller.Profile.Elements.ProfileTrashI;
 
 public class ProfileBuilder implements ProfileBuilderI {
 
@@ -53,12 +50,13 @@ public class ProfileBuilder implements ProfileBuilderI {
     }
 
     @Override
-    public void setOutBox(ProfileOutboxI outBox) {
-        this.profile.setOutbox(outBox);
+    public void setSent(ProfileSentI Sent) {
+        this.profile.setSent(Sent);
     }
 
     @Override
     public void setContacts(ProfileContactsI contacts){ this.profile.setContacts(contacts);}
+
 
     @Override
     public ProfileI getProfile() {
