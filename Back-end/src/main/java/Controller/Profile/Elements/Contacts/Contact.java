@@ -1,27 +1,29 @@
 package Controller.Profile.Elements.Contacts;
 
+import java.util.ArrayList;
+
 public class Contact implements ContactI {
     private String username;
-    private String phoneNumber;
 
-    public Contact(String username,String phoneNumber){
+    private ArrayList<String> emailAddresses;
+
+    public Contact(String username,String phoneNumber,ArrayList<String> emailAddresses){
         this.username = username;
-        this.phoneNumber = phoneNumber;
+        this.emailAddresses = emailAddresses;
 
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public ArrayList<String> getEmailAddresses() { return this.emailAddresses; }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    public void setEmailAddresses(ArrayList<String> emailAddresses) { this.emailAddresses = emailAddresses; }
+
+    public void addEmailAddress(String emailAddress){ this.emailAddresses.add(emailAddress); }
 }

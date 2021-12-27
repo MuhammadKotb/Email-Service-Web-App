@@ -4,11 +4,11 @@ import Controller.Email.EmailI;
 
 import java.util.ArrayList;
 
-public class CustomedCriteria implements CriteriaI{
+public class FilteringCustomizedCriteria implements CriteriaI{
     private String feature;
     private String target;
 
-    public CustomedCriteria(String feature, String target){
+    public FilteringCustomizedCriteria(String feature, String target){
         this.feature = feature;
         this.target = target;
     }
@@ -24,30 +24,9 @@ public class CustomedCriteria implements CriteriaI{
                     }
                 }
                 break;
-            case "body":
-                for(EmailI email:emails){
-                    if((email.getBody().toLowerCase()).contains(this.target.toLowerCase())){
-                        filteredEmails.add(email);
-                    }
-                }
-                break;
             case "senderUsername":
                 for(EmailI email:emails){
                     if((email.getSenderUsername().toLowerCase()).contains(this.target.toLowerCase())){
-                        filteredEmails.add(email);
-                    }
-                }
-                break;
-            case "receiverUsername":
-                for(EmailI email:emails){
-                    if((email.getreceiverUsername().toLowerCase()).contains(this.target.toLowerCase())){
-                        filteredEmails.add(email);
-                    }
-                }
-                break;
-            case "timeSent":
-                for(EmailI email:emails){
-                    if((email.getTimeSent().toLowerCase()).contains(this.target.toLowerCase())){
                         filteredEmails.add(email);
                     }
                 }

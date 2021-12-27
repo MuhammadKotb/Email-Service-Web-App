@@ -30,6 +30,23 @@ public class ContactsPageController {
         }
 
     }
+    @PostMapping("/editContact")
+    ContactI editContact(@RequestParam(value = "username") String username,@RequestParam(value = "oldContact") ContactI oldContact
+            ,@RequestParam(value = "editedAttribute") String editedAttribute,@RequestParam(value = "newContact") ContactI newContact){
+        try {
+            ContactI contact = Database.getProfilebyUsername("",username).getContacts().getContact(oldContact.getUsername());
+            if(editedAttribute.equalsIgnoreCase("username")){
+                contact.setUsername(newContact.getUsername());
+            }else if(editedAttribute.equalsIgnoreCase("emailAddresses")){
+                contact.setEmailAddresses(newContact.getEmailAddresses());
+            }
+            return contact;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
     @DeleteMapping ("/removeContact")
     void removeContact(@RequestParam(value = "contact") ContactI contact,@RequestParam(value = "username") String username){
         try {
