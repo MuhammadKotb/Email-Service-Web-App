@@ -24,7 +24,7 @@ public class SendEmailPageController {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
         }
     }
 

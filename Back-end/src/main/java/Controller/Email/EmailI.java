@@ -8,6 +8,7 @@ public interface EmailI {
     String owner = null;
     String senderUsername = null;
     String receiverUsername = null;
+    String priority = null;
     String emailID = null;
     String emailType = null;
     List<Attachment> attachments = null;

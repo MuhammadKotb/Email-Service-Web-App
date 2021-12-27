@@ -11,6 +11,7 @@ public class Email implements EmailI {
     private String owner;
     private String senderUsername;
     private String receiverUsername;
+    private String priority;
 
 
     private String timeSent;
@@ -19,8 +20,21 @@ public class Email implements EmailI {
     private String emailType;
     List<Attachment> attachments = null;
 
+    public String getReceiverUsername() {
+        return receiverUsername;
+    }
 
+    public void setReceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
+    }
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
     public Email(){}
     public Email(String subject, String body, String senderUsername, String receiverUsername, String emailType, List<Attachment> attachments){
@@ -131,8 +145,6 @@ public class Email implements EmailI {
     public void removeAttachment(Attachment attachment) {
         this.attachments.remove(attachment);
     }
-
-
 
 
 }
