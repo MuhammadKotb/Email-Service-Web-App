@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/login/login/login.component';
 import { EmailI } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
+import { InboxService } from '../inbox/inbox.service';
+import { TrashService } from './trash.service';
 
 @Component({
   selector: 'app-trash',
@@ -10,6 +13,11 @@ import { InboxComponent } from '../inbox/inbox.component';
 export class TrashComponent implements OnInit {
   private listOfEmails : EmailI[] = []
   private viewArray : string[][] = []
+  private listPreSize : number = this.viewArray.length
+  private placer = new InboxComponent()
+  private serveMe1 : InboxService | undefined
+  private serveMe2 : TrashService | undefined
+
 
   constructor() { 
   }
@@ -65,9 +73,11 @@ export class TrashComponent implements OnInit {
     this.listOfEmails.push(Z)
     this.listOfEmails.push(w)
 
+    this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+    this.listPreSize  = this.viewArray.length
     this.parseArray()
-    let placer = new InboxComponent()
-    placer.place(this.viewArray,5)
+    this.placer.place(this.viewArray,5,this.listPreSize,"Restore")
+    this.checkClick()
 }
 parseArray(){
   for (let email=0; email < this.listOfEmails.length;email++){
@@ -83,6 +93,28 @@ parseArray(){
 
   }
 }
+checkClick(){
+  var listOfButtons = document.querySelectorAll("td  > button")
+    for (var i =  0 ; i < listOfButtons.length ; i++){
+      if (i%2){
+        listOfButtons[i].addEventListener("click", e =>{
+          this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+        })
+        this.listPreSize = this.viewArray.length
+        this.parseArray()
+        this.placer.place(this.viewArray,this.listPreSize,5)
+    }else{
+        listOfButtons[i].addEventListener("click", e =>{
+          this.serveMe2?.restore(this.serveMe2.loginUsername,this.listOfEmails[(i)/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);
+          });
+        })
+        
+      }
+      
+    }
+}
+
+
 
 
 

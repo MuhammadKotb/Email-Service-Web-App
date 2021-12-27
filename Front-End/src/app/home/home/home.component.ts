@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/login/login/login.component';
 
 
 export interface EmailI{
@@ -25,8 +26,13 @@ export class HomeComponent implements OnInit {
 
   path:string = ""
   ngOnInit(): void {
+
     this.router.navigate(['/home/inbox']);
 
+  }
+  switchToFolders(){
+    this.router.navigate(['/home/folders']);
+    
   }
   switchToSendEmail(){
     this.router.navigate(['/home/sendEmail']);
@@ -55,4 +61,4 @@ export class HomeComponent implements OnInit {
   logOut(){
     this.router.navigate(['']);
   }
-
+}

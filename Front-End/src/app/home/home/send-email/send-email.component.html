@@ -13,7 +13,7 @@
     <div id = "Receiver">
         <label for = "receiver">Receiver</label>
         <input type="text" id = "receiver">
-        <button type="button" id = "receiver">Add to Receivers</button>
+        <button type="button" id = "receiver_btn" (click)="showReceiver()">Add to Receivers</button>
         <table id = "Receiver_table">
             <thead>
                 <tr>
@@ -39,7 +39,7 @@
     
     <div id = "Message">
         <label for = "message">Enter Your Message:</label>
-        <textarea id = "message" rows = "4" cols = "35"></textarea>
+        <textarea id = "message" rows = "10" cols = "75"></textarea>
     </div>
     <div>
         <button type="submit">Send E-mail</button>
