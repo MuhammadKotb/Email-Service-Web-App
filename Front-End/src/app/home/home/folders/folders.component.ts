@@ -16,7 +16,7 @@ export interface FoldersI{
 export class FoldersComponent implements OnInit{
   private listOfFolders : FoldersI[] = []
   private viewArray : string[][] = []
-  private listOfButtons: NodeListOf<Element>= null
+  private listOfButtons: NodeListOf<Element> | undefined
 
   constructor(private router:Router) { }
 
@@ -74,7 +74,6 @@ export class FoldersComponent implements OnInit{
 
   switchToSpecificFolder(){
     this.router.navigate(['home/folders/specificFolder']);
-    
   }
 
 }

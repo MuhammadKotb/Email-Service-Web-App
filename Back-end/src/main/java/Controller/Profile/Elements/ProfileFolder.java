@@ -111,7 +111,7 @@ public class ProfileFolder implements ProfileFolderI {
     public EmailI getEmailbyreceiverUsername(String username) {
         EmailI email = null;
         for(int i = 0; i < this.emails.size(); i++){
-            if(username.equals(this.emails.get(i).getreceiverUsername())){
+            if(username.equals(this.emails.get(i).getReceiverUsername())){
                 email = this.emails.get(i);
             }
         }

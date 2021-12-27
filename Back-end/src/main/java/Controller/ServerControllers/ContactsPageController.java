@@ -14,7 +14,7 @@ public class ContactsPageController {
     @PostMapping("/addContact")
     void addContact(@RequestParam(value = "contact") ContactI contact, @RequestParam(value = "username") String username){
         try {
-            Database.getProfilebyUsername("",username).getContacts().addContact(contact);
+            Database.getInstance().getProfilebyUsername("",username).getContacts().addContact(contact);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -23,17 +23,17 @@ public class ContactsPageController {
     @PostMapping("/getContacts")
     ArrayList<ContactI> getContacts(@RequestParam(value = "username") String username){
         try {
-            return Database.getProfilebyUsername("",username).getContacts().getContacts();
+            return Database.getInstance().getProfilebyUsername("",username).getContacts().getContacts();
         }catch (Exception e){
             System.out.println(e.getMessage());
             return null;
         }
 
     }
-    @DeleteMapping ("/removeContact")
+    @DeleteMapping("/removeContact")
     void removeContact(@RequestParam(value = "contact") ContactI contact,@RequestParam(value = "username") String username){
         try {
-            Database.getProfilebyUsername("",username).getContacts().removeContact(contact.getUsername());
+            Database.getInstance().getProfilebyUsername("",username).getContacts().removeContact(contact.getUsername());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

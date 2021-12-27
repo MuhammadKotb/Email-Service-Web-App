@@ -5,6 +5,7 @@ import Controller.Email.EmailI;
 import Controller.Profile.ProfileI;
 
 import java.io.File;
+import java.io.FileFilter;
 
 public class Deleter {
     private static Deleter instance;
@@ -79,6 +80,16 @@ public class Deleter {
     public void deleteProfileFolder(ProfileI profile, String folderName) throws Exception{
         if(profile.getProfileFolderbyName(folderName) == null){
             throw new Exception("NO FOLDER BY THIS NAME BELONING TO THIS PROFILE");
+        }
+        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/"));
+        File[] files = file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isFile();
+            }
+        });
+        for(int i = 0; i < files.length; i++){
+            files[i].delete();
         }
         if(!profile.getProfileFolderbyName(folderName).getFolderDataContainer().getFile().delete()){
             throw new Exception("COULD NOT DELETE FOLDER");

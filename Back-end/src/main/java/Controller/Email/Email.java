@@ -52,11 +52,6 @@ public class Email implements EmailI {
     }
 
     @Override
-    public String getreceiverUsername() {
-        return this.receiverUsername;
-    }
-
-    @Override
     public String getSubject() {
         return this.subject;
     }
@@ -89,11 +84,6 @@ public class Email implements EmailI {
     @Override
     public List<Attachment> getAttachments() {
         return this.attachments;
-    }
-
-    @Override
-    public void setreceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
     }
 
     @Override

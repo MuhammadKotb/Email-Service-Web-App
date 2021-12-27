@@ -8,6 +8,8 @@ import { SendEmailComponent } from './home/home/send-email/send-email.component'
 import { SentComponent } from './home/home/sent/sent.component';
 import { DraftComponent } from './home/home/draft/draft.component';
 import { ContactsComponent } from './home/home/contacts/contacts.component';
+import { FoldersComponent } from './home/home/folders/folders.component';
+import { SpecificFolderComponent } from './home/home/folders/specific-folder/specific-folder.component';
 
 
 const routes: Routes = [
@@ -18,7 +20,10 @@ const routes: Routes = [
     {path:'sendEmail',component:SendEmailComponent},
     {path:'sent',component:SentComponent},
     {path:'draft',component:DraftComponent},
-    {path:'contacts',component:ContactsComponent}
+    {path:'contacts',component:ContactsComponent},
+    {path: 'folders',component:FoldersComponent,children:[
+      {path: 'specificFolder',component:SpecificFolderComponent}
+    ]}
   ]},
   
 ];

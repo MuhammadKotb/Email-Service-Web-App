@@ -46,6 +46,7 @@ public class Database {
         for(int i = 0; i < size; i++){
             dataBaseList.add(creator.setProfile(databasePath, files[i].getName()));
         }
+        System.out.println(size);
     }
 
     public int getSize(){
@@ -57,7 +58,7 @@ public class Database {
     }
 
 
-    public static ProfileI getProfilebyUsername(String encryption, String username){
+    public ProfileI getProfilebyUsername(String encryption, String username){
 
         if(username == "") username = encryption.substring(0, encryption.indexOf("$"));
         ProfileI profile = null;
@@ -71,7 +72,7 @@ public class Database {
         }
         return profile;
     }
-    public static ProfileI getProfilebyEncryption(String encryption)throws Exception{
+    public ProfileI getProfilebyEncryption(String encryption)throws Exception{
         ProfileI profile = null;
         for(int i = 0; i < size; i++){
             if(encryption.equals(dataBaseList.get(i).getEncryption())){

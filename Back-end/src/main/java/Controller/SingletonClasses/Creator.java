@@ -102,6 +102,7 @@ public class Creator {
     }
 
     public void createProfileFoler(String name, ProfileI profile) throws Exception{
+        System.out.println(profile.getDataContainer());
         ProfileFolderI profileFolder = new ProfileFolder(createDataContainer(profile.getDataContainer().getDataContainerPath().concat("/").concat(name), name), name);
         profile.addFolder(profileFolder);
 
@@ -117,19 +118,19 @@ public class Creator {
     }
 
     public EmailI createEmailDataInbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Inbox", email.getAttachments());
+        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), "Inbox", email.getAttachments());
         File file = new File(profile.getInbox().getInboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE INBOX EMAIL FILE");
         }
         inboxEmail.setEmailID(ID);
-        inboxEmail.setOwner(email.getreceiverUsername());
+        inboxEmail.setOwner(email.getReceiverUsername());
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, inboxEmail);
         return inboxEmail;
     }
     public EmailI createEmailDataSent(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Sent", email.getAttachments());
+        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), "Sent", email.getAttachments());
         File file = new File(profile.getSent().getSentDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE Sent EMAIL FILE");
@@ -141,7 +142,7 @@ public class Creator {
         return SentEmail;
     }
     public EmailI createEmailDataDraft(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Draft", email.getAttachments());
+        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), "Draft", email.getAttachments());
         File file = new File(profile.getDraft().getDraftDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -153,7 +154,7 @@ public class Creator {
 
     }
     public EmailI createEmailDataTrash(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), "Trash", email.getAttachments());
+        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), "Trash", email.getAttachments());
         File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -169,8 +170,8 @@ public class Creator {
         if(profile.getProfileFolderbyName(folderName) == null){
             throw new Exception("NO FOLDER BY THIS NAME BELONING TO THIS PROFILE");
         }
-        EmailI emailFolder = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getreceiverUsername(), folderName, email.getAttachments());
-        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".jsom"));
+        EmailI emailFolder = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), folderName, email.getAttachments());
+        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE FOLDER EMAIL FILE");
         }

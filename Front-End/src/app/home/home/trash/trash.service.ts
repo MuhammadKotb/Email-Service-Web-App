@@ -7,17 +7,17 @@ import { EmailI } from '../home.component';
 @Injectable({
   providedIn: 'root'
 })
-export class InboxService {
+export class TrashService {
   loginUsername = LoginComponent.globalUsername
 
   constructor(private http : HttpClient) { }
 
-  getEmails(loginUsername:string) : Observable<EmailI[]>{
+  restore(loginUsername:string,email:EmailI) : Observable<EmailI>{
 
-    return this.http.post<EmailI[]>("http://localhost:8080/getEmails", loginUsername);
-  }
-  loginToAccount(accountDetails:string) : Observable<string>{
+    return this.http.post<EmailI>("http://localhost:8080/restore?username=" + loginUsername, email);
 
-    return this.http.post("http://localhost:8080/getProfile", accountDetails, {responseType : "text"});
   }
+
+  
+  
 }

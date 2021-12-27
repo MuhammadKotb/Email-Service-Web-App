@@ -1,13 +1,11 @@
-import { Component, IterableDiffers, OnInit } from '@angular/core';
-import { EmailI } from '../home.component'
+import { Component, OnInit } from '@angular/core';
 import { InboxComponent } from '../inbox/inbox.component';
-import { sendEmailService } from './send-email.services';
 
-export interface Attachmnet {
-  encoded : string,
-  name:string,
-  type:string
+export interface ReceiverI{
+  username: string
+  num: number
 }
+
 
 @Component({
   selector: 'app-send-email',
@@ -15,50 +13,32 @@ export interface Attachmnet {
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-  private recieverCount : number = 0
+  private listOfReceivers : ReceiverI[] = []
+  private receiverCount : number = 0
   private viewArray : string[][] = []
-  
 
-  
-  attachmentUplodad : File;
-  attatchmentSent : FormData = new FormData();
-
-
-  constructor(private service:sendEmailService) {}
+  constructor() { }
 
   ngOnInit(): void {
-    this.addReciever("Joe")
-    this.addReciever("Mn3m")
-    this.addReciever("Deffo")
-    this.addReciever("Otb")
+
+  }
+
+
+  showReceiver(){
+    var receiver_input = (<HTMLInputElement>document.getElementById("receiver")).value
+    var receiver : ReceiverI = {
+      username: receiver_input,
+      num: this.receiverCount
+    }
+    this.listOfReceivers.push(receiver)
+    this.viewArray.length = 0
+    this.viewArray[0] = []
+    this.viewArray[0][0] = receiver.username
+    this.viewArray[0][1] = ((this.receiverCount++)+1).toString()
     let placer = new InboxComponent()
-    placer.place(this.viewArray,4)
+    placer.place(this.viewArray,3,"Delete")
   }
 
-  uploadFile(input : any){
-    this.attachmentUplodad = input.files.item(0);
-    this.attatchmentSent.append("file", this.attachmentUplodad);
-    console.log(this.attatchmentSent.get("file"));
-    input = null;
-  }
 
-  sendFile(){
-    this.service.postFile(this.attatchmentSent).subscribe();
-  }
-
-  getFile(){
-    this.service.getAttachment().subscribe((data : Attachmnet) => {
-      console.log(data);
-      console.log(data.type)
-      document.getElementById("attachmentembed")?.setAttribute("src", "data:".concat(data.type).concat(";base64,").concat(data.encoded));
-    });
-  }
-
-  addReciever(reciever: string){
-    this.viewArray[this.recieverCount] = []
-    this.viewArray[this.recieverCount][0] = reciever
-    this.viewArray[this.recieverCount][1] = ((this.recieverCount++)+1).toString()
-  }
 
 }
-

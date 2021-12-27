@@ -16,7 +16,7 @@ public interface EmailI {
     String timeSent = null;
 
     String getSenderUsername();
-    String getreceiverUsername();
+    String getReceiverUsername();
     String getSubject();
     String getBody();
     String getEmailID();
@@ -25,8 +25,9 @@ public interface EmailI {
     String getOwner();
     List<Attachment> getAttachments();
 
-    void setreceiverUsername(String receiverUsername);
+
     void setSenderUsername(String senderUsername);
+    void setReceiverUsername(String receiverUsername);
     void setSubject(String subject);
     void setTimeSent(String timeSent);
     void setBody(String body);

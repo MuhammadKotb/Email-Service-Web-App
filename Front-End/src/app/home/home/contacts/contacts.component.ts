@@ -1,5 +1,5 @@
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
-import { EmailI } from '../home.component'
 import { InboxComponent } from '../inbox/inbox.component';
 
 
@@ -16,7 +16,7 @@ export interface ContactI{
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent implements OnInit {
-  private listOfContacts : ContactI[] = []
+  private listOfContacts : ContactI[] =[]
   private viewArray : string[][] = []
 
   constructor() { 
@@ -50,11 +50,30 @@ export class ContactsComponent implements OnInit {
     placer.place(this.viewArray,3,"Send Email")
 }
 parseArray(){
-  for (let email=0; email < this.listOfContacts.length;email++){
-    this.viewArray[email] = [] 
-    this.viewArray[email][0] = this.listOfContacts[email].username
-    this.viewArray[email][1] = this.listOfContacts[email].number
+  for (let contact=0; contact < this.listOfContacts.length;contact++){
+    this.viewArray[contact] = [] 
+    this.viewArray[contact][0] = this.listOfContacts[contact].username
+    this.viewArray[contact][1] = this.listOfContacts[contact].number
   }
+}
+
+addContact(){
+
+  var username_input = (<HTMLInputElement>document.getElementById("username")).value
+  var phone_input = (<HTMLInputElement>document.getElementById("phone")).value
+  var contact : ContactI = {
+    username: username_input,
+    number: phone_input
+  }
+
+  this.listOfContacts.push(contact)
+  this.viewArray.length = 0
+  this.viewArray[0] = []
+  this.viewArray[0][0] = contact.username
+  this.viewArray[0][1] = contact.number
+  let placer = new InboxComponent()
+  placer.place(this.viewArray,3,"Send Email")
+
 }
 
 

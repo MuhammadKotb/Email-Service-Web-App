@@ -1,11 +1,12 @@
 package Controller.ServerControllers;
 
 import Controller.Email.Email;
+import Controller.Email.EmailI;
+import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Handlers.FirstHandler;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/home/inbox")
@@ -19,6 +20,16 @@ public class InboxPageController {
         catch (Exception e){
             System.out.println(e.getMessage());
             return e.getMessage();
+        }
+    }
+    @GetMapping("/getInbox")
+    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
+        try{
+            return Database.getInstance().getProfilebyUsername("", username).getInbox().getEmails();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }

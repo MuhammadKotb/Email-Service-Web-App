@@ -68,7 +68,7 @@ export class DraftComponent implements OnInit {
 
     this.parseArray()
     let placer = new InboxComponent()
-    placer.place(this.viewArray,4)
+    placer.place(this.viewArray,4,"Edit")
 }
 parseArray(){
   for (let email=0; email < this.listOfEmails.length;email++){

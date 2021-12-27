@@ -13,7 +13,7 @@
     <div id = "Receiver">
         <label for = "receiver">Receiver</label>
         <input type="text" id = "receiver">
-        <button type="button" id = "receiver">Add to Receivers</button>
+        <button type="button" id = "receiver_btn" (click)="showReceiver()">Add to Receivers</button>
         <table id = "Receiver_table">
             <thead>
                 <tr>
@@ -34,14 +34,12 @@
 
     <div id = "Attachments">
         <label for = "attachment">Select an attachment:</label>
-        <input  type="file" id="attachment" multiple (change)="uploadFile($event.target)">
-        <input  type="button" id="attachmentsend" (click)="sendFile()">
-        <input  type="button" id="getattachment" (click)="getFile()">
+        <input type="file" id="attachment">
     </div>
     
     <div id = "Message">
         <label for = "message">Enter Your Message:</label>
-        <textarea id = "message" rows = "4" cols = "35"></textarea>
+        <textarea id = "message" rows = "10" cols = "75"></textarea>
     </div>
     <div>
         <button type="submit">Send E-mail</button>
@@ -49,5 +47,3 @@
     
 
 </form>
-
-<embed id="attachmentembed">
