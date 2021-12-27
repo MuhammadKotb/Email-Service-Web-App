@@ -6,15 +6,15 @@ import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
 
-public class MovetoTrashHandler implements HandlerI{
+public class SecondHandler implements HandlerI{
     private final String concern = "MovetoTrash";
-    private HandlerI successor = null;
-    private static MovetoTrashHandler instance = null;
+    private HandlerI successor = ThirdHandler.getInstance();
+    private static SecondHandler instance = null;
 
-    private MovetoTrashHandler(){}
-    public static MovetoTrashHandler getInstance(){
+    private SecondHandler(){}
+    public static SecondHandler getInstance(){
         if(instance == null){
-            return new MovetoTrashHandler();
+            return new SecondHandler();
         }else {
             return instance;
         }

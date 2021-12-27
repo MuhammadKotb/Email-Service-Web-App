@@ -7,15 +7,15 @@ import Controller.SingletonClasses.Database;
 
 import java.util.UUID;
 
-public class SendEmailHandler implements HandlerI{
+public class FirstHandler implements HandlerI{
     private final String concern = "SendEmail";
-    private HandlerI successor = MovetoTrashHandler.getInstance();
-    private static SendEmailHandler instance = null;
+    private HandlerI successor = SecondHandler.getInstance();
+    private static FirstHandler instance = null;
 
-    private SendEmailHandler(){}
-    public static SendEmailHandler getInstance(){
+    private FirstHandler(){}
+    public static FirstHandler getInstance(){
         if(instance == null){
-            return new SendEmailHandler();
+            return new FirstHandler();
         }else {
             return instance;
         }
@@ -25,7 +25,6 @@ public class SendEmailHandler implements HandlerI{
 
     public EmailI handle(EmailI email) throws Exception {
         EmailI newEmail = null;
-
 
         Database database = Database.getInstance();
         if(database.getProfilebyUsername("", email.getSenderUsername()) == null){
