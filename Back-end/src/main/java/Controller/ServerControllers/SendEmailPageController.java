@@ -37,14 +37,14 @@ public class SendEmailPageController {
     Attachment attachment = new Attachment();
 
     @PostMapping("/sendEmail")
-    String sendEmail(@RequestBody Email email){
+    EmailI sendEmail(@RequestBody Email email){
         try{
-            SendEmailHandler.getInstance().handle("SendEmail",email);
-            return "SENT EMAIL SUCCESSFULLY";
+            return SendEmailHandler.getInstance().handle(email);
+
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
         }
     }
 
