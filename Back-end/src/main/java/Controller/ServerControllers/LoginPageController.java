@@ -26,7 +26,7 @@ public class LoginPageController {
     ProfileI getProfile(@RequestParam(value="encyrption") String encryption){
         try{
             Database database = Database.getInstance();
-            return Database.getProfilebyEncryption(encryption);
+            return database.getProfilebyEncryption(encryption);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

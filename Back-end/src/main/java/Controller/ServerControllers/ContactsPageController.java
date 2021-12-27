@@ -14,7 +14,8 @@ public class ContactsPageController {
     @PostMapping("/addContact")
     void addContact(@RequestParam(value = "contact") ContactI contact, @RequestParam(value = "username") String username){
         try {
-            Database.getProfilebyUsername("",username).getContacts().addContact(contact);
+            Database database = Database.getInstance();
+            database.getProfilebyUsername("",username).getContacts().addContact(contact);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -23,7 +24,8 @@ public class ContactsPageController {
     @PostMapping("/getContacts")
     ArrayList<ContactI> getContacts(@RequestParam(value = "username") String username){
         try {
-            return Database.getProfilebyUsername("",username).getContacts().getContacts();
+            Database database = Database.getInstance();
+            return database.getProfilebyUsername("",username).getContacts().getContacts();
         }catch (Exception e){
             System.out.println(e.getMessage());
             return null;
@@ -34,7 +36,8 @@ public class ContactsPageController {
     ContactI editContact(@RequestParam(value = "username") String username,@RequestParam(value = "oldContact") ContactI oldContact
             ,@RequestParam(value = "editedAttribute") String editedAttribute,@RequestParam(value = "newContact") ContactI newContact){
         try {
-            ContactI contact = Database.getProfilebyUsername("",username).getContacts().getContact(oldContact.getUsername());
+            Database database = Database.getInstance();
+            ContactI contact = database.getProfilebyUsername("",username).getContacts().getContact(oldContact.getUsername());
             if(editedAttribute.equalsIgnoreCase("username")){
                 contact.setUsername(newContact.getUsername());
             }else if(editedAttribute.equalsIgnoreCase("emailAddresses")){
@@ -50,7 +53,8 @@ public class ContactsPageController {
     @DeleteMapping ("/removeContact")
     void removeContact(@RequestParam(value = "contact") ContactI contact,@RequestParam(value = "username") String username){
         try {
-            Database.getProfilebyUsername("",username).getContacts().removeContact(contact.getUsername());
+            Database database = Database.getInstance();
+            database.getProfilebyUsername("",username).getContacts().removeContact(contact.getUsername());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
