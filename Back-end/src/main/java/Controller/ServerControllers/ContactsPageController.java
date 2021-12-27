@@ -1,5 +1,6 @@
 package Controller.ServerControllers;
 
+import Controller.ContactsFilter.SearchingCustomizedCriteria;
 import Controller.Profile.Elements.Contacts.ContactI;
 import Controller.SingletonClasses.Database;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,18 @@ public class ContactsPageController {
             database.getProfilebyUsername("",username).getContacts().removeContact(contact.getUsername());
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }
+
+    }
+    @PostMapping("/searchContacts")
+    ArrayList<ContactI> searchContacts(@RequestParam(value = "username") String username,@RequestParam(value = "target") String target){
+        try {
+            Database database = Database.getInstance();
+            SearchingCustomizedCriteria search = new SearchingCustomizedCriteria(target);
+            return search.meetCriteria(database.getProfilebyUsername("",username).getContacts().getContacts());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
 
     }
