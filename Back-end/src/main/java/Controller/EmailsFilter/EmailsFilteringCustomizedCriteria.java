@@ -35,14 +35,14 @@ public class EmailsFilteringCustomizedCriteria implements EmailsCriteriaI {
         switch (this.feature){
             case "subject":
                 for(EmailI email:emails){
-                    if((email.getSubject().toLowerCase()).contains(this.target.toLowerCase())){
+                    if(email.getSubject().equalsIgnoreCase(this.target)){
                         filteredEmails.add(email);
                     }
                 }
                 break;
             case "senderUsername":
                 for(EmailI email:emails){
-                    if((email.getSenderUsername().toLowerCase()).contains(this.target.toLowerCase())){
+                    if(email.getSenderUsername().equalsIgnoreCase(this.target)){
                         filteredEmails.add(email);
                     }
                 }

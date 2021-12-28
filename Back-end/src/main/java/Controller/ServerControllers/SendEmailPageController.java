@@ -44,11 +44,6 @@ public class SendEmailPageController {
             System.out.println(e.getMessage());
         }
     }
-    @PostMapping("/test")
-    void testMethod(@RequestParam(value = "string") String string, @RequestBody Email email){
-        System.out.println(string);
-        System.out.println(email.getBody());
-    }
 
     @GetMapping("/getAttachment")
     Attachment getAttachment(){
