@@ -229,14 +229,14 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 
     deleteClicked(e: any){
       try{
-        const buttonNum = parseInt(e.target.id)
-        this.serveMe.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-            this.listOfEmails = data; 
-            console.log(this.listOfEmails);
-            this.listPreSize = this.viewArray.length
-            this.parseArray()
-            this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-        })
+        // const buttonNum = parseInt(e.target.id)
+        // this.serveMe.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        //     this.listOfEmails = data; 
+        //     console.log(this.listOfEmails);
+        //     this.listPreSize = this.viewArray.length
+        //     this.parseArray()
+        //     this.place(this.viewArray,this.iterationsNum,this.listPreSize)
+        // })
       }catch (error){
         console.log(error)
       }

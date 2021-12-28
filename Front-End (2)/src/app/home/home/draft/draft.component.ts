@@ -113,14 +113,14 @@ checkClick(){
 
   deleteClicked(e: any){
     try{
-      const buttonNum = parseInt(e.target.id)
-      this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-        this.listOfEmails = data;
-         console.log(this.listOfEmails)
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-  });
+    //   const buttonNum = parseInt(e.target.id)
+    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     this.listOfEmails = data;
+    //      console.log(this.listOfEmails)
+    // this.listPreSize = this.viewArray.length
+    // this.parseArray()
+    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+  // });
     }catch (error){
       console.log(error)
     }

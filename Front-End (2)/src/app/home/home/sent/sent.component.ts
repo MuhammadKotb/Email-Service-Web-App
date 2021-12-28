@@ -3,6 +3,8 @@
   import { EmailI } from '../home.component'
   import { InboxComponent } from '../inbox/inbox.component';
   import { InboxService } from '../inbox/inbox.service';
+  import $ from "jquery"
+
 
 
   @Component({
@@ -26,57 +28,57 @@
     }
 
     ngOnInit(): void {
-      // var x : EmailI = {
-      //   senderUsername: '',
-      //   timeSent: "27/9/2001",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   recieverUsername: "Joe",
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Urgent'
-      // }
-      // var y : EmailI = {
-      //   senderUsername: '',
-      //   timeSent: "4/6/2001",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   recieverUsername: "Meniem",
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Important'
-      // }
-      // var Z : EmailI = {
-      //   senderUsername: '',
-      //   timeSent: "هيخو",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   recieverUsername: "otb",
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Non-essential'
-      // }
-      // var w : EmailI = {
-      //   senderUsername: '',
-      //   timeSent: "لول",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   recieverUsername: "deffo",
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Skipable'
-      // }
+      var x : EmailI = {
+        senderUsername: 'vfsf',
+        timeSent: "27/9/2001",
+        subject: "birthday",
+        body: 'vfvsv',
+        owner: '',
+        recieverUsername: "Joe",
+        emailID: '',
+        emailType: '',
+        priority: 'Urgent'
+      }
+      var y : EmailI = {
+        senderUsername: '',
+        timeSent: "4/6/2001",
+        subject: "birthday",
+        body: '',
+        owner: '',
+        recieverUsername: "Meniem",
+        emailID: '',
+        emailType: '',
+        priority: 'Important'
+      }
+      var Z : EmailI = {
+        senderUsername: '',
+        timeSent: "هيخو",
+        subject: "birthday",
+        body: '',
+        owner: '',
+        recieverUsername: "otb",
+        emailID: '',
+        emailType: '',
+        priority: 'Non-essential'
+      }
+      var w : EmailI = {
+        senderUsername: '',
+        timeSent: "لول",
+        subject: "birthday",
+        body: '',
+        owner: '',
+        recieverUsername: "deffo",
+        emailID: '',
+        emailType: '',
+        priority: 'Skipable'
+      }
 
-      // this.listOfEmails.push(x)
-      // this.listOfEmails.push(y)
-      // this.listOfEmails.push(Z)
-      // this.listOfEmails.push(w)
+      this.listOfEmails.push(x)
+      this.listOfEmails.push(y)
+      this.listOfEmails.push(Z)
+      this.listOfEmails.push(w)
 
-      this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
       this.listPreSize  = this.viewArray.length
 
       this.parseArray()
@@ -147,20 +149,21 @@
         }
         node.appendChild(textNode)
         destinationNode?.appendChild(node)
-
+        
       }
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "block"
 
   }
   deleteClicked(e: any){
     try{
-      const buttonNum = parseInt(e.target.id)
-      this.serveMe?.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-        this.listOfEmails = data; 
-        console.log(this.listOfEmails)
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-      })
+    //   const buttonNum = parseInt(e.target.id)
+    //   this.serveMe?.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     this.listOfEmails = data; 
+    //     console.log(this.listOfEmails)
+    // this.listPreSize = this.viewArray.length
+    // this.parseArray()
+    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
+    //   })
     }catch (error){
       console.log(error)
     }
