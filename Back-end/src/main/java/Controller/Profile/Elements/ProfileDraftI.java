@@ -4,17 +4,20 @@ import Controller.DataContainerI;
 import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public interface ProfileDraftI {
     DataContainerI draftDataContainer = null;
 
     ArrayList<EmailI> emails = null;
+    PriorityQueue<EmailI> emailsPrioritized = null;
 
     ArrayList<EmailI> getEmails();
 
     void addEmail(EmailI email);
     void removeEmail(EmailI email);
     void removeEmailbyID(String ID);
+
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);
     EmailI getEmailbySenderUsername(String username);

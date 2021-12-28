@@ -12,6 +12,7 @@ import Controller.Sorter.EmailsSorterI;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/home/sent")
@@ -27,6 +28,7 @@ public class SentPageController {
             return e.getMessage();
         }
     }
+
     @GetMapping("/getSent")
     ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
         try{

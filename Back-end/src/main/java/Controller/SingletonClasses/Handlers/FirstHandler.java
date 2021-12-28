@@ -19,7 +19,6 @@ public class FirstHandler implements HandlerI{
         }else {
             return instance;
         }
-
     }
 
     public void handle(String concern, EmailI email)throws Exception{

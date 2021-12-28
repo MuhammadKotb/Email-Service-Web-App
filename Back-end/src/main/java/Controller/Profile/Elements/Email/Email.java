@@ -3,6 +3,7 @@ package Controller.Profile.Elements.Email;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.PriorityQueue;
 
 public class Email implements EmailI {
 
@@ -14,13 +15,13 @@ public class Email implements EmailI {
     private ArrayList<String> receiversUsernames;
     private String priority;
 
-
     private String timeSent;
     private String timeSentString;
     private String emailID;
 
     private String emailType;
     ArrayList<Attachment> attachments = null;
+
 
     @Override
     public String getTimeSentString() {

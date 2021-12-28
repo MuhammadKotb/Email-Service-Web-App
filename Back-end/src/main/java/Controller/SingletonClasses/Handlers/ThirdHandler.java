@@ -29,11 +29,9 @@ public class ThirdHandler implements HandlerI {
             if(database.getProfilebyUsername("", email.getOwner()) == null){
                 throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
             }
-
             ProfileI owner = database.getProfilebyUsername("", email.getOwner());
             Creator.getInstance().createEmailDataDraft(email, owner, email.getEmailID());
             owner.getDraft().addEmail(email);
-
 
         }else{
             if(this.successor == null){

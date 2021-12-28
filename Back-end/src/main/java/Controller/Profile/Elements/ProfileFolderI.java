@@ -4,11 +4,13 @@ import Controller.DataContainerI;
 import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public interface ProfileFolderI {
     String name = null;
     DataContainerI folderDataContainer = null;
     ArrayList<EmailI> email = null;
+    PriorityQueue<EmailI> emailsPrioritized = null;
 
     ArrayList<EmailI> getEmails();
 

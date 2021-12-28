@@ -29,7 +29,7 @@ public class EmailsSorter implements EmailsSorterI {
                 sortedEmails = this.sortBySubject(emails); break;
             case "body":
                 sortedEmails = this.sortByBody(emails); break;
-            case "Attacments":
+            case "attacments":
                 sortedEmails = this.sortByAttachments(emails); break;
             case "priority":
                 sortedEmails = this.sortByPriority(emails); break;

@@ -12,6 +12,7 @@ import Controller.Sorter.ContactsSorterI;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @RestController
@@ -32,8 +33,8 @@ public class ContactsPageController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-
     }
+
     @PostMapping("/getContacts")
     ArrayList<ContactI> getContacts(@RequestParam(value = "username") String username){
         try {
@@ -43,8 +44,8 @@ public class ContactsPageController {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
+
     @PostMapping("/editContact")
     void editContact(@RequestParam(value = "username") String username,@RequestParam(value = "oldContact") ContactI oldContact, @RequestParam(value = "newContact") ContactI newContact){
         try {
@@ -56,6 +57,7 @@ public class ContactsPageController {
             System.out.println(e.getMessage());
         }
     }
+
     @DeleteMapping("/removeContact")
     String removeContact(@RequestParam(value = "contactUsername") String contactUsername, @RequestParam(value = "username") String username){
         try {
@@ -66,8 +68,8 @@ public class ContactsPageController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-
     }
+
     @GetMapping("/sortContacts")
     ArrayList<ContactI> sortContacts(@RequestParam(value = "username") String username, @RequestParam(value = "ascending") String ascending) {
         try {
@@ -90,6 +92,5 @@ public class ContactsPageController {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
 }

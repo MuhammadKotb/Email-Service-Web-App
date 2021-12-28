@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class EmailsSortingTester {
+
     static EmailI firstEmail = new Email("test","hello programmer","joe", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null);
     static EmailI secondEmail = new Email("test","hello programmer","ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null);
     static ArrayList<EmailI> enteredEmails = new ArrayList<EmailI>();
