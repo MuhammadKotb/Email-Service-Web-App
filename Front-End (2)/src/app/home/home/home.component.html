@@ -5,7 +5,7 @@
         <div class = "filter_container">
             <select name="filter_menu" id="filter_menu">
                 <option value="sender">Sender</option>
-                <option value="recievers">Receivers</option>
+                <option value="recievers">Subject</option>
             </select>
             <input type = "text" id = "filter_text">
             <button type = "button" value = "Filter" (click) = "filter()">Filter</button>
@@ -28,12 +28,6 @@
         </div>
         <label for="search_container">Search:</label>
         <div class = "search_container">
-            <select name="search_menu" id="search_menu">
-                <option value="sender">Sender</option>
-                <option value="recievers">Receivers</option>
-                <option value="subject">Subject</option>
-                <option value="body">Body</option>
-            </select>
             <input type = "text" id = "search_text">
             <button type = "button" value = "Search" (click) = "search()">Search</button>
         </div>

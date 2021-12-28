@@ -14,7 +14,7 @@ import $ from "jquery"
   styleUrls: ['./draft.component.css']
 })
 export class DraftComponent implements OnInit {
-  private listOfEmails : EmailI[] 
+  public static listOfEmails : EmailI[] 
   private viewArray : string[][] 
   private listPreSize : number
   private iterationsNum : number
@@ -22,7 +22,7 @@ export class DraftComponent implements OnInit {
 
 
   constructor(private router : Router, private serveMe1: InboxService, private serveMe2 : TrashService, private placer : InboxComponent  ) { 
-    this.listOfEmails = []
+    DraftComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 4
@@ -38,7 +38,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recieverUsername: "Joe",
+      recievers: ["Joe"],
       emailID: '',
       emailType: '',
       priority: 'Urgent'
@@ -49,7 +49,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recieverUsername: "Meniem",
+      recievers: ["Meniem"],
       emailID: '',
       emailType: '',
       priority: 'Important'
@@ -60,7 +60,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recieverUsername: "otb",
+      recievers: ["otb"],
       emailID: '',
       emailType: '',
       priority: 'Non-essential'
@@ -71,18 +71,18 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recieverUsername: "deffo",
+      recievers: ["deffo"],
       emailID: '',
       emailType: '',
       priority: 'Skipable'
     }
 
-    this.listOfEmails.push(x)
-    this.listOfEmails.push(y)
-    this.listOfEmails.push(Z)
-    this.listOfEmails.push(w)
+    DraftComponent.listOfEmails.push(x)
+    DraftComponent.listOfEmails.push(y)
+    DraftComponent.listOfEmails.push(Z)
+    DraftComponent.listOfEmails.push(w)
 
-    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {DraftComponent.listOfEmails = data; console.log(DraftComponent.listOfEmails);});
     this.listPreSize = this.viewArray.length
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
@@ -90,11 +90,11 @@ export class DraftComponent implements OnInit {
     this.checkClick()
 }
 parseArray(){
-  for (let email=0; email < this.listOfEmails.length;email++){
+  for (let email=0; email < DraftComponent.listOfEmails.length;email++){
     this.viewArray[email] = [] 
-    this.viewArray[email][0] = this.listOfEmails[email].recieverUsername
-    this.viewArray[email][1] = this.listOfEmails[email].timeSent
-    this.viewArray[email][2] = this.listOfEmails[email].subject
+    this.viewArray[email][0] = DraftComponent.listOfEmails[email].recievers.toString()
+    this.viewArray[email][1] = DraftComponent.listOfEmails[email].timeSent
+    this.viewArray[email][2] = DraftComponent.listOfEmails[email].subject
   }
 }
 
@@ -114,9 +114,9 @@ checkClick(){
   deleteClicked(e: any){
     try{
     //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     this.listOfEmails = data;
-    //      console.log(this.listOfEmails)
+    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     DraftComponent.listOfEmails = data;
+    //      console.log(DraftComponent.listOfEmails)
     // this.listPreSize = this.viewArray.length
     // this.parseArray()
     // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
@@ -127,7 +127,7 @@ checkClick(){
   }
     editClicked(e: any){
       try{
-        console.log(this.listOfEmails)
+        console.log(DraftComponent.listOfEmails)
         const buttonNum = parseInt(e.target.id)
         this.showInSendEmail()
       }catch (error){

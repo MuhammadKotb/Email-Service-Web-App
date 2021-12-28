@@ -13,7 +13,7 @@
     styleUrls: ['./sent.component.css']
   })
   export class SentComponent implements OnInit {
-    private listOfEmails : EmailI[] 
+    public static listOfEmails : EmailI[] 
     private viewArray : string[][] 
     private listPreSize : number
     private iterationsNum : number
@@ -21,7 +21,7 @@
 
 
     constructor(private serveMe: InboxService, private placer : InboxComponent  ) { 
-      this.listOfEmails = []
+      SentComponent.listOfEmails = []
       this.viewArray = []
       this.listPreSize = this.viewArray.length
       this.iterationsNum = 4
@@ -34,7 +34,7 @@
         subject: "birthday",
         body: 'vfvsv',
         owner: '',
-        recieverUsername: "Joe",
+        recievers: ["Joe"],
         emailID: '',
         emailType: '',
         priority: 'Urgent'
@@ -45,7 +45,7 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recieverUsername: "Meniem",
+        recievers: ["Meniem"],
         emailID: '',
         emailType: '',
         priority: 'Important'
@@ -56,7 +56,7 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recieverUsername: "otb",
+        recievers: ["otb"],
         emailID: '',
         emailType: '',
         priority: 'Non-essential'
@@ -67,18 +67,18 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recieverUsername: "deffo",
+        recievers: ["deffo"],
         emailID: '',
         emailType: '',
         priority: 'Skipable'
       }
 
-      this.listOfEmails.push(x)
-      this.listOfEmails.push(y)
-      this.listOfEmails.push(Z)
-      this.listOfEmails.push(w)
+      SentComponent.listOfEmails.push(x)
+      SentComponent.listOfEmails.push(y)
+      SentComponent.listOfEmails.push(Z)
+      SentComponent.listOfEmails.push(w)
 
-      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);});
       this.listPreSize  = this.viewArray.length
 
       this.parseArray()
@@ -88,11 +88,11 @@
       this.checkClick()
   }
   parseArray(){
-    for (let email=0; email < this.listOfEmails.length;email++){
+    for (let email=0; email < SentComponent.listOfEmails.length;email++){
       this.viewArray[email] = [] 
-      this.viewArray[email][0] = this.listOfEmails[email].recieverUsername
-      this.viewArray[email][1] = this.listOfEmails[email].timeSent
-      this.viewArray[email][2] = this.listOfEmails[email].subject
+      this.viewArray[email][0] = SentComponent.listOfEmails[email].recievers.toString()
+      this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSent
+      this.viewArray[email][2] = SentComponent.listOfEmails[email].subject
     }
   }
   checkClick(){
@@ -157,9 +157,9 @@
   deleteClicked(e: any){
     try{
     //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe?.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     this.listOfEmails = data; 
-    //     console.log(this.listOfEmails)
+    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     SentComponent.listOfEmails = data; 
+    //     console.log(SentComponent.listOfEmails)
     // this.listPreSize = this.viewArray.length
     // this.parseArray()
     // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
@@ -171,7 +171,7 @@
     showClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        this.show(this.listOfEmails[buttonNum/2]);
+        this.show(SentComponent.listOfEmails[buttonNum/2]);
       }catch (error){
         console.log(error)
       }
