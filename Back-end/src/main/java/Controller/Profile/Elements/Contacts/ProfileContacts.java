@@ -1,7 +1,12 @@
 package Controller.Profile.Elements.Contacts;
 
 import Controller.DataContainerI;
+import Controller.Email.Email;
+import Controller.Email.EmailI;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 
 public class ProfileContacts implements ProfileContactsI {
@@ -13,6 +18,24 @@ public class ProfileContacts implements ProfileContactsI {
     public ProfileContacts(DataContainerI contactsDataContainer) throws Exception{
         this.contactsDataContainer = contactsDataContainer;
         this.contacts = new ArrayList<ContactI>();
+        this.setContacts();
+    }
+    private void setContacts() throws Exception {
+        File file = new File(this.contactsDataContainer.getDataContainerPath().concat("/"));
+        File[] files = file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isFile();
+            }
+        });
+        if(file == null || files == null){
+            throw new Exception("NO SUCH DIRECOTRY");
+        }
+        for(int i = 0; i < files.length; i++){
+            ObjectMapper map = new ObjectMapper();
+            ContactI contact = map.readValue(files[i], Contact.class);
+            this.addContact(contact);
+        }
     }
     @Override
     public DataContainerI getContactsDataContainer() {
@@ -36,7 +59,7 @@ public class ProfileContacts implements ProfileContactsI {
     @Override
     public ContactI getContact(String username) {
         for(int i = 0 ;i < contacts.size(); i++){
-            if(contacts.get(i).getUsername() == username ){
+            if(contacts.get(i).getUsername().equals(username)){
                 return contacts.get(i);
             }
         }

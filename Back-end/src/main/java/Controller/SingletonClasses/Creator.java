@@ -9,6 +9,7 @@ import Controller.Profile.Builder.ProfileBuilder;
 import Controller.Profile.Builder.ProfileBuilderI;
 import Controller.Profile.Builder.ProfileDirector;
 import Controller.Profile.Elements.*;
+import Controller.Profile.Elements.Contacts.ContactI;
 import Controller.Profile.Elements.Contacts.ProfileContacts;
 import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
@@ -94,11 +95,7 @@ public class Creator {
                 profile.addFolder(new ProfileFolder(new DataContainer(dataBasePath.concat(encryption).concat("/").concat(files[i].getName()), files[i].getName(), new File(dataBasePath.concat(encryption).concat("/").concat(files[i].getName()))), files[i].getName()));
             }
         }
-
         return profile;
-
-
-
     }
 
     public void createProfileFoler(String name, ProfileI profile) throws Exception{
@@ -151,7 +148,6 @@ public class Creator {
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, draftEmail);
         return draftEmail;
-
     }
     public EmailI createEmailDataTrash(EmailI email, ProfileI profile, String ID) throws Exception{
         EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiverUsername(), "Trash", email.getAttachments());
@@ -180,6 +176,15 @@ public class Creator {
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, emailFolder);
         return emailFolder;
+    }
+
+    public void createContactData(ProfileI profile, ContactI contact) throws Exception{
+        File file = new File(profile.getContacts().getContactsDataContainer().getDataContainerPath().concat("/").concat(contact.getUsername().concat(".json")));
+        if(!file.createNewFile()){
+            throw new Exception("COULD NOT CREATE CONTACT FOLDER");
+        }
+        ObjectMapper map = new ObjectMapper();
+        map.writeValue(file, contact);
     }
 
 

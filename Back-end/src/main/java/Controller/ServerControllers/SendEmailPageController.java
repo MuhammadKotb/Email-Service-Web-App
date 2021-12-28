@@ -2,11 +2,17 @@ package Controller.ServerControllers;
 
 import Controller.Email.Attachment;
 import Controller.Email.Email;
+import Controller.Email.EmailI;
+import Controller.SingletonClasses.Database;
+import Controller.Sorter.Sorter;
+import Controller.Sorter.SorterI;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import Controller.SingletonClasses.Handlers.FirstHandler;
 
@@ -17,9 +23,9 @@ public class SendEmailPageController {
     Attachment attachment = new Attachment();
 
     @PostMapping("/sendEmail")
-    String sendEmail(@RequestBody Email email){
+    String sendEmail(@RequestBody EmailI email){
         try{
-            FirstHandler.getInstance().handle("SendEmail",email);
+            FirstHandler.getInstance().handle("SendEmail", email);
             return "SENT EMAIL SUCCESSFULLY";
         }
         catch (Exception e){
@@ -29,7 +35,7 @@ public class SendEmailPageController {
     }
 
     @PostMapping("/attachment")
-    void attachment(@RequestParam("file") MultipartFile file){
+    void attachment(@RequestParam("file") MultipartFile file, @RequestBody Email email){
         try{
             this.attachment.setEncoded(file.getBytes());
             this.attachment.setType(file.getContentType());
@@ -42,11 +48,18 @@ public class SendEmailPageController {
             System.out.println(e.getMessage());
         }
     }
+    @PostMapping("/test")
+    void testMethod(@RequestParam(value = "string") String string, @RequestBody Email email){
+        System.out.println(string);
+        System.out.println(email.getBody());
+    }
 
     @GetMapping("/getAttachment")
     Attachment getAttachment(){
         return this.attachment;
     }
+
+
 
 
 }

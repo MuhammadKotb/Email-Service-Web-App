@@ -57,7 +57,6 @@ public class Database {
         return databasePath;
     }
 
-
     public ProfileI getProfilebyUsername(String encryption, String username){
 
         if(username == "") username = encryption.substring(0, encryption.indexOf("$"));

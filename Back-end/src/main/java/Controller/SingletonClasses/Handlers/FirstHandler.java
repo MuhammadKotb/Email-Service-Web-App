@@ -28,6 +28,7 @@ public class FirstHandler implements HandlerI{
             if(database.getProfilebyUsername("", email.getSenderUsername()) == null){
                 throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
             }
+
             if(database.getProfilebyUsername("", email.getReceiverUsername()) == null){
                 throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
             }
@@ -45,4 +46,5 @@ public class FirstHandler implements HandlerI{
             this.successor.handle(concern,email);
         }
     }
+
 }

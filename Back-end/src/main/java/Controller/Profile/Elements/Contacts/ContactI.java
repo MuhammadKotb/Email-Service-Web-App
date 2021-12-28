@@ -1,12 +1,16 @@
 package Controller.Profile.Elements.Contacts;
 
+import java.util.ArrayList;
+
 public interface ContactI {
     String username = null;
-    String phoneNumber = null;
+    ArrayList<String> emailAddresses = null;
 
-    String getPhoneNumber();
+    ArrayList<String> getEmailAddresses();
+    void setEmailAddresses(ArrayList<String> emailAddresses);
+    void addEmailAddress(String emailAddress);
     String getUsername() ;
     void setUsername(String username);
-    void setPhoneNumber(String phoneNumber) ;
+
 
 }

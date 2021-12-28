@@ -1,5 +1,6 @@
 package Controller.Email;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public interface EmailI {
@@ -13,7 +14,8 @@ public interface EmailI {
     String emailType = null;
     List<Attachment> attachments = null;
 
-    String timeSent = null;
+    DateFormat timeSent = null;
+    String timeSentString = null;
 
     String getSenderUsername();
     String getReceiverUsername();
@@ -21,8 +23,10 @@ public interface EmailI {
     String getBody();
     String getEmailID();
     String getTimeSent();
+    String getTimeSentString();
     String getEmailType();
     String getOwner();
+    String getPriority();
     List<Attachment> getAttachments();
 
 
@@ -30,11 +34,14 @@ public interface EmailI {
     void setReceiverUsername(String receiverUsername);
     void setSubject(String subject);
     void setTimeSent(String timeSent);
+    void setTimeSentString(String timeSentString);
     void setBody(String body);
     void setEmailID(String emailID);
     void setEmailType(String emailType);
     void setOwner(String owner);
+    void setPriority(String priority);
     void setAttachments(List<Attachment> attachments);
+
 
     void addAttachment(Attachment attachment);
     void removeAttachment(Attachment attachment);

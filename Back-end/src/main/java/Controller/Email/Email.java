@@ -1,7 +1,12 @@
 package Controller.Email;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 public class Email implements EmailI {
 
@@ -15,6 +20,18 @@ public class Email implements EmailI {
 
 
     private String timeSent;
+    private String timeSentString;
+
+    @Override
+    public String getTimeSentString() {
+        return timeSentString;
+    }
+
+    @Override
+    public void setTimeSentString(String timeSentString) {
+        this.timeSentString = timeSentString;
+    }
+
     private String emailID;
 
     private String emailType;
@@ -42,7 +59,8 @@ public class Email implements EmailI {
         this.receiverUsername = receiverUsername;
         this.subject = subject;
         this.body = body;
-        this.timeSent = LocalTime.now().toString();
+        this.timeSent = String.valueOf(new Date().getTime());
+        this.timeSentString = SimpleDateFormat.getDateTimeInstance().format(new Date());
         this.emailType = emailType;
         this.attachments = attachments;
     }

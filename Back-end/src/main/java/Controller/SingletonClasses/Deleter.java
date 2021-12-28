@@ -2,6 +2,8 @@ package Controller.SingletonClasses;
 
 import Controller.DataContainerI;
 import Controller.Email.EmailI;
+import Controller.Profile.Elements.Contacts.ContactI;
+import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
 
 import java.io.File;
@@ -95,6 +97,17 @@ public class Deleter {
             throw new Exception("COULD NOT DELETE FOLDER");
         }
         profile.removeFolderbyName(folderName);
+    }
+
+    public void deleteContact(ContactI contact, ProfileI profile) throws Exception{
+        if(profile.getContacts().getContact(contact.getUsername()) == null){
+            throw new Exception("NO SUCH CONTACT FOR THIS PROFILE");
+        }
+        File file = new File(profile.getContacts().getContactsDataContainer().getDataContainerPath().concat("/").concat(contact.getUsername().concat(".json")));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE CONTACT");
+        }
+
     }
 
 }
