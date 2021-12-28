@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-public class profileFolderController {
+public class UserFoldersPageController {
 
     @PostMapping("/addUserFolder")
     String addUserFolder(@RequestParam(value="foldername") String folderName, @RequestParam("username") String username){
