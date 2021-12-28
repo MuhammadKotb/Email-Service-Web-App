@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/login/login/login.component';
-import { EmailI } from '../home.component'
+import { EmailI, HomeComponent } from '../home.component'
 import { InboxComponent } from '../inbox/inbox.component';
 import {InboxService } from '../inbox/inbox.service';
 import { TrashService } from '../trash/trash.service';
@@ -24,6 +24,7 @@ export class DraftComponent implements OnInit {
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 5
+    HomeComponent.pageIndicator = "Draft"
   }
   
 
@@ -81,9 +82,9 @@ export class DraftComponent implements OnInit {
 
     this.listPreSize = this.viewArray.length
     
-    this.listOfButtons = document.querySelectorAll("td  > button")
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+    this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
 }
 parseArray(){
@@ -100,11 +101,14 @@ checkClick(){
     for (var i =  0 ; i < listOfButtons.length ; i++){
       if (i%2){
         listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
-        })
+          this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
+            this.listOfEmails = data;
+             console.log(this.listOfEmails)
         this.listPreSize = this.viewArray.length
         this.parseArray()
         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+      });})
+
       }else{
         listOfButtons[i].addEventListener("click", e =>{
           this.show(this.listOfEmails[(i)/2]);

@@ -1,7 +1,7 @@
 import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/login/login/login.component';
-import { EmailI } from '../home.component';
+import { EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 import { InboxService } from '../inbox/inbox.service';
 import { ContactService } from './contacts.service';
@@ -29,6 +29,8 @@ export class ContactsComponent implements OnInit {
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 3
+    HomeComponent.pageIndicator = "Contacts"
+
   }
 
 
@@ -93,11 +95,14 @@ checkClick(){
     for (var i =  0 ; i < this.listOfButtons.length ; i++){
       if (i%2){
         this.listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe1?.deleteContact(LoginComponent.globalUsername,this.listOfContacts[(i-1)/2].username).subscribe((data : ContactI[])=> {this.listOfContacts = data; console.log(this.listOfContacts);});
-        })
+          this.serveMe1?.deleteContact(LoginComponent.globalUsername,this.listOfContacts[(i-1)/2].username).subscribe((data : ContactI[])=> {
+            this.listOfContacts = data;
+             console.log(this.listOfContacts)
         this.listPreSize = this.viewArray.length
         this.parseArray()
         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+      });})
+
       }else{
         //ROUTE TO SEND EMAIL WITH RECIEVER
         }

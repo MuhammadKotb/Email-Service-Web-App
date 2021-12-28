@@ -78,10 +78,11 @@ export class SentComponent implements OnInit {
 
     this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
     this.listPreSize  = this.viewArray.length
-    this.listOfButtons = document.querySelectorAll("td  > button")
 
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
+    this.listOfButtons = document.querySelectorAll("td  > button")
+
     this.checkClick()
 }
 parseArray(){
@@ -96,11 +97,14 @@ checkClick(){
     for (var i =  0 ; i < this.listOfButtons.length ; i++){
       if (i%2){
        this. listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe?.delete(this.serveMe.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
-        })
+          this.serveMe?.delete(this.serveMe.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
+            this.listOfEmails = data; 
+            console.log(this.listOfEmails)
         this.listPreSize = this.viewArray.length
         this.parseArray()
         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
+      });})
+
       }else{
         this.listOfButtons[i].addEventListener("click", e =>{
           this.show(this.listOfEmails[(i)/2]);

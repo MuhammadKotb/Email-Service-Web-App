@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AttachmentI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 
 export interface ReceiverI{
@@ -18,6 +19,11 @@ export class SendEmailComponent implements OnInit {
   private viewArray : string[][] 
   private listPreSize : number
   private iterationsNum : number
+  private priority: string 
+  private subject: string 
+  private Attachment: AttachmentI 
+  private fileObject = new FormData
+  private message: string 
 
   constructor(private placer : InboxComponent  ) { 
     this.listOfReceivers = []
@@ -25,6 +31,15 @@ export class SendEmailComponent implements OnInit {
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 0
+    this.priority = ""
+    this.subject = ""
+    this.message = ""
+    this.Attachment = {
+      encoded: "",
+      name: "",
+      type: ""
+    }
+    HomeComponent.pageIndicator = "Send Email"
   }
 
 
@@ -49,6 +64,42 @@ export class SendEmailComponent implements OnInit {
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Delete")
   }
 
+  getPriority(){
+    var e = (<HTMLSelectElement>document.getElementById("priority_select"))
+    this.priority = e.options[e.selectedIndex].text
+
+  }
+
+  getSubject(){
+    this.subject = (<HTMLInputElement>document.getElementById("subject")).value
+    console.log(this.subject)
+
+  }
+
+  getAttachment(input : any){
+    var files: File[]
+    files = input.files
+    for(let i = 0; i <files.length; i++){
+      this.fileObject.append("file", files[i])
+    }
+
+  }
+
+  getMessage(){
+    this.message = (<HTMLInputElement>document.getElementById("message")).value
+    console.log(this.message)
+  }
+
+  sendEmail(){
+
+    
+
+  }
 
 
 }
+
+
+
+
+

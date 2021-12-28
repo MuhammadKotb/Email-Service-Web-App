@@ -77,10 +77,11 @@ export class TrashComponent implements OnInit {
 
     // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
     this.listPreSize  = this.viewArray.length
-    this.listOfButtons = document.querySelectorAll("td  > button")
 
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+    this.listOfButtons = document.querySelectorAll("td  > button")
+
     this.checkClick()
 }
 parseArray(){
@@ -101,11 +102,14 @@ checkClick(){
     for (var i =  0 ; i < this.listOfButtons.length ; i++){
       if (i%2){
         this.listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
-        })
+          this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
+            this.listOfEmails = data; 
+            console.log(this.listOfEmails);
         this.listPreSize = this.viewArray.length
         this.parseArray()
         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+      });})
+
       }else{
        this. listOfButtons[i].addEventListener("click", e =>{
           // this.serveMe2?.restore(this.serveMe2.loginUsername,this.listOfEmails[(i)/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);

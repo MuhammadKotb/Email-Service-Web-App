@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InboxComponent } from '../inbox/inbox.component';
-import { EmailI } from '../home.component';
+import { EmailI, HomeComponent } from '../home.component';
 import { InboxService } from '../inbox/inbox.service';
 import { FolderService } from './folders.service';
 import { LoginComponent } from 'src/app/login/login/login.component';
@@ -28,6 +28,7 @@ export class FoldersComponent implements OnInit{
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 2
+    HomeComponent.pageIndicator = "Folders"
 
   }
 

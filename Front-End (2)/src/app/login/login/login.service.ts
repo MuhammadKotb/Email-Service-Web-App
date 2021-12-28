@@ -11,7 +11,7 @@ export class LoginService {
 
   createAccount(accountDetails:string) : Observable<string>{
 
-    return this.http.get("http://localhost:8080/createProfile?encryption=" + accountDetails, {responseType : "text"});
+    return this.http.post<string>("http://localhost:8080/createProfile?encryption=" + accountDetails, {responseType : "text"});
   }
   loginToAccount(accountDetails:string) : Observable<string>{
 
