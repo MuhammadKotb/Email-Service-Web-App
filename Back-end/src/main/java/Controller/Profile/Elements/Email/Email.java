@@ -17,6 +17,10 @@ public class Email implements EmailI {
 
     private String timeSent;
     private String timeSentString;
+    private String emailID;
+
+    private String emailType;
+    ArrayList<Attachment> attachments = null;
 
     @Override
     public String getTimeSentString() {
@@ -28,10 +32,6 @@ public class Email implements EmailI {
         this.timeSentString = timeSentString;
     }
 
-    private String emailID;
-
-    private String emailType;
-    ArrayList<Attachment> attachments = null;
 
     public ArrayList<String> getReceiversUsernames() {
         return this.receiversUsernames;

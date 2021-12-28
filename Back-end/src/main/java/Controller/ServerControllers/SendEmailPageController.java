@@ -3,6 +3,7 @@ package Controller.ServerControllers;
 import Controller.Profile.Elements.Email.Attachment;
 import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
+import Controller.SingletonClasses.Database;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,4 +55,13 @@ public class SendEmailPageController {
         return this.attachment;
     }
 
+    @PostMapping("/movetoDraft")
+    void movetoDraft(@RequestParam(value = "email") EmailI email){
+        try {
+            FirstHandler.getInstance().handle("MovetoDraft",email);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+
+        }
+    }
 }
