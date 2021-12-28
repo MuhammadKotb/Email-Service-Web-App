@@ -1,8 +1,10 @@
   import { Component, OnInit } from '@angular/core';
   import { LoginComponent } from 'src/app/login/login/login.component';
-  import { EmailI, HomeComponent } from '../home.component'
+  import { EmailI } from '../home.component'
   import { InboxComponent } from '../inbox/inbox.component';
   import { InboxService } from '../inbox/inbox.service';
+  import $ from "jquery"
+
 
 
   @Component({
@@ -23,17 +25,16 @@
       this.viewArray = []
       this.listPreSize = this.viewArray.length
       this.iterationsNum = 4
-      HomeComponent.pageIndicator = "Sent"
     }
 
     ngOnInit(): void {
       var x : EmailI = {
-        senderUsername: '',
+        senderUsername: 'vfsf',
         timeSent: "27/9/2001",
         subject: "birthday",
-        body: '',
+        body: 'vfvsv',
         owner: '',
-        recievers: ["Meneiem", "Ray"],
+        recievers: ["Joe"],
         emailID: '',
         emailType: '',
         priority: 'Urgent'
@@ -44,7 +45,7 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recievers: ["Joe", "Deffo"],
+        recievers: ["Meniem"],
         emailID: '',
         emailType: '',
         priority: 'Important'
@@ -55,7 +56,7 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recievers: ["otb", "Ray"],
+        recievers: ["otb"],
         emailID: '',
         emailType: '',
         priority: 'Non-essential'
@@ -66,7 +67,7 @@
         subject: "birthday",
         body: '',
         owner: '',
-        recievers: ["deffo","May"],
+        recievers: ["deffo"],
         emailID: '',
         emailType: '',
         priority: 'Skipable'
@@ -77,7 +78,7 @@
       SentComponent.listOfEmails.push(Z)
       SentComponent.listOfEmails.push(w)
 
-      this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);});
+      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);});
       this.listPreSize  = this.viewArray.length
 
       this.parseArray()
@@ -148,20 +149,21 @@
         }
         node.appendChild(textNode)
         destinationNode?.appendChild(node)
-
+        
       }
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "block"
 
   }
   deleteClicked(e: any){
     try{
-      const buttonNum = parseInt(e.target.id)
-      this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-        SentComponent.listOfEmails = data; 
-        console.log(SentComponent.listOfEmails)
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-      })
+    //   const buttonNum = parseInt(e.target.id)
+    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     SentComponent.listOfEmails = data; 
+    //     console.log(SentComponent.listOfEmails)
+    // this.listPreSize = this.viewArray.length
+    // this.parseArray()
+    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
+    //   })
     }catch (error){
       console.log(error)
     }

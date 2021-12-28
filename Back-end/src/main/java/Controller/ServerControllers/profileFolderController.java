@@ -22,7 +22,7 @@ public class profileFolderController {
     @PostMapping("/addUserFolder")
     String addUserFolder(@RequestParam(value="foldername") String folderName, @RequestParam("username") String username){
         try{
-            Creator.getInstance().createProfileFoler(folderName, Database.getInstance().getProfilebyUsername("", username));
+            Creator.getInstance().createProfileFolder(folderName, Database.getInstance().getProfilebyUsername("", username));
             return "CREATED FOLDER SUCCESSFULLY";
         }
         catch (Exception e){

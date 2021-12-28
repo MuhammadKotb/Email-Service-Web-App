@@ -7,7 +7,6 @@ import { ContactI, ContactsComponent } from './contacts/contacts.component';
 import { DraftComponent } from './draft/draft.component';
 import { SentComponent } from './sent/sent.component';
 import { InboxComponent } from './inbox/inbox.component';
-import { ReceiverI } from './send-email/send-email.component';
 export interface AttachmentI{
     encoded: string;
     name: string;

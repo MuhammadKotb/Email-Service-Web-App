@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AttachmentI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
+import $ from "jquery"
 
-export interface ReceiverI{
-  username: string
-  num: number
-}
+
+
 
 
 @Component({
@@ -14,8 +13,7 @@ export interface ReceiverI{
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-  private listOfReceivers : ReceiverI[] 
-  private receiverCount : number 
+  private listOfReceivers : string[] 
   private viewArray : string[][] 
   private listPreSize : number
   private iterationsNum : number
@@ -27,9 +25,9 @@ export class SendEmailComponent implements OnInit {
 
   constructor(private placer : InboxComponent  ) { 
     this.listOfReceivers = []
-    this.receiverCount = 0
     this.viewArray = []
     this.listPreSize = this.viewArray.length
+    this.iterationsNum = 3
     this.iterationsNum = 0
     this.priority = ""
     this.subject = ""
@@ -50,17 +48,11 @@ export class SendEmailComponent implements OnInit {
 
   showReceiver(){
     var receiver_input = (<HTMLInputElement>document.getElementById("receiver")).value
-    var receiver : ReceiverI = {
-      username: receiver_input,
-      num: this.receiverCount
-    }
-    this.listOfReceivers.push(receiver)
+    this.listOfReceivers.push(receiver_input)
     this.listPreSize = this.viewArray.length
-    this.viewArray.length = 0
-    this.viewArray[0] = []
-    this.viewArray[0][0] = receiver.username
-    this.viewArray[0][1] = ((this.receiverCount++)+1).toString()
-    this.iterationsNum = this.receiverCount
+    this.viewArray[this.viewArray.length] = []
+    this.viewArray[this.viewArray.length-1][0] = receiver_input
+    this.viewArray[this.viewArray.length-1][1] = this.viewArray.length.toString()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Delete")
   }
 

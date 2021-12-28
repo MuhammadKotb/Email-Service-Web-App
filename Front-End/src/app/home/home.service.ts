@@ -87,4 +87,8 @@ import { ContactI } from './home/contacts/contacts.component';
   
         return this.http.get<ContactI[]>("http://localhost:8080/searchContacts?username=" + loginUsername + "&target=" + searchText);
       }
+
+    sortFolder(loginUsername: string, folderName: string, sortOption: string, sortOrder: string) : Observable<EmailI[]>{
+      return this.http.get<EmailI[]>("http://localhost:8080/sortFolder?username=" + loginUsername + "&foldername=" + folderName + "&target=" + sortOption + "&ascending=" + sortOrder);
+    }
   }

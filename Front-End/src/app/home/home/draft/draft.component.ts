@@ -38,7 +38,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["Joe", "Rat"],
+      recievers: ["Joe"],
       emailID: '',
       emailType: '',
       priority: 'Urgent'
@@ -60,7 +60,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["otb", "Hey"],
+      recievers: ["otb"],
       emailID: '',
       emailType: '',
       priority: 'Non-essential'
@@ -71,7 +71,7 @@ export class DraftComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["deffo", "May"],
+      recievers: ["deffo"],
       emailID: '',
       emailType: '',
       priority: 'Skipable'
@@ -113,14 +113,14 @@ checkClick(){
 
   deleteClicked(e: any){
     try{
-      const buttonNum = parseInt(e.target.id)
-      this.serveMe2?.deleteForever(this.serveMe2.loginUsername,DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-        DraftComponent.listOfEmails = data;
-         console.log(DraftComponent.listOfEmails)
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-  });
+    //   const buttonNum = parseInt(e.target.id)
+    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+    //     DraftComponent.listOfEmails = data;
+    //      console.log(DraftComponent.listOfEmails)
+    // this.listPreSize = this.viewArray.length
+    // this.parseArray()
+    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+  // });
     }catch (error){
       console.log(error)
     }

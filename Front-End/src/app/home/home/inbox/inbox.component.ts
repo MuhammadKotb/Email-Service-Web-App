@@ -47,7 +47,7 @@ export class InboxComponent implements OnInit {
       subject: "rap",
       body: "I'm about to go HAM. Hard as a motherfucker, let these niggas know who I am",
       owner: '',
-      recievers: [],
+      recievers: [''],
       emailID: '',
       emailType: '',
       priority: 'Important'
@@ -59,7 +59,7 @@ export class InboxComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: [],
+      recievers: [''],
       emailID: '',
       emailType: '',
       priority: 'standard'
@@ -70,12 +70,11 @@ export class InboxComponent implements OnInit {
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: [],
+      recievers: [''],
       emailID: '',
       emailType: '',
       priority: 'Skippable'
     }
-
 
     InboxComponent.listOfEmails.push(x)
     InboxComponent.listOfEmails.push(y)
@@ -218,14 +217,14 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 
     deleteClicked(e: any){
       try{
-        const buttonNum = parseInt(e.target.id)
-        this.serveMe.delete(this.serveMe.loginUsername,InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-            InboxComponent.listOfEmails = data; 
-            console.log(InboxComponent.listOfEmails);
-            this.listPreSize = this.viewArray.length
-            this.parseArray()
-            this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-        })
+        // const buttonNum = parseInt(e.target.id)
+        // this.serveMe.delete(this.serveMe.loginUsername,InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        //     InboxComponent.listOfEmails = data; 
+        //     console.log(InboxComponent.listOfEmails);
+        //     this.listPreSize = this.viewArray.length
+        //     this.parseArray()
+        //     this.place(this.viewArray,this.iterationsNum,this.listPreSize)
+        // })
       }catch (error){
         console.log(error)
       }

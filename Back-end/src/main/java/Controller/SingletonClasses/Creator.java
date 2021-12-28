@@ -98,7 +98,7 @@ public class Creator {
         return profile;
     }
 
-    public void createProfileFoler(String name, ProfileI profile) throws Exception{
+    public void createProfileFolder(String name, ProfileI profile) throws Exception{
         System.out.println(profile.getDataContainer());
         ProfileFolderI profileFolder = new ProfileFolder(createDataContainer(profile.getDataContainer().getDataContainerPath().concat("/").concat(name), name), name);
         profile.addFolder(profileFolder);
