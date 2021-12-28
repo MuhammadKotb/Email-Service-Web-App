@@ -191,7 +191,6 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
                    break
         }
         var emailContents = document.querySelectorAll("div.email-container > div");
-        alert(emailContents.length)
         for (var i = 0; i<emailContents.length; i++){
           var node = document.createElement("P")
           node.style.marginTop  = "0"

@@ -84,24 +84,36 @@ export class FoldersComponent implements OnInit{
   }
 
   checkClick(){
-    console.log("I am in click")
     for (var i =  0 ; i < this.listOfButtons.length ; i++){
+
       if (i%2){
-        this.listOfButtons[i].addEventListener("click", e =>{
-            this.serveMe.deleteFolder(this.serveMe.loginUsername,this.listOfFolders[(i-1)/2].name).subscribe((data : FoldersI[])=> {
-            this.listOfFolders = data;
-            this.listPreSize = this.viewArray.length
-            this.parseArray()
-            this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
-          });
-        })   
+        this.listOfButtons[i].addEventListener("click",$.proxy(this.deleteClicked,this));
       }else{
-        this.listOfButtons[i].addEventListener("click", e =>{
-          this.router.navigate(['home/folders/specificFolder']);
-          });
-        }
-        
+        this.listOfButtons[i].addEventListener("click",$.proxy(this.openClicked,this));
       }
+      
+    }
+}
+
+deleteClicked(e: any){
+  try{
+    const buttonNum = parseInt(e.target.id)
+      this.serveMe.deleteFolder(this.serveMe.loginUsername,this.listOfFolders[(buttonNum-1)/2].name).subscribe((data : FoldersI[])=> {
+      this.listOfFolders = data;
+      this.listPreSize = this.viewArray.length
+      this.parseArray()
+      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
+    });
+  }catch (error){
+    console.log(error)
+  }
+}
+  openClicked(e: any){
+    try{
+        this.router.navigate(['home/folders/specificFolder']);
+    }catch (error){
+      console.log(error)
+    }
   }
 }
 

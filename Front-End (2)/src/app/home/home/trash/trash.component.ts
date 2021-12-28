@@ -99,29 +99,40 @@ parseArray(){
   }
 }
 checkClick(){
-    for (var i =  0 ; i < this.listOfButtons.length ; i++){
-      if (i%2){
-        this.listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
-            this.listOfEmails = data; 
-            console.log(this.listOfEmails);
-        this.listPreSize = this.viewArray.length
-        this.parseArray()
-        this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
-      });})
+  for (var i =  0 ; i < this.listOfButtons.length ; i++){
 
-      }else{
-       this. listOfButtons[i].addEventListener("click", e =>{
-          // this.serveMe2?.restore(this.serveMe2.loginUsername,this.listOfEmails[(i)/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);
-          // });
-        })
-        
-      }
-      
+    if (i%2){
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.deleteClicked,this));
+    }else{
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.restoreClicked,this));
     }
+    
+  }
 }
 
-
+deleteClicked(e: any){
+  try{
+    const buttonNum = parseInt(e.target.id)
+      this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        this.listOfEmails = data; 
+        console.log(this.listOfEmails);
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+  });
+  }catch (error){
+    console.log(error)
+  }
+}
+  restoreClicked(e: any){
+    try{
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe2?.restore(this.serveMe2.loginUsername,this.listOfEmails[buttonNum/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);
+          });
+    }catch (error){
+      console.log(error)
+    }
+  }
 
 
 

@@ -93,7 +93,6 @@ export class HomeComponent implements OnInit {
   }
   switchToSendEmail(){
     this.router.navigate(['/home/sendEmail']);
-
   }
   switchToSent(){
     this.router.navigate(['/home/sent']);
