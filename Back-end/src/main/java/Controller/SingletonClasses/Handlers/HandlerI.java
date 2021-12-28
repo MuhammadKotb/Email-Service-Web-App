@@ -1,6 +1,6 @@
 package Controller.SingletonClasses.Handlers;
 
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 
 public interface HandlerI {
     String concern = null;

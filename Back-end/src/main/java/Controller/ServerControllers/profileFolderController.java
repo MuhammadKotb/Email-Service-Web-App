@@ -1,16 +1,15 @@
 package Controller.ServerControllers;
 
-import Controller.Email.Email;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.Email;
+import Controller.Profile.Elements.Email.EmailI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
-import Controller.Sorter.Sorter;
-import Controller.Sorter.SorterI;
+import Controller.Sorter.EmailsSorter;
+import Controller.Sorter.EmailsSorterI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -60,7 +59,7 @@ public class profileFolderController {
     ArrayList<EmailI> sortFolder(@RequestParam(value = "username") String username, @RequestParam(value = "foldername") String folderName, @RequestParam(value = "target") String target, @RequestParam(value = "ascending") String ascending){
         try{
             Database database = Database.getInstance();
-            SorterI sorter = new Sorter(Boolean.parseBoolean(ascending));
+            EmailsSorterI sorter = new EmailsSorter(Boolean.parseBoolean(ascending));
             return sorter.sort(database.getProfilebyUsername("", username).getProfileFolderbyName(folderName).getEmails(), target);
         }
         catch (Exception e){

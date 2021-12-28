@@ -1,15 +1,31 @@
 package Controller.EmailsFilter;
 
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
 
-public class FilteringCustomizedCriteria implements CriteriaI{
+public class EmailsFilteringCustomizedCriteria implements CriteriaI{
     private String feature;
     private String target;
 
-    public FilteringCustomizedCriteria(String feature, String target){
+    public EmailsFilteringCustomizedCriteria(String feature, String target){
         this.feature = feature;
+        this.target = target;
+    }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setFeature(String feature) {
+        this.feature = feature;
+    }
+
+    public void setTarget(String target) {
         this.target = target;
     }
 

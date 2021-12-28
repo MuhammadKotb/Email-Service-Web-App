@@ -1,13 +1,8 @@
-package Controller.Email;
+package Controller.Profile.Elements.Email;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.zip.DataFormatException;
 
 public class Email implements EmailI {
 

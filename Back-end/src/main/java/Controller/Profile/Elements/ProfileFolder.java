@@ -1,8 +1,8 @@
 package Controller.Profile.Elements;
 
 import Controller.DataContainerI;
-import Controller.Email.Email;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.Email;
+import Controller.Profile.Elements.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;

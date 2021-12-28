@@ -1,6 +1,6 @@
 package Controller.SingletonClasses.Handlers;
 
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 import Controller.Profile.ProfileI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;

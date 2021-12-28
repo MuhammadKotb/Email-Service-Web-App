@@ -1,10 +1,10 @@
 package Controller.Sorter;
 
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
 
-public interface SorterI {
+public interface EmailsSorterI {
     ArrayList<EmailI> sort(ArrayList<EmailI> emails, String target) throws Exception;
 
 }

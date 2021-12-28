@@ -1,13 +1,12 @@
 package Controller.Sorter;
 
-import Controller.Email.EmailI;
 import Controller.Profile.Elements.Contacts.ContactI;
 
 import java.util.*;
 
-public class ContactSorter implements ContactSorterI{
+public class ContactsSorter implements ContactsSorterI {
     boolean ascending;
-    public ContactSorter(boolean ascending){
+    public ContactsSorter(boolean ascending){
         this.ascending = ascending;
     }
     @Override

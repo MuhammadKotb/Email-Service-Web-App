@@ -3,8 +3,8 @@ package Controller.SingletonClasses;
 
 import Controller.DataContainer;
 import Controller.DataContainerI;
-import Controller.Email.Email;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.Email;
+import Controller.Profile.Elements.Email.EmailI;
 import Controller.Profile.Builder.ProfileBuilder;
 import Controller.Profile.Builder.ProfileBuilderI;
 import Controller.Profile.Builder.ProfileDirector;
@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 
 public class Creator {
 

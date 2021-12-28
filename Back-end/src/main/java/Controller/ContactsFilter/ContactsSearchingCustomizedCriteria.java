@@ -4,10 +4,10 @@ import Controller.Profile.Elements.Contacts.ContactI;
 
 import java.util.ArrayList;
 
-public class SearchingCustomizedCriteria implements CriteriaI {
+public class ContactsSearchingCustomizedCriteria implements CriteriaI {
     private String target;
 
-    public SearchingCustomizedCriteria(String target){
+    public ContactsSearchingCustomizedCriteria(String target){
         this.target = target;
     }
 

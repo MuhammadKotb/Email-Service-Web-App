@@ -5,6 +5,6 @@ import Controller.Profile.Elements.Contacts.ContactI;
 
 import java.util.ArrayList;
 
-public interface ContactSorterI {
+public interface ContactsSorterI {
     ArrayList<ContactI> sort(ArrayList<ContactI> contacts);
 }

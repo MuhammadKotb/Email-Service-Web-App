@@ -1,20 +1,18 @@
 package Controller.ServerControllers;
 
 
-import Controller.ContactsFilter.SearchingCustomizedCriteria;
+import Controller.ContactsFilter.ContactsSearchingCustomizedCriteria;
 import Controller.Profile.Elements.Contacts.Contact;
 import Controller.Profile.Elements.Contacts.ContactI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
-import Controller.Sorter.ContactSorter;
-import Controller.Sorter.ContactSorterI;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import Controller.Sorter.ContactsSorter;
+import Controller.Sorter.ContactsSorterI;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/home/contacts")
@@ -73,7 +71,7 @@ public class ContactsPageController {
     @GetMapping("/sortContacts")
     ArrayList<ContactI> sortContacts(@RequestParam(value = "username") String username, @RequestParam(value = "ascending") String ascending) {
         try {
-            ContactSorterI sorter = new ContactSorter(Boolean.parseBoolean(ascending));
+            ContactsSorterI sorter = new ContactsSorter(Boolean.parseBoolean(ascending));
             return sorter.sort(Database.getInstance().getProfilebyUsername("", username).getContacts().getContacts());
 
         } catch (Exception e) {
@@ -86,7 +84,7 @@ public class ContactsPageController {
     ArrayList<ContactI> searchContacts(@RequestParam(value = "username") String username,@RequestParam(value = "target") String target){
         try {
             Database database = Database.getInstance();
-            SearchingCustomizedCriteria search = new SearchingCustomizedCriteria(target);
+            ContactsSearchingCustomizedCriteria search = new ContactsSearchingCustomizedCriteria(target);
             return search.meetCriteria(database.getProfilebyUsername("",username).getContacts().getContacts());
         }catch (Exception e){
             System.out.println(e.getMessage());

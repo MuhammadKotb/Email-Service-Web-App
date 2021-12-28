@@ -1,8 +1,4 @@
-package Controller.Email;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
+package Controller.Profile.Elements.Email;
 
 public class Attachment {
 

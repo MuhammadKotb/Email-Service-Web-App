@@ -1,15 +1,14 @@
 package Controller.Sorter;
 
-import Controller.Email.Email;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.*;
 
-public class Sorter implements SorterI {
+public class EmailsSorter implements EmailsSorterI {
 
     boolean ascending;
 
-    public Sorter(boolean ascending){
+    public EmailsSorter(boolean ascending){
         this.ascending = ascending;
     }
     private static ArrayList<String> priorities = new ArrayList<>(

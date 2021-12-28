@@ -1,4 +1,4 @@
-package Controller.Email;
+package Controller.Profile.Elements.Email;
 
 public class Receiver implements ReceiverI{
     String username;

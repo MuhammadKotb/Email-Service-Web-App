@@ -1,8 +1,7 @@
-package Controller.Email;
+package Controller.Profile.Elements.Email;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface EmailI {
     String subject = null;

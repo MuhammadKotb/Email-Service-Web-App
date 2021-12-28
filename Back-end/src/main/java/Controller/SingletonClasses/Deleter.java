@@ -1,9 +1,8 @@
 package Controller.SingletonClasses;
 
 import Controller.DataContainerI;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 import Controller.Profile.Elements.Contacts.ContactI;
-import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
 
 import java.io.File;

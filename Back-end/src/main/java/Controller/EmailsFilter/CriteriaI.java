@@ -1,6 +1,6 @@
 package Controller.EmailsFilter;
 
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
 

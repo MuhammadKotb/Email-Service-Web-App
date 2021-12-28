@@ -1,18 +1,13 @@
 package Controller.ServerControllers;
 
-import Controller.Email.Attachment;
-import Controller.Email.Email;
-import Controller.Email.EmailI;
-import Controller.SingletonClasses.Database;
-import Controller.Sorter.Sorter;
-import Controller.Sorter.SorterI;
+import Controller.Profile.Elements.Email.Attachment;
+import Controller.Profile.Elements.Email.Email;
+import Controller.Profile.Elements.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import Controller.SingletonClasses.Handlers.FirstHandler;
 

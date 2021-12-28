@@ -1,13 +1,11 @@
 package Controller.SingletonClasses;
 
-import Controller.Email.EmailI;
 import Controller.Profile.ProfileI;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Database {
 
