@@ -83,6 +83,7 @@ export class InboxComponent implements OnInit {
     // this.listOfEmails.push(y)
     // this.listOfEmails.push(z)
     // this.listOfEmails.push(w)
+    // this.listOfEmails.push(q)
     this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
     this.listPreSize = this.viewArray.length
     this.parseArray()
@@ -156,9 +157,16 @@ checkClick(){
       
     }
 }
+
+//----------------------------------------------------------------------//
+
+closeEmailPopup(){
+  (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
+}
     
   show(email:EmailI){
     //where we show email
+    (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
 }
 
 }

@@ -65,7 +65,7 @@ public class EmailServiceController {
     DataContainerI getDataContainer(@RequestBody String encryption){
         try{
             Database database = Database.getInstance();
-            return database.getProfilebyEncryption(encryption).getDataContainer();
+            return (DataContainerI) database.getProfilebyEncryption(encryption).getDataContainer();
         }
         catch (Exception e){
             System.out.println(e.getMessage());

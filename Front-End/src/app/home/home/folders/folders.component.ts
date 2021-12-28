@@ -57,7 +57,6 @@ export class FoldersComponent implements OnInit{
   }
 
   addFolder(){
-    this.ngOnInit()
     var folder_input = (<HTMLInputElement>document.getElementById("folder")).value
     var folder : FoldersI = {
       name: folder_input,
