@@ -11,7 +11,7 @@ export class ContactService {
   loginUsername = LoginComponent.globalUsername
 
   constructor(private http : HttpClient) { }
-
+  
   getContacts(loginUsername:string) : Observable<ContactI[]>{
 
     return this.http.get<ContactI[]>("http://localhost:8080/getContacts?username=" + loginUsername);

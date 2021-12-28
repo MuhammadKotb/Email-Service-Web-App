@@ -1,7 +1,7 @@
 import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/login/login/login.component';
-import { EmailI } from '../home.component';
+import { EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 import { InboxService } from '../inbox/inbox.service';
 import { ContactService } from './contacts.service';
@@ -18,15 +18,22 @@ export interface ContactI{
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent implements OnInit {
-  private listOfContacts : ContactI[] =[]
-  private viewArray : string[][] = []
-  private listPreSize = this.viewArray.length
-  private placer : InboxComponent | undefined
-  private serveMe1 : ContactService | undefined
+  public static listOfContacts : ContactI[] 
+  private viewArray : string[][] 
+  private listPreSize : number
+  private iterationsNum : number
+  private listOfButtons : NodeList
 
+  constructor(private serveMe1: ContactService, private placer : InboxComponent  ) { 
+    ContactsComponent.listOfContacts = []
+    this.viewArray = []
+    this.listPreSize = this.viewArray.length
+    this.iterationsNum = 3
+    HomeComponent.pageIndicator = "Contacts"
 
-  constructor() { 
   }
+
+
 
   ngOnInit(): void {
   //  var x : ContactI = {
@@ -46,22 +53,23 @@ export class ContactsComponent implements OnInit {
   //   number: "01143330116"
   // }
 
-  //   this.listOfContacts.push(x)
-  //   this.listOfContacts.push(y)
-  //   this.listOfContacts.push(z)
-  //   this.listOfContacts.push(w)
+  //   ContactsComponent.listOfContacts.push(x)
+  //   ContactsComponent.listOfContacts.push(y)
+  //   ContactsComponent.listOfContacts.push(z)
+  //   ContactsComponent.listOfContacts.push(w)
 
-  this.serveMe1?.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {this.listOfContacts = data; console.log(this.listOfContacts);});
+  this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
   this.listPreSize = this.viewArray.length
     this.parseArray()
-    this.placer?.place(this.viewArray,3,this.listPreSize,"Send Email")
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
+     this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
 }
 parseArray(){
-  for (let contact=0; contact < this.listOfContacts.length;contact++){
+  for (let contact=0; contact < ContactsComponent.listOfContacts.length;contact++){
     this.viewArray[contact] = [] 
-    this.viewArray[contact][0] = this.listOfContacts[contact].username
-    this.viewArray[contact][1] = this.listOfContacts[contact].number
+    this.viewArray[contact][0] = ContactsComponent.listOfContacts[contact].username
+    this.viewArray[contact][1] = ContactsComponent.listOfContacts[contact].number
   }
 }
 
@@ -74,25 +82,27 @@ addContact(){
     number: phone_input
   }
 
-  this.listOfContacts.push(contact)
+  ContactsComponent.listOfContacts.push(contact)
   this.listPreSize = this.viewArray.length
   this.viewArray.length = 0
   this.viewArray[0] = []
   this.viewArray[0][0] = contact.username
   this.viewArray[0][1] = contact.number
-  this.placer?.place(this.viewArray,3,this.listPreSize,"Send Email")
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
 
 }
 checkClick(){
-  var listOfButtons = document.querySelectorAll("td  > button")
-    for (var i =  0 ; i < listOfButtons.length ; i++){
+    for (var i =  0 ; i < this.listOfButtons.length ; i++){
       if (i%2){
-        listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe1?.deleteContact(LoginComponent.globalUsername,this.listOfContacts[(i-1)/2].username).subscribe((data : ContactI[])=> {this.listOfContacts = data; console.log(this.listOfContacts);});
-        })
+        this.listOfButtons[i].addEventListener("click", e =>{
+          this.serveMe1?.deleteContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(i-1)/2].username).subscribe((data : ContactI[])=> {
+            ContactsComponent.listOfContacts = data;
+             console.log(ContactsComponent.listOfContacts)
         this.listPreSize = this.viewArray.length
         this.parseArray()
-        this.placer?.place(this.viewArray,5,this.listPreSize,"Open")
+        this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+      });})
+
       }else{
         //ROUTE TO SEND EMAIL WITH RECIEVER
         }

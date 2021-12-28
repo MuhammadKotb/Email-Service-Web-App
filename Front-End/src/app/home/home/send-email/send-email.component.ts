@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AttachmentI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
-import { EmailI, AttachmentI } from '../home.component';
 
 export interface ReceiverI{
   username: string
@@ -14,22 +14,34 @@ export interface ReceiverI{
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-  private listOfReceivers : ReceiverI[] = []
-  private receiverCount : number = 0
-  private viewArray : string[][] = []
-  private listPreSize = this.viewArray.length
-  private priority: string = ""
-  private subject: string = ""
-  private Attachment: AttachmentI = {
-    encoded: "",
-    name: "",
-    type: ""
-  }
+  private listOfReceivers : ReceiverI[] 
+  private receiverCount : number 
+  private viewArray : string[][] 
+  private listPreSize : number
+  private iterationsNum : number
+  private priority: string 
+  private subject: string 
+  private Attachment: AttachmentI 
   private fileObject = new FormData
-  
-  private message: string ="" 
+  private message: string 
 
-  constructor() { }
+  constructor(private placer : InboxComponent  ) { 
+    this.listOfReceivers = []
+    this.receiverCount = 0
+    this.viewArray = []
+    this.listPreSize = this.viewArray.length
+    this.iterationsNum = 0
+    this.priority = ""
+    this.subject = ""
+    this.message = ""
+    this.Attachment = {
+      encoded: "",
+      name: "",
+      type: ""
+    }
+    HomeComponent.pageIndicator = "Send Email"
+  }
+
 
   ngOnInit(): void {
 
@@ -48,8 +60,8 @@ export class SendEmailComponent implements OnInit {
     this.viewArray[0] = []
     this.viewArray[0][0] = receiver.username
     this.viewArray[0][1] = ((this.receiverCount++)+1).toString()
-    let placer = new InboxComponent()
-    placer.place(this.viewArray,3,this.listPreSize,"Delete")
+    this.iterationsNum = this.receiverCount
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Delete")
   }
 
   getPriority(){
@@ -85,5 +97,9 @@ export class SendEmailComponent implements OnInit {
   }
 
 
-
 }
+
+
+
+
+

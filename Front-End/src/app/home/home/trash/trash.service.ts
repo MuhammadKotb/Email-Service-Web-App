@@ -23,7 +23,6 @@ export class TrashService {
     return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever?username=" + loginUsername, email);
 
   }
-
   
   
 }
