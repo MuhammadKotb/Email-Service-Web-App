@@ -2,14 +2,15 @@ package Controller.ServerControllers;
 
 import Controller.EmailsFilter.EmailsCriteriaI;
 import Controller.EmailsFilter.EmailsFilteringCustomizedCriteria;
+import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
+import Controller.SingletonClasses.Handlers.FirstHandler;
 import Controller.Sorter.EmailsSorter;
 import Controller.Sorter.EmailsSorterI;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -54,6 +55,28 @@ public class UserFoldersPageController {
         try{
             Deleter.getInstance().deleteProfileFolder(Database.getInstance().getProfilebyUsername("", username), foldername);
             return "REMOVED FOLDER SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+    @PostMapping("/moveToFolder")
+    String moveToFolder(@RequestBody Email email, @RequestParam(value = "usernane") String username, @RequestParam(value = "foldername") String folderName){
+        try{
+            FirstHandler.getInstance().handle("MoveToFolder", email, folderName);
+            return "MOVED TO FOLDER SUCCESSFULLY";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+    @PostMapping("/moveToTrash")
+    String moveToTrash(@RequestBody Email email, @RequestParam(value = "usernane") String username, @RequestParam(value = "foldername") String folderName){
+        try{
+            FirstHandler.getInstance().handle("MovetoTrash", email, folderName);
+            return "MOVED TO TRASH SUCCESSFULLY";
         }
         catch (Exception e){
             System.out.println(e.getMessage());

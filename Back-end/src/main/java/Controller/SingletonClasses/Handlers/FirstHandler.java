@@ -21,7 +21,7 @@ public class FirstHandler implements HandlerI{
         }
     }
 
-    public void handle(String concern, EmailI email)throws Exception{
+    public void handle(String concern, EmailI email, String folderName)throws Exception{
         if(concern == this.concern){
             Database database = Database.getInstance();
             if(database.getProfilebyUsername("", email.getSenderUsername()) == null){
@@ -42,7 +42,7 @@ public class FirstHandler implements HandlerI{
             if(this.successor == null){
                 throw new Exception("NO HANDLER CAN HANDLE THIS CONCERN");
             }
-            this.successor.handle(concern,email);
+            this.successor.handle(concern,email, folderName);
         }
     }
 

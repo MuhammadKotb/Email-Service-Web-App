@@ -20,7 +20,7 @@ public class SentPageController {
     @PostMapping("/movetoTrashSent")
     String movetoTrash(@RequestBody Email email){
         try{
-            FirstHandler.getInstance().handle("MovetoTrash",email);
+            FirstHandler.getInstance().handle("MovetoTrash",email, "");
             return "MOVED TO TRASH SUCCESSFULLY";
         }
         catch (Exception e){

@@ -98,6 +98,16 @@ public class Deleter {
         profile.removeFolderbyName(folderName);
     }
 
+    public void deleteEmailProfileFolder(ProfileI profile, String folderName, EmailI email) throws Exception{
+        if(profile.getProfileFolderbyName(folderName).getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
+    }
+
     public void deleteContact(ContactI contact, ProfileI profile) throws Exception{
         if(profile.getContacts().getContact(contact.getUsername()) == null){
             throw new Exception("NO SUCH CONTACT FOR THIS PROFILE");

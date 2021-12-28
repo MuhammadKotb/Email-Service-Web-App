@@ -21,7 +21,7 @@ public class SendEmailPageController {
     @PostMapping("/sendEmail")
     String sendEmail(@RequestBody Email email){
         try{
-            FirstHandler.getInstance().handle("SendEmail", email);
+            FirstHandler.getInstance().handle("SendEmail", email, "");
             return "SENT EMAIL SUCCESSFULLY";
         }
         catch (Exception e){
@@ -44,6 +44,7 @@ public class SendEmailPageController {
             System.out.println(e.getMessage());
         }
     }
+
     @PostMapping("/test")
     void testMethod(@RequestParam(value = "string") String string, @RequestBody Email email){
         System.out.println(string);
@@ -58,7 +59,7 @@ public class SendEmailPageController {
     @PostMapping("/movetoDraft")
     void movetoDraft(@RequestParam(value = "email") EmailI email){
         try {
-            FirstHandler.getInstance().handle("MovetoDraft",email);
+            FirstHandler.getInstance().handle("MovetoDraft",email, "");
         }catch (Exception e){
             System.out.println(e.getMessage());
 

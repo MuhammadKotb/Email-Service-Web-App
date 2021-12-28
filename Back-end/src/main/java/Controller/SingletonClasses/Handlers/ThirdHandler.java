@@ -10,7 +10,7 @@ import Controller.SingletonClasses.Database;
 public class ThirdHandler implements HandlerI {
 
     private final String concern = "MovetoDraft";
-    private HandlerI successor = null;
+    private HandlerI successor = FourthHandler.getInstance();
     private static ThirdHandler instance = null;
 
     private ThirdHandler(){}
@@ -20,14 +20,14 @@ public class ThirdHandler implements HandlerI {
         }else {
             return instance;
         }
-
     }
+
     @Override
-    public void handle(String concern, EmailI email) throws Exception {
+    public void handle(String concern, EmailI email, String folderName) throws Exception {
         if(concern == this.concern){
             Database database = Database.getInstance();
             if(database.getProfilebyUsername("", email.getOwner()) == null){
-                throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
+                throw new Exception("THERE IS NO PROFILE BY THIS USERNAME");
             }
             ProfileI owner = database.getProfilebyUsername("", email.getOwner());
             Creator.getInstance().createEmailDataDraft(email, owner, email.getEmailID());
@@ -37,7 +37,7 @@ public class ThirdHandler implements HandlerI {
             if(this.successor == null){
                 throw new Exception("NO HANDLER CAN HANDLE THIS CONCERN");
             }
-            this.successor.handle(concern,email);
+            this.successor.handle(concern, email, folderName);
         }
     }
 }
