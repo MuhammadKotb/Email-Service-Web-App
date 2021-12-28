@@ -23,7 +23,7 @@
             </thead>
             <tbody id = "mybody">
             </tbody>
-            <button type="button">Clear List</button>
+            <button type="button"(click) = "getMessage()">Clear List</button>
         </table>
     </div>
 
@@ -34,7 +34,7 @@
 
     <div id = "Attachments">
         <label for = "attachment">Select an attachment:</label>
-        <input type="file" id="attachment">
+        <input type="file" id="attachment" multiple (change) = "getAttachment($event.target)">
     </div>
     
     <div id = "Message">

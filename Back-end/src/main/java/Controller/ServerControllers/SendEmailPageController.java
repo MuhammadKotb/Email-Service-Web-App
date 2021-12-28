@@ -19,7 +19,7 @@ public class SendEmailPageController {
     Attachment attachment = new Attachment();
 
     @PostMapping("/sendEmail")
-    String sendEmail(@RequestBody EmailI email){
+    String sendEmail(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("SendEmail", email);
             return "SENT EMAIL SUCCESSFULLY";

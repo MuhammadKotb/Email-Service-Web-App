@@ -18,9 +18,15 @@ import java.util.ArrayList;
 @CrossOrigin(origins = "http://localhost:4200/home/trash")
 public class TrashPageController {
     @GetMapping("/getTrash")
-    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
+    ArrayList<EmailI> getTrash(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
         try{
-            return Database.getInstance().getProfilebyUsername("", username).getTrash().getEmails();
+            if(!Boolean.parseBoolean(priority)){
+                EmailsSorterI emailsSorter = new EmailsSorter(false);
+                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getTrash().getEmails(), "date");
+            }
+            else{
+                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getTrash().getEmailsPrioritized());
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());

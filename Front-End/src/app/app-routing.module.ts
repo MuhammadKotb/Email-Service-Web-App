@@ -20,7 +20,7 @@ const routes: Routes = [
     {path:'sendEmail',component:SendEmailComponent},
     {path:'sent',component:SentComponent},
     {path:'draft',component:DraftComponent},
-    {path:'contacts',component:ContactsComponent},
+  {path:'contacts',component:ContactsComponent},
     {path: 'folders',component:FoldersComponent,children:[
       {path: 'specificFolder',component:SpecificFolderComponent}
     ]}

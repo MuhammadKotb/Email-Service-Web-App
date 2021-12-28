@@ -18,6 +18,12 @@ export class TrashService {
 
   }
 
+  deleteForever(loginUsername:string,email:EmailI) : Observable<EmailI[]>{
+
+    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever?username=" + loginUsername, email);
+
+  }
+
   
   
 }

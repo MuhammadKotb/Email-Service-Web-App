@@ -43,7 +43,7 @@ public class Email implements EmailI {
     }
 
     public String getPriority() {
-        return priority;
+        return this.priority;
     }
 
     public void setPriority(String priority) {
@@ -51,7 +51,7 @@ public class Email implements EmailI {
     }
 
     public Email(){}
-    public Email(String subject, String body, String senderUsername, ArrayList<String> receiversUsernames, String emailType, ArrayList<Attachment> attachments){
+    public Email(String subject, String body, String senderUsername, ArrayList<String> receiversUsernames, String emailType, ArrayList<Attachment> attachments, String priority){
         this.senderUsername = senderUsername;
         this.receiversUsernames = receiversUsernames;
         this.subject = subject;
@@ -60,6 +60,7 @@ public class Email implements EmailI {
         this.timeSentString = SimpleDateFormat.getDateTimeInstance().format(new Date());
         this.emailType = emailType;
         this.attachments = attachments;
+        this.priority = priority;
     }
     @Override
     public String getSenderUsername() {

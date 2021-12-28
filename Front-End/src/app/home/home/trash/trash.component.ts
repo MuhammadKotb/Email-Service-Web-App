@@ -11,15 +11,17 @@ import { TrashService } from './trash.service';
   styleUrls: ['./trash.component.css']
 })
 export class TrashComponent implements OnInit {
-  private listOfEmails : EmailI[] = []
-  private viewArray : string[][] = []
-  private listPreSize : number = this.viewArray.length
-  private placer = new InboxComponent()
-  private serveMe1 : InboxService | undefined
-  private serveMe2 : TrashService | undefined
+  private listOfEmails : EmailI[] 
+  private viewArray : string[][] 
+  private listPreSize : number
+  private iterationsNum : number
+  private listOfButtons : NodeList
 
-
-  constructor() { 
+  constructor(private serveMe1: InboxService, private serveMe2: TrashService, private placer : InboxComponent  ) { 
+    this.listOfEmails = []
+    this.viewArray = []
+    this.listPreSize = this.viewArray.length
+    this.iterationsNum = 5
   }
 
   ngOnInit(): void {
@@ -73,10 +75,13 @@ export class TrashComponent implements OnInit {
     this.listOfEmails.push(Z)
     this.listOfEmails.push(w)
 
-    this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
     this.listPreSize  = this.viewArray.length
+
     this.parseArray()
-    this.placer.place(this.viewArray,5,this.listPreSize,"Restore")
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+    this.listOfButtons = document.querySelectorAll("td  > button")
+
     this.checkClick()
 }
 parseArray(){
@@ -94,27 +99,40 @@ parseArray(){
   }
 }
 checkClick(){
-  var listOfButtons = document.querySelectorAll("td  > button")
-    for (var i =  0 ; i < listOfButtons.length ; i++){
-      if (i%2){
-        listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe1?.delete(LoginComponent.globalUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
-        })
-        this.listPreSize = this.viewArray.length
-        this.parseArray()
-        this.placer.place(this.viewArray,this.listPreSize,5)
+  for (var i =  0 ; i < this.listOfButtons.length ; i++){
+
+    if (i%2){
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.deleteClicked,this));
     }else{
-        listOfButtons[i].addEventListener("click", e =>{
-          this.serveMe2?.restore(LoginComponent.globalUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);
-          });
-        })
-        
-      }
-      
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.restoreClicked,this));
     }
+    
+  }
 }
 
-
+deleteClicked(e: any){
+  try{
+    const buttonNum = parseInt(e.target.id)
+      this.serveMe1?.delete(this.serveMe1.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        this.listOfEmails = data; 
+        console.log(this.listOfEmails);
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+  });
+  }catch (error){
+    console.log(error)
+  }
+}
+  restoreClicked(e: any){
+    try{
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe2?.restore(this.serveMe2.loginUsername,this.listOfEmails[buttonNum/2]).subscribe((data : EmailI)=> {var email = data; console.log(this.listOfEmails);
+          });
+    }catch (error){
+      console.log(error)
+    }
+  }
 
 
 

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailI } from '../home.component'
+import { Router } from '@angular/router';
+import { LoginComponent } from 'src/app/login/login/login.component';
+import { EmailI, HomeComponent } from '../home.component'
 import { InboxComponent } from '../inbox/inbox.component';
+import {InboxService } from '../inbox/inbox.service';
+import { TrashService } from '../trash/trash.service';
+import $ from "jquery"
 
 
 @Component({
@@ -9,11 +14,22 @@ import { InboxComponent } from '../inbox/inbox.component';
   styleUrls: ['./draft.component.css']
 })
 export class DraftComponent implements OnInit {
-  private listOfEmails : EmailI[] = []
-  private viewArray : string[][] = []
+  private listOfEmails : EmailI[] 
+  private viewArray : string[][] 
+  private listPreSize : number
+  private iterationsNum : number
+  private listOfButtons : NodeList
 
-  constructor() { 
+
+  constructor(private router : Router, private serveMe1: InboxService, private serveMe2 : TrashService, private placer : InboxComponent  ) { 
+    this.listOfEmails = []
+    this.viewArray = []
+    this.listPreSize = this.viewArray.length
+    this.iterationsNum = 4
+    HomeComponent.pageIndicator = "Draft"
+
   }
+  
 
   ngOnInit(): void {
     var x : EmailI = {
@@ -66,9 +82,12 @@ export class DraftComponent implements OnInit {
     this.listOfEmails.push(Z)
     this.listOfEmails.push(w)
 
+    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
+    this.listPreSize = this.viewArray.length
     this.parseArray()
-    let placer = new InboxComponent()
-    placer.place(this.viewArray,4,"Edit")
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+    this.listOfButtons = document.querySelectorAll("td  > button")
+    this.checkClick()
 }
 parseArray(){
   for (let email=0; email < this.listOfEmails.length;email++){
@@ -79,5 +98,45 @@ parseArray(){
   }
 }
 
+checkClick(){
+  for (var i =  0 ; i < this.listOfButtons.length ; i++){
+
+    if (i%2){
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.deleteClicked,this));
+    }else{
+      this.listOfButtons[i].addEventListener("click",$.proxy(this.editClicked,this));
+    }
+    
+  }
+}
+
+
+  deleteClicked(e: any){
+    try{
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe2?.deleteForever(this.serveMe2.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        this.listOfEmails = data;
+         console.log(this.listOfEmails)
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+  });
+    }catch (error){
+      console.log(error)
+    }
+  }
+    editClicked(e: any){
+      try{
+        console.log(this.listOfEmails)
+        const buttonNum = parseInt(e.target.id)
+        this.showInSendEmail()
+      }catch (error){
+        console.log(error)
+      }
+    }
+
+    showInSendEmail(){
+      this.router.navigate(['/home/sendEmail']);
+    }
 
 }

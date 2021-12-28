@@ -12,8 +12,8 @@ import java.util.Arrays;
 
 public class EmailsSortingTester {
 
-    static EmailI firstEmail = new Email("test","hello programmer","joe", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null);
-    static EmailI secondEmail = new Email("test","hello programmer","ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null);
+    static EmailI firstEmail = new Email("test","hello programmer","joe", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null, "non-nessential");
+    static EmailI secondEmail = new Email("test","hello programmer","ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null, "crucial");
     static ArrayList<EmailI> enteredEmails = new ArrayList<EmailI>();
     static ArrayList<EmailI> sortedEmails = new ArrayList<EmailI>();
     static EmailsSorter sorter = mock(EmailsSorter.class);

@@ -12,6 +12,7 @@ import Controller.Sorter.EmailsSorterI;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/home/inbox")
@@ -30,15 +31,23 @@ public class InboxPageController {
     }
 
     @GetMapping("/getInbox")
-    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
+    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
         try{
-            return Database.getInstance().getProfilebyUsername("", username).getInbox().getEmails();
+            if(!Boolean.parseBoolean(priority)){
+                EmailsSorterI emailsSorter = new EmailsSorter(false);
+                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getInbox().getEmails(), "date");
+            }
+            else{
+                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getInbox().getEmailsPrioritized());
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());
             return null;
         }
     }
+
+
 
     @GetMapping("/sortInbox")
     ArrayList<EmailI> sortInbox(@RequestParam(value = "username") String username, @RequestParam(value = "target") String target, @RequestParam(value = "ascending") String ascending){

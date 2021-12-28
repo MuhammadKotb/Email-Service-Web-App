@@ -13,8 +13,8 @@ import java.util.Collections;
 
 
 public class EmailsFilterTester {
-    static EmailI firstEmail = new Email("test","hello programmer","Ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null);
-    static EmailI secondEmail = new Email("test","hello programmer","Joe", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null);
+    static EmailI firstEmail = new Email("test","hello programmer","Ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null,"crucial");
+    static EmailI secondEmail = new Email("test","hello programmer","Joe", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null, "important");
     static ArrayList<EmailI> emails = new ArrayList<EmailI>();
     static EmailsFilteringCustomizedCriteria filter = mock(EmailsFilteringCustomizedCriteria.class);
 

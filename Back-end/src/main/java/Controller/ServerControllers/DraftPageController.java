@@ -9,6 +9,7 @@ import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Handlers.FirstHandler;
 import Controller.Sorter.EmailsSorter;
 import Controller.Sorter.EmailsSorterI;
+import org.glassfish.hk2.runlevel.Sorter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,9 +29,15 @@ public class DraftPageController {
         }
     }
     @GetMapping("/getDraft")
-    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
+    ArrayList<EmailI> getDraft(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
         try{
-            return Database.getInstance().getProfilebyUsername("", username).getDraft().getEmails();
+            if(!Boolean.parseBoolean(priority)){
+                EmailsSorterI emailsSorter = new EmailsSorter(false);
+                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getDraft().getEmails(), "date");
+            }
+            else{
+                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getDraft().getEmailsPrioritized());
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());

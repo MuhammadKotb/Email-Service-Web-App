@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 public class EmailsSearchingTester {
-    static EmailI firstEmail = new Email("test","hello my friend","Ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null);
-    static EmailI secondEmail = new Email("test","hello programmer","Joe", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null);
+    static EmailI firstEmail = new Email("test","hello my friend","Ahmed", new ArrayList<String>(Arrays.asList(new String[]{"Muhammad"})),null,null, "skippable");
+    static EmailI secondEmail = new Email("test","hello programmer","Joe", new ArrayList<String>(Arrays.asList(new String[]{"Mn3m"})),null,null, "non-essential");
     static ArrayList<EmailI> emails = new ArrayList<EmailI>();
     static EmailsSearchingCustomizedCriteria searcher = mock(EmailsSearchingCustomizedCriteria.class);
 

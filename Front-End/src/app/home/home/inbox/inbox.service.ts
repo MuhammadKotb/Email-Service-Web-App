@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginComponent } from 'src/app/login/login/login.component';
 import { EmailI } from '../home.component';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,13 +17,9 @@ export class InboxService {
   }
   delete(loginUsername:string,email:EmailI) : Observable<EmailI[]>{
 
-    return this.http.post<EmailI[]>("http://localhost:8080/delete?username=" + loginUsername, email);
+    return this.http.delete<EmailI[]>("http://localhost:8080/delete?username=" + loginUsername, email);
   }
-  show(loginUsername:string,email:EmailI) : Observable<EmailI>{
 
-    return this.http.post<EmailI>("http://localhost:8080/show?username=" + loginUsername, email);
-
-  }
 
   
   

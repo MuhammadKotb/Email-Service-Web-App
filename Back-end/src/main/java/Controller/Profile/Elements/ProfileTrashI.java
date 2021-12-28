@@ -17,6 +17,11 @@ public interface ProfileTrashI {
     void addEmail(EmailI email);
     void removeEmail(EmailI email);
     void removeEmailbyID(String ID);
+    void setEmails(ArrayList<EmailI> emails);
+
+    void setEmailsPrioritized(PriorityQueue<EmailI> emailsPrioritized);
+
+    PriorityQueue<EmailI> getEmailsPrioritized();
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);
     EmailI getEmailbySenderUsername(String username);

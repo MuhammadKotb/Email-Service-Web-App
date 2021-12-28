@@ -1,6 +1,7 @@
 package Controller.Profile.Elements;
 
 import Controller.DataContainerI;
+import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ public interface ProfileDraftI {
     void addEmail(EmailI email);
     void removeEmail(EmailI email);
     void removeEmailbyID(String ID);
+    void setEmails(ArrayList<EmailI> emails);
+
+    void setEmailsPrioritized(PriorityQueue<EmailI> emailsPrioritized);
+
+    PriorityQueue<EmailI> getEmailsPrioritized();
 
     EmailI getEmailbySubject(String subject);
     EmailI getEmailbyBody(String body);

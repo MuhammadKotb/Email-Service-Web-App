@@ -114,7 +114,7 @@ public class Creator {
     }
 
     public EmailI createEmailDataInbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Inbox", email.getAttachments());
+        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Inbox", email.getAttachments(), email.getPriority());
         File file = new File(profile.getInbox().getInboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE INBOX EMAIL FILE");
@@ -125,7 +125,7 @@ public class Creator {
         return inboxEmail;
     }
     public EmailI createEmailDataSent(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Sent", email.getAttachments());
+        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Sent", email.getAttachments(), email.getPriority());
         File file = new File(profile.getSent().getSentDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE Sent EMAIL FILE");
@@ -136,7 +136,7 @@ public class Creator {
         return SentEmail;
     }
     public EmailI createEmailDataDraft(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Draft", email.getAttachments());
+        EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Draft", email.getAttachments(), email.getPriority());
         File file = new File(profile.getDraft().getDraftDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -147,7 +147,7 @@ public class Creator {
         return draftEmail;
     }
     public EmailI createEmailDataTrash(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Trash", email.getAttachments());
+        EmailI trashEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Trash", email.getAttachments(), email.getPriority());
         File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
@@ -163,7 +163,7 @@ public class Creator {
         if(profile.getProfileFolderbyName(folderName) == null){
             throw new Exception("NO FOLDER BY THIS NAME BELONING TO THIS PROFILE");
         }
-        EmailI emailFolder = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), folderName, email.getAttachments());
+        EmailI emailFolder = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), folderName, email.getAttachments(), email.getPriority());
         File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE FOLDER EMAIL FILE");

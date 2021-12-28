@@ -18,6 +18,12 @@ public interface ProfileFolderI {
     void removeEmail(EmailI email);
     void removeEmailbyID(String ID);
 
+    void setEmails(ArrayList<EmailI> emails);
+
+    void setEmailsPrioritized(PriorityQueue<EmailI> emailsPrioritized);
+
+    PriorityQueue<EmailI> getEmailsPrioritized();
+
 
     String getName();
     void setName(String name);

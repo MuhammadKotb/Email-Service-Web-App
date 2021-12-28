@@ -30,9 +30,15 @@ public class SentPageController {
     }
 
     @GetMapping("/getSent")
-    ArrayList<EmailI> getInbox(@RequestParam(value = "username") String username){
+    ArrayList<EmailI> getSent(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
         try{
-            return Database.getInstance().getProfilebyUsername("", username).getSent().getEmails();
+            if(!Boolean.parseBoolean(priority)){
+                EmailsSorterI emailsSorter = new EmailsSorter(false);
+                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getSent().getEmails(), "date");
+            }
+            else{
+                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getSent().getEmailsPrioritized());
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());
