@@ -1,6 +1,6 @@
 package Controller.ServerControllers;
 
-import Controller.EmailsFilter.CriteriaI;
+import Controller.EmailsFilter.EmailsCriteriaI;
 import Controller.EmailsFilter.EmailsFilteringCustomizedCriteria;
 import Controller.EmailsFilter.EmailsSearchingCustomizedCriteria;
 import Controller.Profile.Elements.Email.Email;
@@ -54,7 +54,7 @@ public class SentPageController {
     ArrayList<EmailI> filterSent(@RequestParam(value = "username") String username, @RequestParam(value = "target") String target, @RequestParam(value = "feature") String feature){
         try{
             Database database = Database.getInstance();
-            CriteriaI filter = new EmailsFilteringCustomizedCriteria(feature, target);
+            EmailsCriteriaI filter = new EmailsFilteringCustomizedCriteria(feature, target);
             return filter.meetCriteria(database.getProfilebyUsername("", username).getSent().getEmails());
         }
         catch (Exception e){
@@ -66,7 +66,7 @@ public class SentPageController {
     ArrayList<EmailI> searchSent(@RequestParam(value = "username") String username, @RequestParam(value = "target") String target){
         try{
             Database database = Database.getInstance();
-            CriteriaI searcher = new EmailsSearchingCustomizedCriteria(target);
+            EmailsCriteriaI searcher = new EmailsSearchingCustomizedCriteria(target);
             return searcher.meetCriteria(database.getProfilebyUsername("", username).getSent().getEmails());
         }
         catch (Exception e){

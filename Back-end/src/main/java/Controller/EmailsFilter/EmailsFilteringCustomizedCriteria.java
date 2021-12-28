@@ -4,7 +4,7 @@ import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
 
-public class EmailsFilteringCustomizedCriteria implements CriteriaI{
+public class EmailsFilteringCustomizedCriteria implements EmailsCriteriaI {
     private String feature;
     private String target;
 

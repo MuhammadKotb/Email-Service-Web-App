@@ -4,7 +4,7 @@ import Controller.Profile.Elements.Contacts.ContactI;
 
 import java.util.ArrayList;
 
-public class ContactsSearchingCustomizedCriteria implements CriteriaI {
+public class ContactsSearchingCustomizedCriteria implements ContactsCriteriaI {
     private String target;
 
     public ContactsSearchingCustomizedCriteria(String target){

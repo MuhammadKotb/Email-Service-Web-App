@@ -4,7 +4,7 @@ import Controller.Profile.Elements.Email.EmailI;
 
 import java.util.ArrayList;
 
-public class EmailsSearchingCustomizedCriteria implements CriteriaI{
+public class EmailsSearchingCustomizedCriteria implements EmailsCriteriaI {
     private String target;
 
     public EmailsSearchingCustomizedCriteria(String target){

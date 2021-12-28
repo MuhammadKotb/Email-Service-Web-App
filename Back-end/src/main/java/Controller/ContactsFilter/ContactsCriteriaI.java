@@ -4,6 +4,6 @@ import Controller.Profile.Elements.Contacts.ContactI;
 
 import java.util.ArrayList;
 
-public interface CriteriaI {
+public interface ContactsCriteriaI {
     ArrayList<ContactI> meetCriteria(ArrayList<ContactI> contacts);
 }
