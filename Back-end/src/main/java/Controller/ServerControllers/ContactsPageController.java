@@ -1,5 +1,7 @@
 package Controller.ServerControllers;
 
+
+import Controller.ContactsFilter.SearchingCustomizedCriteria;
 import Controller.Profile.Elements.Contacts.Contact;
 import Controller.Profile.Elements.Contacts.ContactI;
 import Controller.SingletonClasses.Creator;
@@ -69,15 +71,27 @@ public class ContactsPageController {
 
     }
     @GetMapping("/sortContacts")
-    ArrayList<ContactI> sortContacts(@RequestParam(value = "username") String username, @RequestParam(value = "ascending") String ascending){
-        try{
+    ArrayList<ContactI> sortContacts(@RequestParam(value = "username") String username, @RequestParam(value = "ascending") String ascending) {
+        try {
             ContactSorterI sorter = new ContactSorter(Boolean.parseBoolean(ascending));
             return sorter.sort(Database.getInstance().getProfilebyUsername("", username).getContacts().getContacts());
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    @PostMapping("/searchContacts")
+    ArrayList<ContactI> searchContacts(@RequestParam(value = "username") String username,@RequestParam(value = "target") String target){
+        try {
+            Database database = Database.getInstance();
+            SearchingCustomizedCriteria search = new SearchingCustomizedCriteria(target);
+            return search.meetCriteria(database.getProfilebyUsername("",username).getContacts().getContacts());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 }
