@@ -33,7 +33,7 @@ public class FilteringCustomizedCriteria implements CriteriaI{
                 break;
             case "receiverUsername":
                 for(EmailI email:emails){
-                    if((email.getReceiverUsername().toLowerCase()).contains(this.target.toLowerCase())){
+                    if((email.getReceiversUsernames().get(0).toLowerCase()).contains(this.target.toLowerCase())){
                         filteredEmails.add(email);
                     }
                 }

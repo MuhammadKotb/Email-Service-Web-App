@@ -16,7 +16,7 @@ public class SearchingCustomizedCriteria implements CriteriaI{
         ArrayList<EmailI> filteredEmails = null;
         for(EmailI email:emails){
             if((email.getBody().toLowerCase()).concat(email.getSubject().toLowerCase()
-            .concat(email.getSenderUsername().toLowerCase().concat(email.getReceiverUsername().toLowerCase()
+            .concat(email.getSenderUsername().toLowerCase().concat(email.getReceiversUsernames().get(0).toLowerCase()
             .concat(email.getTimeSentString().toLowerCase())))).contains(this.target.toLowerCase())){
                 filteredEmails.add(email);
             }

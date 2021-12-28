@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.DataFormatException;
@@ -15,7 +16,7 @@ public class Email implements EmailI {
 
     private String owner;
     private String senderUsername;
-    private String receiverUsername;
+    private ArrayList<String> receiversUsernames;
     private String priority;
 
 
@@ -35,14 +36,14 @@ public class Email implements EmailI {
     private String emailID;
 
     private String emailType;
-    List<Attachment> attachments = null;
+    ArrayList<Attachment> attachments = null;
 
-    public String getReceiverUsername() {
-        return receiverUsername;
+    public ArrayList<String> getReceiversUsernames() {
+        return this.receiversUsernames;
     }
 
-    public void setReceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
+    public void setReceiversUsernames(ArrayList<String> receiversUsernames) {
+        this.receiversUsernames = receiversUsernames;
     }
 
     public String getPriority() {
@@ -54,9 +55,9 @@ public class Email implements EmailI {
     }
 
     public Email(){}
-    public Email(String subject, String body, String senderUsername, String receiverUsername, String emailType, List<Attachment> attachments){
+    public Email(String subject, String body, String senderUsername, ArrayList<String> receiversUsernames, String emailType, ArrayList<Attachment> attachments){
         this.senderUsername = senderUsername;
-        this.receiverUsername = receiverUsername;
+        this.receiversUsernames = receiversUsernames;
         this.subject = subject;
         this.body = body;
         this.timeSent = String.valueOf(new Date().getTime());
@@ -100,7 +101,7 @@ public class Email implements EmailI {
     }
 
     @Override
-    public List<Attachment> getAttachments() {
+    public ArrayList<Attachment> getAttachments() {
         return this.attachments;
     }
 
@@ -140,7 +141,7 @@ public class Email implements EmailI {
     }
 
     @Override
-    public void setAttachments(List<Attachment> attachments) {
+    public void setAttachments(ArrayList<Attachment> attachments) {
         this.attachments = attachments;
     }
 

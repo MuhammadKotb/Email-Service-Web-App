@@ -53,7 +53,7 @@ public class Sorter implements SorterI {
 
     private ArrayList<EmailI> sortByReceiver(ArrayList<EmailI> emails) {
         EmailI[] emailsSorted = emails.toArray(EmailI[]::new);
-        Arrays.sort(emailsSorted, Comparator.comparing(email -> email.getReceiverUsername().toLowerCase()));
+        Arrays.sort(emailsSorted, Comparator.comparing(email -> email.getReceiversUsernames().get(0).toLowerCase()));
         ArrayList<EmailI> ret =  new ArrayList<>(Arrays.asList(emailsSorted));
         if (!this.ascending) {
             Collections.reverse(ret);

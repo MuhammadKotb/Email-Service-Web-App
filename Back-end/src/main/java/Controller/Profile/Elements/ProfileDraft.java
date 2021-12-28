@@ -102,7 +102,7 @@ public class ProfileDraft implements ProfileDraftI {
     public EmailI getEmailbyreceiverUsername(String username) {
         EmailI email = null;
         for(int i = 0; i < this.emails.size(); i++){
-            if(username.equals(this.emails.get(i).getReceiverUsername())){
+            if(username.equals(this.emails.get(i).getReceiversUsernames().get(0))){
                 email = this.emails.get(i);
             }
         }

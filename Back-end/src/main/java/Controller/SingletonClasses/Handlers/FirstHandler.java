@@ -29,11 +29,11 @@ public class FirstHandler implements HandlerI{
                 throw new Exception("THERE IS NO SENDER BY THIS USERNAME");
             }
 
-            if(database.getProfilebyUsername("", email.getReceiverUsername()) == null){
+            if(database.getProfilebyUsername("", email.getReceiversUsernames().get(0)) == null){
                 throw new Exception("THERE IS NO RECIEVER BY THIS USERNAME");
             }
             ProfileI sender = database.getProfilebyUsername("", email.getSenderUsername());
-            ProfileI reciever = database.getProfilebyUsername("", email.getReceiverUsername());
+            ProfileI reciever = database.getProfilebyUsername("", email.getReceiversUsernames().get(0));
             Creator creator = Creator.getInstance();
             String senderID = UUID.randomUUID().toString();
             String recieverID = UUID.randomUUID().toString();
