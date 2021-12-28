@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/home/trash")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TrashPageController {
     @GetMapping("/getTrash")
     ArrayList<EmailI> getTrash(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){

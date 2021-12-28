@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/home/contacts")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ContactsPageController {
 
     @PostMapping("/addContact")

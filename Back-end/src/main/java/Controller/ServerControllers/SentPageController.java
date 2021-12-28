@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/home/sent")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SentPageController {
     @PostMapping("/movetoTrashSent")
     String movetoTrash(@RequestBody Email email){

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/home/inbox")
+@CrossOrigin(origins = "http://localhost:4200")
 public class InboxPageController {
 
     @PostMapping("/movetoTrashInbox")
