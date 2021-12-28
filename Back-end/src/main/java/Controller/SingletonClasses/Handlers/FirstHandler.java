@@ -36,6 +36,7 @@ public class FirstHandler implements HandlerI{
             Creator creator = Creator.getInstance();
             String senderID = UUID.randomUUID().toString();
             String recieverID = UUID.randomUUID().toString();
+            System.out.println("OWNER__>>"+ email.getOwner());
             reciever.getInbox().addEmail(creator.createEmailDataInbox(email, reciever, senderID));
             sender.getSent().addEmail(creator.createEmailDataSent(email, sender, recieverID));
         }else{

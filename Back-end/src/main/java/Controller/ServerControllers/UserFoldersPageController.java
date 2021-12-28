@@ -73,7 +73,7 @@ public class UserFoldersPageController {
         }
     }
     @PostMapping("/moveToTrash")
-    String moveToTrash(@RequestBody Email email, @RequestParam(value = "usernane") String username, @RequestParam(value = "foldername") String folderName){
+    String moveToTrash(@RequestBody Email email, @RequestParam(value = "foldername") String folderName){
         try{
             FirstHandler.getInstance().handle("MovetoTrash", email, folderName);
             return "MOVED TO TRASH SUCCESSFULLY";
