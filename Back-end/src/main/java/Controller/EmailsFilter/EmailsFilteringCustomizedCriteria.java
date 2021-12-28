@@ -47,20 +47,7 @@ public class EmailsFilteringCustomizedCriteria implements EmailsCriteriaI {
                     }
                 }
                 break;
-            case "receiverUsername":
-                for(EmailI email:emails){
-                    if((email.getReceiversUsernames().get(0).toLowerCase()).contains(this.target.toLowerCase())){
-                        filteredEmails.add(email);
-                    }
-                }
-                break;
-            case "timeSent":
-                for(EmailI email:emails){
-                    if((email.getTimeSentString().toLowerCase()).contains(this.target.toLowerCase())){
-                        filteredEmails.add(email);
-                    }
-                }
-                break;
+
         }
         return filteredEmails;
     }
