@@ -66,7 +66,6 @@ export class HomeComponent implements OnInit {
     }
 
     else if (HomeComponent.pageIndicator == "Sent"){
-      this.switchToInbox();
       console.log("Sent Filtered")
       this.serveMe1.filterSent(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {this.sent.filterSent(data);console.log(SentComponent.listOfEmails);})
     }

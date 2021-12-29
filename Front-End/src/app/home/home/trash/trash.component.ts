@@ -21,7 +21,7 @@ export class TrashComponent implements OnInit {
   private iterationsNum : number
   private listOfButtons : NodeList
 
-  constructor(private serveMe1: TrashService, private placer : InboxComponent  ) { 
+  constructor(private serveMe1: TrashService) { 
     TrashComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -86,7 +86,7 @@ export class TrashComponent implements OnInit {
       this.listPreSize  = this.viewArray.length
       this.parseArray()
 
-      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+      this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
       this.listOfButtons = document.querySelectorAll("td  > button")
       this.checkClick()
     });
@@ -119,26 +119,46 @@ checkClick(){
   }
 }
 sortTrash(input : EmailI[]){
+  this.listPreSize = TrashComponent.listOfEmails.length;
   TrashComponent.listOfEmails = input
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 filterTrash(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = TrashComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
   TrashComponent.listOfEmails = input
+  console.log("COMP LENGTH ", TrashComponent.listOfEmails.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 searchTrash(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = TrashComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
   TrashComponent.listOfEmails = input
+  console.log("COMP LENGTH ", TrashComponent.listOfEmails.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+
+  this.parseArray();
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
@@ -167,5 +187,49 @@ deleteClicked(e: any){
       console.log(error)
     }
   }
+  place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
+    var body = document.getElementById("mybody")
+    var buttonCount = 0
+    for (let i=0;i<listPreSize;i++){
+      console.log("REMOVED CHILD");
+      body?.removeChild(body?.childNodes[0])
+    }
+    console.log(viewArray)
+    for (let i=0;i<viewArray.length;i++){
+      var node = document.createElement("tr");
+      node.style.width = "300px"
+      node.style.textAlign = "center"
+      node.style.padding = "7px"
+      node.style.margin = "50px"
+      for (let j=0;j<iterationsNum;j++){
+          var node2 = document.createElement("td");
+          if (j!=iterationsNum-1){
+            var textNode = document.createTextNode(viewArray[i][j]);
+            node2.appendChild(textNode);
+          }else{
+            if (btnName!="Delete"){
+              var node3 = document.createElement("button");
+              node3.style.marginRight = "5px"
+              var textNode = document.createTextNode(btnName);
+              node3.appendChild(textNode);
+              node3.type = "button";
+              node3.id = (buttonCount).toString()
+              node2.appendChild(node3);
+              buttonCount++
+            }
+            var textNode2 = document.createTextNode("Delete");
+            var node4 = document.createElement("button");
+            node4.style.marginRight = "5px"
+            node4.appendChild(textNode2);
+            node4.type = "button";
+            node4.id = (buttonCount).toString()
+            node2.appendChild(node4);
+            buttonCount++
+          }
+          node.appendChild(node2);
+      }
+      document.getElementById("mybody")?.appendChild(node);
+  }
+}
 
 }

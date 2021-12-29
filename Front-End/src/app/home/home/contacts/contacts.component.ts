@@ -24,7 +24,7 @@ export class ContactsComponent implements OnInit {
   private iterationsNum : number
   private listOfButtons : NodeList
 
-  constructor(private router : Router, private serveMe1: ContactService, private placer : InboxComponent  ) { 
+  constructor(private router : Router, private serveMe1: ContactService) { 
     ContactsComponent.listOfContacts = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -63,7 +63,7 @@ export class ContactsComponent implements OnInit {
   this.listPreSize = this.viewArray.length
   this.parseArray()
 
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
+    this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
      this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
 }
@@ -92,7 +92,7 @@ addContact(){
   this.viewArray[0] = []
   this.viewArray[0][0] = contact.username
   this.viewArray[0][1] = ContactsComponent.listOfContacts[0].additionalEmails[0]
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
 
   
   this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data;});
@@ -111,26 +111,45 @@ checkClick(){
   }
 }
 sortContacts(input : ContactI[]){
+  this.listPreSize = ContactsComponent.listOfContacts.length;
   ContactsComponent.listOfContacts = input
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 filterContacts(input : ContactI[]){
+  console.log(input.length)
+  this.listPreSize = ContactsComponent.listOfContacts.length;
+  console.log("INPUT LENGTH ", input.length)
   ContactsComponent.listOfContacts = input
+  console.log("COMP LENGTH ", ContactsComponent.listOfContacts.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 searchContacts(input : ContactI[]){
+  console.log(input.length)
+  this.listPreSize = ContactsComponent.listOfContacts.length;
+  console.log("INPUT LENGTH ", input.length)
   ContactsComponent.listOfContacts = input
+  console.log("COMP LENGTH ", ContactsComponent.listOfContacts.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.parseArray();
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
@@ -159,4 +178,48 @@ searchContacts(input : ContactI[]){
           console.log(error)
         }
       }
+      place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
+        var body = document.getElementById("mybody")
+        var buttonCount = 0
+        for (let i=0;i<listPreSize;i++){
+          console.log("REMOVED CHILD");
+          body?.removeChild(body?.childNodes[0])
+        }
+        console.log(viewArray)
+        for (let i=0;i<viewArray.length;i++){
+          var node = document.createElement("tr");
+          node.style.width = "300px"
+          node.style.textAlign = "center"
+          node.style.padding = "7px"
+          node.style.margin = "50px"
+          for (let j=0;j<iterationsNum;j++){
+              var node2 = document.createElement("td");
+              if (j!=iterationsNum-1){
+                var textNode = document.createTextNode(viewArray[i][j]);
+                node2.appendChild(textNode);
+              }else{
+                if (btnName!="Delete"){
+                  var node3 = document.createElement("button");
+                  node3.style.marginRight = "5px"
+                  var textNode = document.createTextNode(btnName);
+                  node3.appendChild(textNode);
+                  node3.type = "button";
+                  node3.id = (buttonCount).toString()
+                  node2.appendChild(node3);
+                  buttonCount++
+                }
+                var textNode2 = document.createTextNode("Delete");
+                var node4 = document.createElement("button");
+                node4.style.marginRight = "5px"
+                node4.appendChild(textNode2);
+                node4.type = "button";
+                node4.id = (buttonCount).toString()
+                node2.appendChild(node4);
+                buttonCount++
+              }
+              node.appendChild(node2);
+          }
+          document.getElementById("mybody")?.appendChild(node);
+      }
+    }
   }

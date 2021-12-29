@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
       console.log(container)
       if(container == ""){
         alert("There is no account by such credintials");
-      }else{
+      }
+      else{
         this.home.path=container;
         LoginComponent.globalUsername = username
         console.log(LoginComponent)

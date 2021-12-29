@@ -7,6 +7,8 @@
   import { SentService } from './sent.service';
 
 
+  let filtered : boolean = false;
+  let listPreSizeFilter : number = 0;
 
   @Component({
     selector: 'app-sent',
@@ -15,15 +17,15 @@
   })
   export class SentComponent implements OnInit {
     public static listOfEmails : EmailI[] 
-    private viewArray : string[][] 
+    private viewArray : string[][] = []; 
     private listPreSize : number
     private iterationsNum : number
     private listOfButtons : NodeList
 
 
-    constructor(private serveMe: SentService, private placer : InboxComponent  ) { 
-      SentComponent.listOfEmails = []
-      this.viewArray = []
+    constructor(private serveMe: SentService) { 
+      SentComponent.listOfEmails = [];
+      filtered = false;
       this.listPreSize = this.viewArray.length
       this.iterationsNum = 4;
       HomeComponent.pageIndicator = "Sent";
@@ -81,19 +83,22 @@
       // SentComponent.listOfEmails.push(w)
 
       this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
-        SentComponent.listOfEmails = data;
-         console.log(SentComponent.listOfEmails);
-         this.listPreSize  = this.viewArray.length;
-         this.parseArray();
+          SentComponent.listOfEmails = data;
+          console.log(SentComponent.listOfEmails);
+          this.listPreSize  = this.viewArray.length;
+          this.parseArray();
 
-         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
-         this.listOfButtons = document.querySelectorAll("td  > button");
-         this.checkClick();});
+          this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+          this.listOfButtons = document.querySelectorAll("td  > button");
+          this.checkClick();});
 
   }
   parseArray(){
+    
+    this.viewArray = [];
     for (let email=0; email < SentComponent.listOfEmails.length;email++){
-      this.viewArray[email] = [] 
+      console.log("IN FOR LOOP");
+      this.viewArray[email] = [];
       this.viewArray[email][0] = SentComponent.listOfEmails[email].receiversUsernames.toString()
       this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSentString
       this.viewArray[email][2] = SentComponent.listOfEmails[email].subject
@@ -111,26 +116,46 @@
     }
 }
 sortSent(input : EmailI[]){
+  this.listPreSize = SentComponent.listOfEmails.length;
   SentComponent.listOfEmails = input
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 filterSent(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = SentComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
   SentComponent.listOfEmails = input
+  console.log("COMP LENGTH ", SentComponent.listOfEmails.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
 searchSent(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = SentComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
   SentComponent.listOfEmails = input
+  console.log("COMP LENGTH ", SentComponent.listOfEmails.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
-  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+
+  this.parseArray();
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
 }
@@ -204,6 +229,51 @@ searchSent(input : EmailI[]){
         console.log(error)
       }
     }
+
+    place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
+      var body = document.getElementById("mybody")
+      var buttonCount = 0
+      for (let i=0;i<listPreSize;i++){
+        console.log("REMOVED CHILD");
+        body?.removeChild(body?.childNodes[0])
+      }
+      console.log(viewArray)
+      for (let i=0;i<viewArray.length;i++){
+        var node = document.createElement("tr");
+        node.style.width = "300px"
+        node.style.textAlign = "center"
+        node.style.padding = "7px"
+        node.style.margin = "50px"
+        for (let j=0;j<iterationsNum;j++){
+            var node2 = document.createElement("td");
+            if (j!=iterationsNum-1){
+              var textNode = document.createTextNode(viewArray[i][j]);
+              node2.appendChild(textNode);
+            }else{
+              if (btnName!="Delete"){
+                var node3 = document.createElement("button");
+                node3.style.marginRight = "5px"
+                var textNode = document.createTextNode(btnName);
+                node3.appendChild(textNode);
+                node3.type = "button";
+                node3.id = (buttonCount).toString()
+                node2.appendChild(node3);
+                buttonCount++
+              }
+              var textNode2 = document.createTextNode("Delete");
+              var node4 = document.createElement("button");
+              node4.style.marginRight = "5px"
+              node4.appendChild(textNode2);
+              node4.type = "button";
+              node4.id = (buttonCount).toString()
+              node2.appendChild(node4);
+              buttonCount++
+            }
+            node.appendChild(node2);
+        }
+        document.getElementById("mybody")?.appendChild(node);
+    }
+  }
   
 
 }

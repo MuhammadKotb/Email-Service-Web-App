@@ -95,6 +95,8 @@ export class InboxComponent implements OnInit {
 parseArray(){
   console.log("In PARSE")
   console.log(InboxComponent.listOfEmails)
+  this.viewArray = [] 
+
   for (let email=0; email < InboxComponent.listOfEmails.length;email++){
     console.log("In Loop")
     this.viewArray[email] = [] 
@@ -108,42 +110,48 @@ parseArray(){
 }
 
 sortInbox(input : EmailI[]){
-  
-  InboxComponent.listOfEmails = input;
+  this.listPreSize = InboxComponent.listOfEmails.length;
+  InboxComponent.listOfEmails = input
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
-  
 }
 filterInbox(input : EmailI[]){
-  
-  InboxComponent.listOfEmails = input;
-  if(input.length != 0){
-    this.parseArray();
-  }
-  else{
+  console.log(input.length)
+  this.listPreSize = InboxComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
+  InboxComponent.listOfEmails = input
+  console.log("COMP LENGTH ", InboxComponent.listOfEmails.length);
+
+  this.parseArray();
+  console.log(this.viewArray.length);
+  if(input.length == 0){
     this.viewArray = [];
   }
-  this.listPreSize = this.viewArray.length;
+
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
-  
 }
-
 searchInbox(input : EmailI[]){
-  
-  InboxComponent.listOfEmails = input;
+  console.log(input.length)
+  this.listPreSize = InboxComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
+  InboxComponent.listOfEmails = input
+  console.log("COMP LENGTH ", InboxComponent.listOfEmails.length);
+
   this.parseArray();
-  this.listPreSize = this.viewArray.length;
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
-  
 }
-
 
 
 
