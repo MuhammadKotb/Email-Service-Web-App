@@ -21,7 +21,7 @@ export class FolderService {
   
   removeUserFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
 
-    return this.http.delete<FoldersI[]>("http://localhost:8080/removeUserFolder?username=" + loginUsername + "&folder=" + folderName);
+    return this.http.delete<FoldersI[]>("http://localhost:8080/removeUserFolder?username=" + loginUsername + "&foldername=" + folderName);
   }
 
   addUserFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
