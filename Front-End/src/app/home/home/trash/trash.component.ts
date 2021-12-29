@@ -15,8 +15,8 @@ import $ from "jquery"
   styleUrls: ['./trash.component.css']
 })
 export class TrashComponent implements OnInit {
-  public static listOfEmails : EmailI[] 
-  private viewArray : string[][] 
+  public static listOfEmails : EmailI[]
+  private viewArray : string[][]
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
@@ -90,12 +90,12 @@ export class TrashComponent implements OnInit {
       this.listOfButtons = document.querySelectorAll("td  > button")
       this.checkClick()
     });
-    
+
 
 }
 parseArray(){
   for (let email=0; email < TrashComponent.listOfEmails.length;email++){
-    this.viewArray[email] = [] 
+    this.viewArray[email] = []
     let isSent = TrashComponent.listOfEmails[email].emailType
     this.viewArray[email][0] = isSent
     if (isSent == "Sent" || isSent == "sent")
@@ -115,7 +115,7 @@ checkClick(){
     }else{
       this.listOfButtons[i].addEventListener("click",$.proxy(this.restoreClicked,this));
     }
-    
+
   }
 }
 sortTrash(input : EmailI[]){
@@ -166,23 +166,22 @@ searchTrash(input : EmailI[]){
 
 deleteClicked(e: any){
   try{
-  //   const buttonNum = parseInt(e.target.id)
-  //     this.serveMe1?.delete(this.serveMe1.loginUsername,TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-  //       TrashComponent.listOfEmails = data; 
-  //       console.log(TrashComponent.listOfEmails);
-  //   this.listPreSize = this.viewArray.length
-  //   this.parseArray()
-  //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
-  // });
+    const buttonNum = parseInt(e.target.id)
+    this.serveMe1.deleteForever(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+      location.reload()
+      this.ngOnInit()
+    })
   }catch (error){
     console.log(error)
   }
 }
   restoreClicked(e: any){
     try{
-      // const buttonNum = parseInt(e.target.id)
-      // this.serveMe2?.restore(this.serveMe2.loginUsername,TrashComponent.listOfEmails[buttonNum/2]).subscribe((data : EmailI)=> {var email = data; console.log(TrashComponent.listOfEmails);
-      //     });
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe1.restore(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI)=> {
+        location.reload()
+        this.ngOnInit()
+      })
     }catch (error){
       console.log(error)
     }
@@ -233,3 +232,5 @@ deleteClicked(e: any){
 }
 
 }
+
+

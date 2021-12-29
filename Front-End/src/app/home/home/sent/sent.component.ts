@@ -5,6 +5,7 @@
   import { InboxService } from '../inbox/inbox.service';
   import $ from "jquery"
   import { SentService } from './sent.service';
+import { TrashComponent } from '../trash/trash.component';
 
 
   let filtered : boolean = false;
@@ -81,6 +82,11 @@
       // SentComponent.listOfEmails.push(y)
       // SentComponent.listOfEmails.push(Z)
       // SentComponent.listOfEmails.push(w)
+      SentComponent.listOfEmails = []
+      this.viewArray = []
+      this.listPreSize = this.viewArray.length
+      this.iterationsNum = 4;
+      HomeComponent.pageIndicator = "Sent";
 
       this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
           SentComponent.listOfEmails = data;
@@ -112,7 +118,7 @@
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.showClicked,this));
       }
-      
+
     }
 }
 sortSent(input : EmailI[]){
@@ -163,8 +169,8 @@ searchSent(input : EmailI[]){
 
     closeEmailPopup(){
       (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
-  } 
-      
+  }
+
     show(email:EmailI){
       var contentsToBeDeleted = document.querySelectorAll("div > p");
       for (var i = 0; i<contentsToBeDeleted.length; i++)
@@ -196,27 +202,24 @@ searchSent(input : EmailI[]){
                   destinationNode = document.getElementById("subject-container")
                   break
           case 3 : node.id = "message"
-                   textNode = document.createTextNode(email.body)
-                   destinationNode = document.getElementById("message-container")
-                   break
+                  textNode = document.createTextNode(email.body)
+                  destinationNode = document.getElementById("message-container")
+                  break
         }
         node.appendChild(textNode)
         destinationNode?.appendChild(node)
-        
+
       }
       (<HTMLElement>document.getElementById("email-popup")).style.display = "block"
 
   }
   deleteClicked(e: any){
     try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     SentComponent.listOfEmails = data; 
-    //     console.log(SentComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-    //   })
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe.movetoTrash(SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        location.reload()
+        this.ngOnInit()
+      })
     }catch (error){
       console.log(error)
     }

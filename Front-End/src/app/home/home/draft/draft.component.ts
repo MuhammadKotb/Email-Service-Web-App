@@ -16,8 +16,8 @@ import { registerLocaleData } from '@angular/common';
   styleUrls: ['./draft.component.css']
 })
 export class DraftComponent implements OnInit {
-  public static listOfEmails : EmailI[] 
-  private viewArray : string[][] 
+  public static listOfEmails : EmailI[]
+  private viewArray : string[][]
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
@@ -31,7 +31,7 @@ export class DraftComponent implements OnInit {
     HomeComponent.pageIndicator = "Draft"
 
   }
-  
+
 
   ngOnInit(): void {
     // var x : EmailI = {
@@ -98,7 +98,7 @@ export class DraftComponent implements OnInit {
 parseArray(){
   this.viewArray = [];
   for (let email=0; email < DraftComponent.listOfEmails.length;email++){
-    this.viewArray[email] = [] 
+    this.viewArray[email] = []
     this.viewArray[email][0] = DraftComponent.listOfEmails[email].receiversUsernames.toString()
     this.viewArray[email][1] = DraftComponent.listOfEmails[email].timeSentString
     this.viewArray[email][2] = DraftComponent.listOfEmails[email].subject
@@ -113,7 +113,7 @@ checkClick(){
     }else{
       this.listOfButtons[i].addEventListener("click",$.proxy(this.editClicked,this));
     }
-    
+
   }
 }
 sortDraft(input : EmailI[]){
@@ -161,20 +161,17 @@ searchDraft(input : EmailI[]){
 }
 
 
-  deleteClicked(e: any){
-    try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     DraftComponent.listOfEmails = data;
-    //      console.log(DraftComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-  // });
-    }catch (error){
-      console.log(error)
-    }
+deleteClicked(e: any){
+  try{
+    const buttonNum = parseInt(e.target.id)
+    this.serveMe1.deleteForever(DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+      location.reload()
+      this.ngOnInit()
+    })
+  }catch (error){
+    console.log(error)
   }
+}
     editClicked(e: any){
       try{
         console.log(DraftComponent.listOfEmails)

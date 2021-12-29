@@ -15,14 +15,14 @@ import { LoginComponent } from 'src/app/login/login/login.component';
 
 
 export class InboxComponent implements OnInit {
-  public static listOfEmails : EmailI[] 
-  private viewArray : string[][] 
+  public static listOfEmails : EmailI[]
+  private viewArray : string[][]
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
 
 
-  constructor(private serveMe: InboxService) { 
+  constructor(private serveMe: InboxService) {
     InboxComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -30,7 +30,7 @@ export class InboxComponent implements OnInit {
     HomeComponent.pageIndicator = "Inbox"
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     // var x : EmailI = {
     //   senderUsername: "Hesisenberg",
     //   timeSent: "27/9/2001",
@@ -53,7 +53,7 @@ export class InboxComponent implements OnInit {
     //   emailType: '',
     //   priority: 'Important'
     // }
-    
+
     // var z : EmailI = {
     //   senderUsername: "Qotb",
     //   timeSent: "هيخو",
@@ -91,7 +91,7 @@ export class InboxComponent implements OnInit {
       this.listOfButtons = document.querySelectorAll("td  > button");
       this.checkClick();});
 }
-  
+
 parseArray(){
   console.log("In PARSE")
   console.log(InboxComponent.listOfEmails)
@@ -99,7 +99,7 @@ parseArray(){
 
   for (let email=0; email < InboxComponent.listOfEmails.length;email++){
     console.log("In Loop")
-    this.viewArray[email] = [] 
+    this.viewArray[email] = []
     this.viewArray[email][0] = InboxComponent.listOfEmails[email].senderUsername
     this.viewArray[email][1] = InboxComponent.listOfEmails[email].timeSentString
     this.viewArray[email][2] = InboxComponent.listOfEmails[email].subject
@@ -208,15 +208,15 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.showClicked,this));
       }
-      
+
     }
 }
 
-    
+
     closeEmailPopup(){
         (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
-    } 
-        
+    }
+
       show(email:EmailI){
         var contentsToBeDeleted = document.querySelectorAll("div > p");
         for (var i = 0; i<contentsToBeDeleted.length; i++)
@@ -240,31 +240,31 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
           var destinationNode = document.getElementById("sender-container")
           switch(i){
             case 0 : node.id = "sender"
-                     break
+                    break
             case 1 : node.id = "date"
-                     textNode = document.createTextNode(email.timeSentString)
-                     destinationNode = document.getElementById("date-container")
-                     break
+                    textNode = document.createTextNode(email.timeSentString)
+                    destinationNode = document.getElementById("date-container")
+                    break
             case 2 : node.id = "subject"
-                     textNode = document.createTextNode(email.subject)
-                     destinationNode = document.getElementById("subject-container")
-                     break
+                    textNode = document.createTextNode(email.subject)
+                    destinationNode = document.getElementById("subject-container")
+                    break
             case 3 : node.id = "priority"
-                     textNode = document.createTextNode(email.priority)
-                     destinationNode = document.getElementById("priority-container")
-                     break
-            case 4 : 
-                     node.id = "message"
-                     textNode = document.createTextNode(email.body)
-                     destinationNode = document.getElementById("message-container")
+                    textNode = document.createTextNode(email.priority)
+                    destinationNode = document.getElementById("priority-container")
+                    break
+            case 4 :
+                    node.id = "message"
+                    textNode = document.createTextNode(email.body)
+                    destinationNode = document.getElementById("message-container")
 
-                     break
+                    break
           }
           node.appendChild(textNode)
           destinationNode?.appendChild(node)
 
         }
-        
+
 
         (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
     }
@@ -273,16 +273,9 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
       try{
         const buttonNum = parseInt(e.target.id)
         this.serveMe.movetoTrash(InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-            console.log("In")
-            console.log(data)
-            InboxComponent.listOfEmails = data; 
-            console.log(InboxComponent.listOfEmails);
-            this.listPreSize = this.viewArray.length
-            alert(this.viewArray.length)
-            this.parseArray()
-            this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-            this.listOfButtons = document.querySelectorAll("td  > button");
-            this.checkClick();})
+          location.reload()
+          this.ngOnInit()
+        })
       }catch (error){
         console.log(error)
       }
@@ -308,7 +301,7 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 //       if (i%2){
 //         this.listOfButtons[i].addEventListener("click", e =>{
 //           this.serveMe.delete(this.serveMe.loginUsername,InboxComponent.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
-//             InboxComponent.listOfEmails = data; 
+//             InboxComponent.listOfEmails = data;
 //             console.log(InboxComponent.listOfEmails);
 //             this.listPreSize = this.viewArray.length
 //             this.parseArray()
@@ -321,8 +314,8 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 //           console.log(InboxComponent.listOfEmails[i/2])
 //           this.show(InboxComponent.listOfEmails[i/2]);
 //         })
-        
+
 //       }
-      
+
 //     }
 // }

@@ -9,9 +9,9 @@ export class LoginService {
 
   constructor(private http : HttpClient) { }
 
-  createAccount(accountDetails:string) : Observable<string>{
+  createAccount(accountDetails:string) : Observable<String>{
 
-    return this.http.post<string>("http://localhost:8080/createProfile?encryption=" + accountDetails, {responseType : "text"});
+    return this.http.post("http://localhost:8080/createProfile" , accountDetails, {responseType : "text"});
   }
   loginToAccount(accountDetails:string) : Observable<string>{
 
