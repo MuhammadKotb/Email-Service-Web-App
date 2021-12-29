@@ -23,8 +23,9 @@ export class InboxComponent implements OnInit {
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
-  private listOfCheckboxes: NodeList
-  private listOfCheckedBoxes: any[]
+  private listOfCheckboxes: NodeListOf <HTMLInputElement>
+  private listOfCheckedBoxes: number[]
+  private date_priority: string
 
 
   constructor(private serveMe: InboxService, private router:Router) {
@@ -32,6 +33,8 @@ export class InboxComponent implements OnInit {
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 5
     HomeComponent.pageIndicator = "Inbox"
+    this.listOfCheckedBoxes = []
+    this.date_priority = "false"
   }
 
   ngOnInit(): void {
@@ -86,7 +89,9 @@ export class InboxComponent implements OnInit {
     // InboxComponent.listOfEmails.push(z)
     // InboxComponent.listOfEmails.push(w)
       console.log("ng on Init called")
-      this.serveMe.getInbox(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+      this.date_priority = ((<HTMLInputElement>document.getElementById("date-priority")).checked).toString()
+      console.log(this.date_priority)
+      this.serveMe.getInbox(LoginComponent.globalUsername, this.date_priority).subscribe((data : EmailI[])=> {
       InboxComponent.listOfEmails = data;
       console.log(InboxComponent.listOfEmails);
       this.listPreSize = this.viewArray.length;
@@ -233,19 +238,30 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 checkBox(){
   for (var i = 0; i < this.listOfCheckboxes.length; i++){
     
-      if((<HTMLInputElement>this.listOfCheckboxes[i]).checked){
-        this.listOfCheckedBoxes.push(<HTMLInputElement>this.listOfCheckboxes[i])
+      if((this.listOfCheckboxes[i]).checked){
+        this.listOfCheckedBoxes.push(i)
       }
       else {
         continue
       }
   }
-  console.log("Any ARRAY")
-  console.log(this.listOfCheckedBoxes)
 }
 
 bulkMove(){
+  var e = (<HTMLSelectElement>document.getElementById("move_options"))
+  var folderOption = e.options[e.selectedIndex].value
+  console.log(folderOption)
   this.checkBox()
+  for(var i = 0; i < this.listOfCheckedBoxes.length; i++){
+    this.serveMe.moveToFolder(LoginComponent.globalUsername, folderOption, InboxComponent.listOfEmails[this.listOfCheckedBoxes[i]]).subscribe((data : string)=> {
+      console.log("I sent an E-mail to Back")
+    });
+  }
+  
+
+
+
+  this.listOfCheckedBoxes.length = 0
 
 }
 

@@ -2,7 +2,6 @@ package Controller.Profile.Elements.Email;
 
 public class Attachment {
 
-    String encodedString;
     byte[] encoded;
     String name;
     String type;
@@ -13,16 +12,10 @@ public class Attachment {
         this.encoded = encoded;
     }
 
-    public String getEncodedString() {
-        return this.encodedString;
-    }
     public byte[] getEncoded(){
         return this.encoded;
     }
 
-    public void setEncoded(String encodedString) {
-        this.encodedString = encodedString;
-    }
 
     public String getName() {
         return this.name;

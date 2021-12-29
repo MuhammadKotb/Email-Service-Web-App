@@ -7,6 +7,7 @@ import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Handlers.FifthHandler;
+import Controller.SingletonClasses.Handlers.FirstHandler;
 import Controller.Sorter.EmailsSorter;
 import Controller.Sorter.EmailsSorterI;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public class TrashPageController {
     @DeleteMapping("/deleteForever")
     ArrayList<EmailI> deleteForever(@RequestBody Email email){
         try{
-            FifthHandler.getInstance().handle("DeleteForever", email, "");
+            FirstHandler.getInstance().handle("DeleteForever", email, "");
             return null;
         }
         catch (Exception e){
@@ -75,9 +76,9 @@ public class TrashPageController {
         }
     }
     @PostMapping("/restore")
-    ArrayList<EmailI> resotore(@RequestBody Email email){
+    ArrayList<EmailI> restore(@RequestBody Email email){
         try{
-            FifthHandler.getInstance().handle("Restore", email, "");
+            FirstHandler.getInstance().handle("Restore", email, "");
             return null;
         }
         catch (Exception e){

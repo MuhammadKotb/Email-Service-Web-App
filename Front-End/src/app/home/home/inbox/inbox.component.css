@@ -83,11 +83,19 @@ button{
 
 #bulkmove{
     position:absolute;
+    top: 5px;
     right: 5px;
     margin-top: 5px;
     font-family: cursive;
     border-radius: 10px;
     border-color: black;
+}
+
+#date-priority-container{
+    position: absolute;
+    margin-top: 5px;
+    margin-left:150px;
+    top: 5px;
 }
 
 

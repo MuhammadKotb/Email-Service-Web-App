@@ -17,7 +17,7 @@ export class DraftService {
   }
   deleteForever(email:EmailI) : Observable<EmailI[]>{
 
-    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForeverDraft", email);
+    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForeverDraft", {body : email});
   }
 
 

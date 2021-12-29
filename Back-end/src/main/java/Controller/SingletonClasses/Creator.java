@@ -123,7 +123,7 @@ public class Creator {
             throw new Exception("COULD NOT CREATE INBOX EMAIL FILE");
         }
         inboxEmail.setEmailID(ID);
-        if(receiverIndex != 0){
+        if(receiverIndex != -1){
             inboxEmail.setOwner(email.getReceiversUsernames().get(receiverIndex));
         }
         inboxEmail.setEmailType("Inbox");

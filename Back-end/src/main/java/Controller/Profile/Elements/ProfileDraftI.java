@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public interface ProfileDraftI {
+
     DataContainerI draftDataContainer = null;
 
     ArrayList<EmailI> emails = null;

@@ -83,7 +83,7 @@ public class ContactsPageController {
         }
     }
 
-    @PostMapping("/searchContacts")
+    @GetMapping("/searchContacts")
     ArrayList<ContactI> searchContacts(@RequestParam(value = "username") String username,@RequestParam(value = "target") String target){
         try {
             Database database = Database.getInstance();
