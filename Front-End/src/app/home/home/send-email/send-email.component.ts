@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AttachmentI, EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
@@ -26,7 +27,7 @@ export class SendEmailComponent implements OnInit {
   private form = new FormData();
 
 
-  constructor(private placer : InboxComponent  , private serveMe:SendEmailService) {
+  constructor(private placer : InboxComponent  , private serveMe:SendEmailService, private router:Router) {
     this.listOfReceivers = []
     this.listPreSize = 0
     this.iterationsNum = 2

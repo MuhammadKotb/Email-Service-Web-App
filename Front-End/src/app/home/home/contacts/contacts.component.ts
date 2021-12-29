@@ -18,13 +18,13 @@ export interface ContactI{
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent implements OnInit {
-  public static listOfContacts : ContactI[] 
-  private viewArray : string[][] 
+  public static listOfContacts : ContactI[]
+  private viewArray : string[][]
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
 
-  constructor(private router : Router, private serveMe1: ContactService) { 
+  constructor(private router : Router, private serveMe1: ContactService) {
     ContactsComponent.listOfContacts = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -59,17 +59,17 @@ export class ContactsComponent implements OnInit {
     ContactsComponent.listOfContacts.push(w)
 
   // this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
-  
+
   this.listPreSize = this.viewArray.length
   this.parseArray()
 
-    this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
+    this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
      this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
 }
 parseArray(){
   for (let contact=0; contact < ContactsComponent.listOfContacts.length;contact++){
-    this.viewArray[contact] = [] 
+    this.viewArray[contact] = []
     this.viewArray[contact][0] = ContactsComponent.listOfContacts[contact].username
     this.viewArray[contact][1] = ContactsComponent.listOfContacts[contact].additionalEmails[0]
   }
@@ -94,7 +94,7 @@ addContact(){
   this.viewArray[0][1] = ContactsComponent.listOfContacts[0].additionalEmails[0]
   this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
 
-  
+
   this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data;});
 
 }
@@ -107,7 +107,7 @@ checkClick(){
     }else{
       this.listOfButtons[i].addEventListener("click",$.proxy(this.sendEmailClicked,this));
     }
-    
+
   }
 }
 sortContacts(input : ContactI[]){
@@ -159,13 +159,12 @@ searchContacts(input : ContactI[]){
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        // this.serveMe1?.deleteContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : ContactI[])=> {
-        //   ContactsComponent.listOfContacts = data;
-        //   console.log(ContactsComponent.listOfContacts)
-        //   this.listPreSize = this.viewArray.length
-        //   this.parseArray()
-        //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
-        // });
+        this.serveMe1.removeContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : ContactI[])=> {
+          this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+            this.router.navigate(["/home/contacts"])
+
+          })
+        });
       }catch (error){
         console.log(error)
       }

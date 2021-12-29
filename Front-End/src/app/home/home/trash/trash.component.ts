@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/login/login/login.component';
 import { EmailI } from '../home.component';
@@ -21,7 +22,7 @@ export class TrashComponent implements OnInit {
   private iterationsNum : number
   private listOfButtons : NodeList
 
-  constructor(private serveMe1: TrashService) { 
+  constructor(private serveMe1: TrashService, private router:Router) {
     TrashComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -168,8 +169,10 @@ deleteClicked(e: any){
   try{
     const buttonNum = parseInt(e.target.id)
     this.serveMe1.deleteForever(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-      location.reload()
-      this.ngOnInit()
+      this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+        this.router.navigate(["/home/trash"])
+
+      })
     })
   }catch (error){
     console.log(error)
@@ -179,8 +182,9 @@ deleteClicked(e: any){
     try{
       const buttonNum = parseInt(e.target.id)
       this.serveMe1.restore(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI)=> {
-        location.reload()
-        this.ngOnInit()
+        this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+          this.router.navigate(["/home/trash"])
+        })
       })
     }catch (error){
       console.log(error)
