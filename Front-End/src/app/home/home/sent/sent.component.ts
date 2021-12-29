@@ -83,11 +83,7 @@ import { TrashComponent } from '../trash/trash.component';
       // SentComponent.listOfEmails.push(y)
       // SentComponent.listOfEmails.push(Z)
       // SentComponent.listOfEmails.push(w)
-      SentComponent.listOfEmails = []
-      this.viewArray = []
-      this.listPreSize = this.viewArray.length
-      this.iterationsNum = 4;
-      HomeComponent.pageIndicator = "Sent";
+
 
       this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
           SentComponent.listOfEmails = data;

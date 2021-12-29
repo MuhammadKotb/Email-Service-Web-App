@@ -22,7 +22,7 @@ public class InboxPageController {
     ArrayList<EmailI> movetoTrash(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("MovetoTrash",email, "");
-            return Database.getInstance().getProfilebyUsername("", email.getOwner()).getInbox().getEmails();
+            return null;
         }
         catch (Exception e){
             System.out.println(e.getMessage());

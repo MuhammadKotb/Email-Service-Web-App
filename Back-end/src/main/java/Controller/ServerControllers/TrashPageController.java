@@ -76,7 +76,7 @@ public class TrashPageController {
         }
     }
     @PostMapping("/restore")
-    ArrayList<EmailI> resotore(@RequestBody Email email){
+    ArrayList<EmailI> restore(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("Restore", email, "");
             return null;
