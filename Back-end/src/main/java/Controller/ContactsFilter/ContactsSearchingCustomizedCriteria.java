@@ -14,6 +14,7 @@ public class ContactsSearchingCustomizedCriteria implements ContactsCriteriaI {
     @Override
     public ArrayList<ContactI> meetCriteria(ArrayList<ContactI> contacts) {
         ArrayList<ContactI> filteredContacts = new ArrayList<>();
+
         for(ContactI contact:contacts){
             if((contact.getUsername().toLowerCase()).concat(contact.getEmailAddresses().toString().toLowerCase()
                     ).contains(this.target.toLowerCase())){

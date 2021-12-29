@@ -31,7 +31,7 @@ public class SixthHandler implements HandlerI{
             database.getProfilebyUsername("", email.getOwner()).getTrash().removeEmailbyID(email.getEmailID());
 
             if(email.getEmailType().equals("Inbox")){
-                Creator.getInstance().createEmailDataInbox(email, database.getProfilebyUsername("", email.getOwner()), email.getEmailID(), 0);
+                Creator.getInstance().createEmailDataInbox(email, database.getProfilebyUsername("", email.getOwner()), email.getEmailID(), -1);
                 database.getProfilebyUsername("", email.getOwner()).getInbox().addEmail(email);
             }
             if(email.getEmailType().equals("Sent")){

@@ -80,7 +80,9 @@ public class DraftPageController {
     @DeleteMapping("/deleteForeverDraft")
     ArrayList<EmailI> deleteForever(@RequestBody Email email){
         try{
+
             FirstHandler.getInstance().handle("DeleteForever", email, "");
+
             return null;
         }
         catch (Exception e){

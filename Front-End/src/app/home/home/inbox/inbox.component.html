@@ -1,5 +1,10 @@
 <p id = "intro">Inbox</p>
 <button type = "button" id = "refresh" (click)="ngOnInit()">Refresh</button>
+<div id = "date-priority-container">
+    <label for = "date-priority">Show Emails using Priority:</label>
+    <input type="checkbox" id = "date-priority">
+</div>
+
 <div id = "bulkmove">
     <label for = "move_options">Bulk Move Selected Emails to Specified Folder</label>
     <select name="moveOptions" id="move_options">

@@ -40,6 +40,7 @@ public class SendEmailPageController {
             newEmail.setAttachments(new ArrayList<Attachment>());
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
+
                     Attachment attachment = new Attachment();
                     attachment.setEncoded(files[i].getBytes());
                     System.out.println(files[i].getOriginalFilename());
@@ -54,6 +55,7 @@ public class SendEmailPageController {
 
             FirstHandler.getInstance().handle("SendEmail", newEmail, "");
         } catch (Exception e) {
+
             System.out.println(e.getMessage());
         }
     }
