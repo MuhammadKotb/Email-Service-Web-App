@@ -96,10 +96,9 @@ addContact(){
   var contact : ContactI = new Contact(username_input,[email_input])
   console.log(contact)
 
-  this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {
+  this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : string)=> {
     this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
-      this.router.navigate(["/home/contacts"])
-      this.ngOnInit();
+      this.router.navigate(['/home/contacts'])
     })
   });
 
@@ -165,7 +164,7 @@ searchContacts(input : ContactI[]){
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        this.serveMe1.removeContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : ContactI[])=> {
+        this.serveMe1.removeContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : string)=> {
           this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
             this.router.navigate(["/home/contacts"])
 

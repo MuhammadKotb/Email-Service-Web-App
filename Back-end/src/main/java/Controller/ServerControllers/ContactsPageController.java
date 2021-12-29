@@ -63,6 +63,7 @@ public class ContactsPageController {
         try {
             Database database = Database.getInstance();
             Deleter.getInstance().deleteContact(database.getProfilebyUsername("", username).getContacts().getContact(contactUsername), database.getProfilebyUsername("", username));
+            database.getProfilebyUsername("",username).getContacts().removeContact(contactUsername);
             return "DELETED CONTACT SUCCESSFULLY";
         }catch (Exception e){
             System.out.println(e.getMessage());
