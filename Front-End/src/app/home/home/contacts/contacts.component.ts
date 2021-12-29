@@ -9,9 +9,17 @@ import $ from "jquery"
 
 export interface ContactI{
   username: string
-  additionalEmails: string[]
+  emailAddresses: string[]
 }
+export class Contact implements ContactI{
+  username:string;
+  emailAddresses: string[]
 
+  constructor(username:string,emailAddresses:string[]){
+    this.username = username;
+    this.emailAddresses = emailAddresses;
+  }
+}
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -36,42 +44,46 @@ export class ContactsComponent implements OnInit {
 
 
   ngOnInit(): void {
-   var x : ContactI = {
-     username: "Joe",
-     additionalEmails: ["youssef.okab@gmail.com"]
-   }
-   var y : ContactI = {
-    username: "Mn3m",
-    additionalEmails: ["mono.ghost@gmail.com"]
-  }
-  var z : ContactI = {
-    username: "Deffo",
-    additionalEmails: ["deffo.he5o@gmail.com"]
-  }
-  var w : ContactI = {
-    username: "otb",
-    additionalEmails: ["otb@gmal.com"]
-  }
+  //  var x : ContactI = {
+  //    username: "Joe",
+  //    additionalEmails: ["youssef.okab@gmail.com"]
+  //  }
+  //  var y : ContactI = {
+  //   username: "Mn3m",
+  //   additionalEmails: ["mono.ghost@gmail.com"]
+  // }
+  // var z : ContactI = {
+  //   username: "Deffo",
+  //   additionalEmails: ["deffo.he5o@gmail.com"]
+  // }
+  // var w : ContactI = {
+  //   username: "otb",
+  //   additionalEmails: ["otb@gmal.com"]
+  // }
 
-    ContactsComponent.listOfContacts.push(x)
-    ContactsComponent.listOfContacts.push(y)
-    ContactsComponent.listOfContacts.push(z)
-    ContactsComponent.listOfContacts.push(w)
-
-  // this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
-
-  this.listPreSize = this.viewArray.length
-  this.parseArray()
-
+  //   ContactsComponent.listOfContacts.push(x)
+  //   ContactsComponent.listOfContacts.push(y)
+  //   ContactsComponent.listOfContacts.push(z)
+  //   ContactsComponent.listOfContacts.push(w)
+  console.log("ng on Init called")
+  this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {
+    console.log("lol")
+    ContactsComponent.listOfContacts = data;
+    console.log(ContactsComponent.listOfContacts);
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
     this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
-     this.listOfButtons = document.querySelectorAll("td  > button")
+    this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
+    });
+
+
 }
 parseArray(){
   for (let contact=0; contact < ContactsComponent.listOfContacts.length;contact++){
     this.viewArray[contact] = []
     this.viewArray[contact][0] = ContactsComponent.listOfContacts[contact].username
-    this.viewArray[contact][1] = ContactsComponent.listOfContacts[contact].additionalEmails[0]
+    this.viewArray[contact][1] = ContactsComponent.listOfContacts[contact].emailAddresses[0]
   }
 }
 
@@ -81,21 +93,15 @@ addContact(){
   var email_input = (<HTMLInputElement>document.getElementById("email")).value
   console.log(username_input)
   console.log(email_input)
-  var contact : ContactI = {
-    username: username_input,
-    additionalEmails: [email_input]
-  }
+  var contact : ContactI = new Contact(username_input,[email_input])
+  console.log(contact)
 
-  ContactsComponent.listOfContacts.push(contact)
-  this.listPreSize = this.viewArray.length
-  this.viewArray.length = 0
-  this.viewArray[0] = []
-  this.viewArray[0][0] = contact.username
-  this.viewArray[0][1] = ContactsComponent.listOfContacts[0].additionalEmails[0]
-  this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
-
-
-  this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data;});
+  this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {
+    this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+      this.router.navigate(["/home/contacts"])
+      this.ngOnInit();
+    })
+  });
 
 }
 
