@@ -29,15 +29,10 @@ public class DraftPageController {
         }
     }
     @GetMapping("/getDraft")
-    ArrayList<EmailI> getDraft(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
+    ArrayList<EmailI> getDraft(@RequestParam(value = "username") String username){
         try{
-            if(!Boolean.parseBoolean(priority)){
-                EmailsSorterI emailsSorter = new EmailsSorter(false);
-                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getDraft().getEmails(), "date");
-            }
-            else{
-                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getDraft().getEmailsPrioritized());
-            }
+            EmailsSorterI emailsSorter = new EmailsSorter(false);
+            return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getDraft().getEmails(), "date");
         }
         catch (Exception e){
             System.out.println(e.getMessage());

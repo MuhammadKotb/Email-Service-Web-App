@@ -24,15 +24,10 @@ import java.util.UUID;
 public class UserFoldersPageController {
 
     @GetMapping("/getFolder")
-    ArrayList<EmailI> getFolder(@RequestParam(value = "username") String username, @RequestParam(value = "foldername") String folderName, @RequestParam(value = "priority") String priority){
+    ArrayList<EmailI> getFolder(@RequestParam(value = "username") String username, @RequestParam(value = "foldername") String folderName){
         try{
-            if(!Boolean.parseBoolean(priority)){
-                EmailsSorterI emailsSorter = new EmailsSorter(false);
-                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getProfileFolderbyName(folderName).getEmails(), "date");
-            }
-            else{
-                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getProfileFolderbyName(folderName).getEmailsPrioritized());
-            }
+            EmailsSorterI emailsSorter = new EmailsSorter(false);
+            return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getProfileFolderbyName(folderName).getEmails(), "date");
         }
         catch (Exception e){
             System.out.println(e.getMessage());

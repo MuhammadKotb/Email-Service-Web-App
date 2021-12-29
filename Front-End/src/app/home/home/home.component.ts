@@ -1,4 +1,5 @@
 import { Router } from '@angular/router';
+import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/login/login/login.component';
 import { HomeService } from '../home.service';
@@ -31,7 +32,7 @@ export interface EmailI{
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  @ViewChild(InboxComponent) inbox: InboxComponent;
   constructor(private router:Router, private serveMe1: HomeService) { }
 
   public static globalFilterOption: string = ""
@@ -111,7 +112,7 @@ export class HomeComponent implements OnInit {
 
     else if (HomeComponent.pageIndicator == "Inbox"){
       console.log("Inbox Sorted")
-      this.serveMe1.sortInbox(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {InboxComponent.listOfEmails = data; console.log(InboxComponent.listOfEmails);})
+      this.serveMe1.sortInbox(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {InboxComponent.listOfEmails = data; console.log(InboxComponent.listOfEmails); this.inbox.test()})
     }
 
     else if (HomeComponent.pageIndicator == "Contacts"){

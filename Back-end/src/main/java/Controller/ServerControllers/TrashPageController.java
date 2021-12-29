@@ -19,13 +19,8 @@ public class TrashPageController {
     @GetMapping("/getTrash")
     ArrayList<EmailI> getTrash(@RequestParam(value = "username") String username, @RequestParam(value = "priority") String priority){
         try{
-            if(!Boolean.parseBoolean(priority)){
-                EmailsSorterI emailsSorter = new EmailsSorter(false);
-                return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getTrash().getEmails(), "date");
-            }
-            else{
-                return new ArrayList<EmailI>(Database.getInstance().getProfilebyUsername("", username).getTrash().getEmailsPrioritized());
-            }
+            EmailsSorterI emailsSorter = new EmailsSorter(false);
+            return emailsSorter.sort(Database.getInstance().getProfilebyUsername("", username).getTrash().getEmails(), "date");
         }
         catch (Exception e){
             System.out.println(e.getMessage());
