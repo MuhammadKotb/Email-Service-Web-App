@@ -5,6 +5,7 @@
   import { InboxService } from '../inbox/inbox.service';
   import $ from "jquery"
   import { SentService } from './sent.service';
+import { TrashComponent } from '../trash/trash.component';
 
 
 
@@ -14,14 +15,14 @@
     styleUrls: ['./sent.component.css']
   })
   export class SentComponent implements OnInit {
-    public static listOfEmails : EmailI[] 
-    private viewArray : string[][] 
+    public static listOfEmails : EmailI[]
+    private viewArray : string[][]
     private listPreSize : number
     private iterationsNum : number
     private listOfButtons : NodeList
 
 
-    constructor(private serveMe: SentService, private placer : InboxComponent  ) { 
+    constructor(private serveMe: SentService, private placer : InboxComponent  ) {
       SentComponent.listOfEmails = []
       this.viewArray = []
       this.listPreSize = this.viewArray.length
@@ -79,21 +80,26 @@
       // SentComponent.listOfEmails.push(y)
       // SentComponent.listOfEmails.push(Z)
       // SentComponent.listOfEmails.push(w)
+      SentComponent.listOfEmails = []
+      this.viewArray = []
+      this.listPreSize = this.viewArray.length
+      this.iterationsNum = 4;
+      HomeComponent.pageIndicator = "Sent";
 
       this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
         SentComponent.listOfEmails = data;
-         console.log(SentComponent.listOfEmails);
-         this.listPreSize  = this.viewArray.length;
-         this.parseArray();
+        console.log(SentComponent.listOfEmails);
+        this.listPreSize  = this.viewArray.length;
+        this.parseArray();
 
-         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
-         this.listOfButtons = document.querySelectorAll("td  > button");
-         this.checkClick();});
+        this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+        this.listOfButtons = document.querySelectorAll("td  > button");
+        this.checkClick();});
 
   }
   parseArray(){
     for (let email=0; email < SentComponent.listOfEmails.length;email++){
-      this.viewArray[email] = [] 
+      this.viewArray[email] = []
       this.viewArray[email][0] = SentComponent.listOfEmails[email].receiversUsernames.toString()
       this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSentString
       this.viewArray[email][2] = SentComponent.listOfEmails[email].subject
@@ -107,7 +113,7 @@
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.showClicked,this));
       }
-      
+
     }
 }
 sortSent(input : EmailI[]){
@@ -138,8 +144,8 @@ searchSent(input : EmailI[]){
 
     closeEmailPopup(){
       (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
-  } 
-      
+  }
+
     show(email:EmailI){
       var contentsToBeDeleted = document.querySelectorAll("div > p");
       for (var i = 0; i<contentsToBeDeleted.length; i++)
@@ -171,27 +177,24 @@ searchSent(input : EmailI[]){
                   destinationNode = document.getElementById("subject-container")
                   break
           case 3 : node.id = "message"
-                   textNode = document.createTextNode(email.body)
-                   destinationNode = document.getElementById("message-container")
-                   break
+                  textNode = document.createTextNode(email.body)
+                  destinationNode = document.getElementById("message-container")
+                  break
         }
         node.appendChild(textNode)
         destinationNode?.appendChild(node)
-        
+
       }
       (<HTMLElement>document.getElementById("email-popup")).style.display = "block"
 
   }
   deleteClicked(e: any){
     try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     SentComponent.listOfEmails = data; 
-    //     console.log(SentComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-    //   })
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe.movetoTrash(SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        location.reload()
+        this.ngOnInit()
+      })
     }catch (error){
       console.log(error)
     }
@@ -204,6 +207,6 @@ searchSent(input : EmailI[]){
         console.log(error)
       }
     }
-  
+
 
 }
