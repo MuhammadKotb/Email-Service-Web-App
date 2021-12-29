@@ -168,6 +168,7 @@ searchTrash(input : EmailI[]){
 deleteClicked(e: any){
   try{
     const buttonNum = parseInt(e.target.id)
+    console.log(TrashComponent.listOfEmails[(buttonNum-1)/2])
     this.serveMe1.deleteForever(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
       this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
         this.router.navigate(["/home/trash"])

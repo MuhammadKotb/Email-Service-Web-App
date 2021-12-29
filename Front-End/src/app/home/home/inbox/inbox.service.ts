@@ -20,6 +20,6 @@ export class InboxService {
     return this.http.post<EmailI[]>("http://localhost:8080/movetoTrashInbox", email);
   }
 
-  
-  
+
+
 }

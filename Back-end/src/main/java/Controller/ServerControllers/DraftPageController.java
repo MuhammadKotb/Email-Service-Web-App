@@ -6,6 +6,7 @@ import Controller.EmailsFilter.EmailsSearchingCustomizedCriteria;
 import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
 import Controller.SingletonClasses.Database;
+import Controller.SingletonClasses.Handlers.FifthHandler;
 import Controller.SingletonClasses.Handlers.FirstHandler;
 import Controller.Sorter.EmailsSorter;
 import Controller.Sorter.EmailsSorterI;
@@ -70,6 +71,17 @@ public class DraftPageController {
             Database database = Database.getInstance();
             EmailsCriteriaI searcher = new EmailsSearchingCustomizedCriteria(target);
             return searcher.meetCriteria(database.getProfilebyUsername("", username).getDraft().getEmails());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @DeleteMapping("/deleteForeverDraft")
+    ArrayList<EmailI> deleteForever(@RequestBody Email email){
+        try{
+            FifthHandler.getInstance().handle("DeleteForever", email, "");
+            return null;
         }
         catch (Exception e){
             System.out.println(e.getMessage());
