@@ -1,5 +1,15 @@
 <p id = "intro">Inbox</p>
 <button type = "button" id = "refresh" (click)="ngOnInit()">Refresh</button>
+<div id = "bulkmove">
+    <label for = "move_options">Bulk Move Selected Emails to Specified Folder</label>
+    <select name="moveOptions" id="move_options">
+
+    </select>
+    <button type="button" id = "bulkmovebtn" (click)="bulkMove()">Move</button>
+</div>
+
+
+
 <div id = "email_table">
     <table>
         <thead>

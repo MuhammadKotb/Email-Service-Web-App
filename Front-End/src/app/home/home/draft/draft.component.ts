@@ -104,7 +104,6 @@ parseArray(){
     this.viewArray[email][2] = DraftComponent.listOfEmails[email].subject
   }
 }
-
 checkClick(){
   for (var i =  0 ; i < this.listOfButtons.length ; i++){
 
@@ -154,7 +153,6 @@ searchDraft(input : EmailI[]){
     this.viewArray = [];
   }
 
-  this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();

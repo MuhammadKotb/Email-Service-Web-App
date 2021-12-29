@@ -117,8 +117,6 @@ checkClick(){
     }else{
       this.listOfButtons[i].addEventListener("click",$.proxy(this.restoreClicked,this));
     }
-    console.log(this.listOfButtons);
-    console.log(TrashComponent.listOfEmails)
 
   }
 }

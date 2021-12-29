@@ -46,7 +46,8 @@ public class UserFoldersPageController {
     }
 
     @PostMapping("/addFolder")
-    ArrayList<ProfileFolderI> addUserFolder(@RequestParam("username") String username, @RequestParam(value="foldername") String folderName){
+    ArrayList<ProfileFolderI> addUserFolder(@RequestParam("username") String username, @RequestBody String folderName){
+
         try{
             Creator.getInstance().createProfileFolder(folderName, Database.getInstance().getProfilebyUsername("", username));
             return Database.getInstance().getProfilebyUsername("", username).getFolders();

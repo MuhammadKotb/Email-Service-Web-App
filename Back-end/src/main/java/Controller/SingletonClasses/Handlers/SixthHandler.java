@@ -26,6 +26,7 @@ public class SixthHandler implements HandlerI{
             Database database = Database.getInstance();
             System.out.println("asddddddddddddddddddddddddddddddddddddddddddddddddddd");
             System.out.println("OWNER" +  " " + email.getOwner());
+
             Deleter.getInstance().deleteEmailDataTrash(email, database.getProfilebyUsername("", email.getOwner()));
             database.getProfilebyUsername("", email.getOwner()).getTrash().removeEmailbyID(email.getEmailID());
 

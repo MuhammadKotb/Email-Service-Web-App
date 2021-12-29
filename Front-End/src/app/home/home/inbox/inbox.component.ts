@@ -4,6 +4,8 @@ import { EmailI, HomeComponent } from '../home.component'
 import { InboxService } from './inbox.service';
 import $ from "jquery"
 import { LoginComponent } from 'src/app/login/login/login.component';
+import { CheckboxControlValueAccessor } from '@angular/forms';
+import { FoldersComponent } from '../folders/folders.component';
 
 
 @Component({
@@ -17,11 +19,12 @@ import { LoginComponent } from 'src/app/login/login/login.component';
 
 export class InboxComponent implements OnInit {
   public static listOfEmails : EmailI[]
-  private viewArray : string[][]
+  private viewArray : string[][] = []
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
-
+  private listOfCheckboxes: NodeList
+  private listOfCheckedBoxes: any[]
 
   constructor(private serveMe: InboxService, private router:Router) {
     InboxComponent.listOfEmails = []
@@ -211,6 +214,35 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
       }
 
     }
+}
+
+checkBox(){
+  for (var i = 0; i < this.listOfCheckboxes.length; i++){
+    
+      if((<HTMLInputElement>this.listOfCheckboxes[i]).checked){
+        this.listOfCheckedBoxes.push(<HTMLInputElement>this.listOfCheckboxes[i])
+      }
+      else {
+        continue
+      }
+  }
+  console.log("Any ARRAY")
+  console.log(this.listOfCheckedBoxes)
+}
+bulkMove(){
+  this.checkBox()
+
+}
+
+getMoveOptions(){
+  var select = document.getElementById("move_options")
+  for (let i=0; i< FoldersComponent.listOfFolders.length; i++){
+    var option = document.createElement("option")
+    var optionText = document.createTextNode(FoldersComponent.listOfFolders[i].name)
+    option.appendChild(optionText)
+    option.value = FoldersComponent.listOfFolders[i].name
+    select?.appendChild(option)
+  }
 }
 
 

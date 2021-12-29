@@ -81,6 +81,15 @@ button{
     background-color: darkgoldenrod;
   }
 
+#bulkmove{
+    position:absolute;
+    right: 5px;
+    margin-top: 5px;
+    font-family: cursive;
+    border-radius: 10px;
+    border-color: black;
+}
+
 
 
 
