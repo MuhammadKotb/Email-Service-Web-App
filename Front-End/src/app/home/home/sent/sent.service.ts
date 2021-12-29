@@ -13,7 +13,7 @@ export class SentService {
 
   getSent(loginUsername:string) : Observable<EmailI[]>{
 
-    return this.http.get<EmailI[]>("http://localhost:8080/getSent?username=" + loginUsername);
+    return this.http.get<EmailI[]>("http://localhost:8080/getSent?username=" + loginUsername + "&priority=false");
   }
   movetoTrash(email:EmailI) : Observable<EmailI[]>{
 

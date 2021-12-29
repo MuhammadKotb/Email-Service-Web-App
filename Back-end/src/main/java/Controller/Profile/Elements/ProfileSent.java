@@ -1,44 +1,77 @@
 package Controller.Profile.Elements;
 
 import Controller.DataContainerI;
-import Controller.Email.Email;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.Email;
+import Controller.Profile.Elements.Email.EmailI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class ProfileSent implements ProfileSentI {
 
     private DataContainerI SentDataContainer;
+    private PriorityQueue<EmailI> emailsPrioritized;
 
     private ArrayList<EmailI> emails;
+
+    private static ArrayList<String> priorities = new ArrayList<>(
+            Arrays.asList("urgent", "important", "standard", "skippable")
+    );
 
     public ProfileSent(DataContainerI SentDataContainer) throws Exception{
         this.SentDataContainer = SentDataContainer;
         this.emails = new ArrayList<EmailI>();
+        this.emailsPrioritized = new PriorityQueue<EmailI>((o1, o2) -> {
+            if(priorities.indexOf(o1.getPriority().toLowerCase()) < priorities.indexOf(o2.getPriority().toLowerCase())){
+                return -1;
+            }
+            else{
+                return 1;
+            }
+        });
         this.setEmails();
+
+    }
+    public void setEmails(ArrayList<EmailI> emails) {
+        this.emails = emails;
+    }
+
+    public PriorityQueue<EmailI> getEmailsPrioritized() {
+        return this.emailsPrioritized;
+    }
+
+    public void setEmailsPrioritized(PriorityQueue<EmailI> emailsPrioritized) {
+        this.emailsPrioritized = emailsPrioritized;
     }
     @Override
     public ArrayList<EmailI> getEmails() {
         return this.emails;
+
     }
 
     @Override
     public void addEmail(EmailI email) {
         this.emails.add(email);
+        this.emailsPrioritized.add(email);
+
     }
 
     @Override
     public void removeEmail(EmailI email) {
         this.emails.remove(email);
+        this.emailsPrioritized.remove(email);
+
     }
 
     @Override
     public void removeEmailbyID(String ID) {
         for(int i = 0; i < this.emails.size(); i++){
             if(ID.equals(this.emails.get(i).getEmailID())){
+                this.emailsPrioritized.remove(this.emails.get(i));
                 this.emails.remove(i);
             }
         }
@@ -59,6 +92,7 @@ public class ProfileSent implements ProfileSentI {
             ObjectMapper map = new ObjectMapper();
             EmailI email = map.readValue(files[i], Email.class);
             this.addEmail(email);
+
         }
     }
 
@@ -99,7 +133,7 @@ public class ProfileSent implements ProfileSentI {
     public EmailI getEmailbyreceiverUsername(String username) {
         EmailI email = null;
         for(int i = 0; i < this.emails.size(); i++){
-            if(username.equals(this.emails.get(i).getReceiverUsername())){
+            if(username.equals(this.emails.get(i).getReceiversUsernames().get(0))){
                 email = this.emails.get(i);
             }
         }

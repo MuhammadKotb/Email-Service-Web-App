@@ -15,12 +15,12 @@ export class SendEmailService {
 
     return this.http.post<string>("http://localhost:8080/sendEmail" , email);
   }
-  movetoDraft(email:EmailI) : Observable<EmailI[]>{
+  movetoDraft(email:EmailI) : Observable<String>{
 
-    return this.http.post<EmailI[]>("http://localhost:8080/movetoDraft", email);
+    return this.http.post<String>("http://localhost:8080/movetoDraft", email);
   }
 
 
-  
-  
+
+
 }

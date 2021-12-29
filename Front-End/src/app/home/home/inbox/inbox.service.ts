@@ -13,7 +13,7 @@ export class InboxService {
 
   getInbox(loginUsername:string) : Observable<EmailI[]>{
 
-    return this.http.get<EmailI[]>("http://localhost:8080/getInbox?username=" + loginUsername);
+    return this.http.get<EmailI[]>("http://localhost:8080/getInbox?username=" + loginUsername + "&priority=false");
   }
   movetoTrash(email:EmailI) : Observable<EmailI[]>{
 

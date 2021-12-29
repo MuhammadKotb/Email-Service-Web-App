@@ -1,11 +1,16 @@
+import { Router } from '@angular/router';
   import { Component, OnInit } from '@angular/core';
   import { LoginComponent } from 'src/app/login/login/login.component';
-  import { EmailI } from '../home.component'
+  import { EmailI, HomeComponent } from '../home.component'
   import { InboxComponent } from '../inbox/inbox.component';
   import { InboxService } from '../inbox/inbox.service';
   import $ from "jquery"
+  import { SentService } from './sent.service';
+import { TrashComponent } from '../trash/trash.component';
 
 
+  let filtered : boolean = false;
+  let listPreSizeFilter : number = 0;
 
   @Component({
     selector: 'app-sent',
@@ -13,85 +18,90 @@
     styleUrls: ['./sent.component.css']
   })
   export class SentComponent implements OnInit {
-    public static listOfEmails : EmailI[] 
-    private viewArray : string[][] 
+    public static listOfEmails : EmailI[]
+    private viewArray : string[][] = [];
     private listPreSize : number
     private iterationsNum : number
     private listOfButtons : NodeList
 
 
-    constructor(private serveMe: InboxService, private placer : InboxComponent  ) { 
-      SentComponent.listOfEmails = []
-      this.viewArray = []
+    constructor(private serveMe: SentService, private router:Router) {
+      SentComponent.listOfEmails = [];
+      filtered = false;
       this.listPreSize = this.viewArray.length
-      this.iterationsNum = 4
+      this.iterationsNum = 4;
+      HomeComponent.pageIndicator = "Sent";
     }
 
     ngOnInit(): void {
-      var x : EmailI = {
-        senderUsername: 'vfsf',
-        timeSent: "27/9/2001",
-        subject: "birthday",
-        body: 'vfvsv',
-        owner: '',
-        recievers: ["Joe"],
-        emailID: '',
-        emailType: '',
-        priority: 'Urgent'
-      }
-      var y : EmailI = {
-        senderUsername: '',
-        timeSent: "4/6/2001",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["Meniem"],
-        emailID: '',
-        emailType: '',
-        priority: 'Important'
-      }
-      var Z : EmailI = {
-        senderUsername: '',
-        timeSent: "هيخو",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["otb"],
-        emailID: '',
-        emailType: '',
-        priority: 'Non-essential'
-      }
-      var w : EmailI = {
-        senderUsername: '',
-        timeSent: "لول",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["deffo"],
-        emailID: '',
-        emailType: '',
-        priority: 'Skipable'
-      }
+      // var x : EmailI = {
+      //   senderUsername: 'vfsf',
+      //   timeSentString: "27/9/2001",
+      //   subject: "birthday",
+      //   body: 'vfvsv',
+      //   owner: '',
+      //   receiversUsernames: ["Joe"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Urgent'
+      // }
+      // var y : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "4/6/2001",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["Meniem"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Important'
+      // }
+      // var Z : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "هيخو",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["otb"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Non-essential'
+      // }
+      // var w : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "لول",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["deffo"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Skipable'
+      // }
 
-      SentComponent.listOfEmails.push(x)
-      SentComponent.listOfEmails.push(y)
-      SentComponent.listOfEmails.push(Z)
-      SentComponent.listOfEmails.push(w)
+      // SentComponent.listOfEmails.push(x)
+      // SentComponent.listOfEmails.push(y)
+      // SentComponent.listOfEmails.push(Z)
+      // SentComponent.listOfEmails.push(w)
+        this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+        SentComponent.listOfEmails = data;
+        console.log(SentComponent.listOfEmails);
+        this.listPreSize  = this.viewArray.length;
+        this.parseArray();
 
-      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);});
-      this.listPreSize  = this.viewArray.length
+        this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+        this.listOfButtons = document.querySelectorAll("td  > button");
+        this.checkClick();});
 
-      this.parseArray()
-      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-      this.listOfButtons = document.querySelectorAll("td  > button")
-
-      this.checkClick()
   }
   parseArray(){
+
+    this.viewArray = [];
     for (let email=0; email < SentComponent.listOfEmails.length;email++){
-      this.viewArray[email] = [] 
-      this.viewArray[email][0] = SentComponent.listOfEmails[email].recievers.toString()
-      this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSent
+      console.log("IN FOR LOOP");
+      this.viewArray[email] = [];
+      this.viewArray[email][0] = SentComponent.listOfEmails[email].receiversUsernames.toString()
+      this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSentString
       this.viewArray[email][2] = SentComponent.listOfEmails[email].subject
     }
   }
@@ -103,15 +113,59 @@
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.showClicked,this));
       }
-      
+
     }
+}
+sortSent(input : EmailI[]){
+  this.listPreSize = SentComponent.listOfEmails.length;
+  SentComponent.listOfEmails = input
+  this.parseArray();
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+filterSent(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = SentComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
+  SentComponent.listOfEmails = input
+  console.log("COMP LENGTH ", SentComponent.listOfEmails.length);
+
+  this.parseArray();
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+searchSent(input : EmailI[]){
+  console.log(input.length)
+  this.listPreSize = SentComponent.listOfEmails.length;
+  console.log("INPUT LENGTH ", input.length)
+  SentComponent.listOfEmails = input
+  console.log("COMP LENGTH ", SentComponent.listOfEmails.length);
+
+  this.parseArray();
+  console.log(this.viewArray.length);
+  if(input.length == 0){
+    this.viewArray = [];
+  }
+
+
+  this.parseArray();
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
 }
 
 
     closeEmailPopup(){
       (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
-  } 
-      
+  }
+
     show(email:EmailI){
       var contentsToBeDeleted = document.querySelectorAll("div > p");
       for (var i = 0; i<contentsToBeDeleted.length; i++)
@@ -135,7 +189,7 @@
           case 0 : node.id = "sender"
                   break
           case 1 : node.id = "date"
-                  textNode = document.createTextNode(email.timeSent)
+                  textNode = document.createTextNode(email.timeSentString)
                   destinationNode = document.getElementById("date-container")
                   break
           case 2 : node.id = "subject"
@@ -143,27 +197,26 @@
                   destinationNode = document.getElementById("subject-container")
                   break
           case 3 : node.id = "message"
-                   textNode = document.createTextNode(email.body)
-                   destinationNode = document.getElementById("message-container")
-                   break
+                  textNode = document.createTextNode(email.body)
+                  destinationNode = document.getElementById("message-container")
+                  break
         }
         node.appendChild(textNode)
         destinationNode?.appendChild(node)
-        
+
       }
       (<HTMLElement>document.getElementById("email-popup")).style.display = "block"
 
   }
   deleteClicked(e: any){
     try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     SentComponent.listOfEmails = data; 
-    //     console.log(SentComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-    //   })
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe.movetoTrash(SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+          this.router.navigate(["/home/sent"])
+
+        })
+      })
     }catch (error){
       console.log(error)
     }
@@ -176,6 +229,51 @@
         console.log(error)
       }
     }
-  
+
+    place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
+      var body = document.getElementById("mybody")
+      var buttonCount = 0
+      for (let i=0;i<listPreSize;i++){
+        console.log("REMOVED CHILD");
+        body?.removeChild(body?.childNodes[0])
+      }
+      console.log(viewArray)
+      for (let i=0;i<viewArray.length;i++){
+        var node = document.createElement("tr");
+        node.style.width = "300px"
+        node.style.textAlign = "center"
+        node.style.padding = "7px"
+        node.style.margin = "50px"
+        for (let j=0;j<iterationsNum;j++){
+            var node2 = document.createElement("td");
+            if (j!=iterationsNum-1){
+              var textNode = document.createTextNode(viewArray[i][j]);
+              node2.appendChild(textNode);
+            }else{
+              if (btnName!="Delete"){
+                var node3 = document.createElement("button");
+                node3.style.marginRight = "5px"
+                var textNode = document.createTextNode(btnName);
+                node3.appendChild(textNode);
+                node3.type = "button";
+                node3.id = (buttonCount).toString()
+                node2.appendChild(node3);
+                buttonCount++
+              }
+              var textNode2 = document.createTextNode("Delete");
+              var node4 = document.createElement("button");
+              node4.style.marginRight = "5px"
+              node4.appendChild(textNode2);
+              node4.type = "button";
+              node4.id = (buttonCount).toString()
+              node2.appendChild(node4);
+              buttonCount++
+            }
+            node.appendChild(node2);
+        }
+        document.getElementById("mybody")?.appendChild(node);
+    }
+  }
+
 
 }

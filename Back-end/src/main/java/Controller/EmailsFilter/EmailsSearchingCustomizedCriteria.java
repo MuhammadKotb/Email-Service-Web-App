@@ -21,12 +21,12 @@ public class EmailsSearchingCustomizedCriteria implements EmailsCriteriaI {
 
     @Override
     public ArrayList<EmailI> meetCriteria(ArrayList<EmailI> emails) {
-        ArrayList<EmailI> filteredEmails = null;
+        ArrayList<EmailI> filteredEmails = new ArrayList<>();
         for(EmailI email:emails){
             if((email.getBody().toLowerCase()).concat(email.getSubject().toLowerCase()
             .concat(email.getSenderUsername().toLowerCase().concat(email.getReceiversUsernames().get(0).toLowerCase()
-            .concat(email.getTimeSentString().toLowerCase().concat(email.getPriority().toLowerCase().concat(email.getAttachments().get(0).getName()
-            )))))).contains(this.target.toLowerCase())){
+            .concat(email.getTimeSentString().toLowerCase().concat(email.getPriority().toLowerCase()
+            ))))).contains(this.target.toLowerCase())){
                 filteredEmails.add(email);
             }
         }

@@ -31,8 +31,8 @@ public class EmailsFilteringCustomizedCriteria implements EmailsCriteriaI {
 
     @Override
     public ArrayList<EmailI> meetCriteria(ArrayList<EmailI> emails) {
-        ArrayList<EmailI> filteredEmails = null;
-        switch (this.feature){
+        ArrayList<EmailI> filteredEmails = new ArrayList<>();
+        switch (this.feature.toLowerCase()){
             case "subject":
                 for(EmailI email:emails){
                     if(email.getSubject().equalsIgnoreCase(this.target)){

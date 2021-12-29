@@ -14,20 +14,19 @@ export class TrashService {
 
   getTrash(loginUsername:string) : Observable<EmailI[]>{
 
-    return this.http.get<EmailI[]>("http://localhost:8080/getTrash?username=" + loginUsername);
+    return this.http.get<EmailI[]>("http://localhost:8080/getTrash?username=" + loginUsername + "&priority=false");
   }
 
-  restore(loginUsername:string,email:EmailI) : Observable<EmailI>{
+  restore(email:EmailI) : Observable<EmailI>{
 
-    return this.http.post<EmailI>("http://localhost:8080/restore?username=" + loginUsername, email);
+    return this.http.post<EmailI>("http://localhost:8080/restore" , email);
+
+  }
+
+  deleteForever(email:EmailI) : Observable<EmailI[]>{
+
+    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever", email);
 
   }
 
-  deleteForever(loginUsername:string,email:EmailI) : Observable<EmailI[]>{
-
-    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever?username=" + loginUsername, email);
-
-  }
-  
-  
 }

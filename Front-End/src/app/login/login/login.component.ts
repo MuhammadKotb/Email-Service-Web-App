@@ -11,19 +11,20 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,private server: LoginService, private home :HomeComponent) { }
 
-  public static globalUsername: string = ""
+  public static globalUsername: string
 
   ngOnInit(): void {
   }
   create(){
     var username :string = (<HTMLInputElement> document.getElementById("username")).value;
     var password :string = (<HTMLInputElement> document.getElementById("password")).value;
-    var container :string;
-    this.server.createAccount(username.concat("$").concat(password)).subscribe((response:string)=>{
+    var container :String;
+    this.server.createAccount(username.concat("$").concat(password)).subscribe((response:String)=>{
       container = response;
       console.log(container)
-      if(container == "CREATED DataContainer SUCCESSFULLY"){
+      if(container == "CREATED PROFILE SUCCESSFULLY"){
         LoginComponent.globalUsername = username
+        console.log(LoginComponent.globalUsername)
         this.router.navigate(['/home']);
       }else {
         alert("This username has already used")
@@ -41,9 +42,11 @@ export class LoginComponent implements OnInit {
       console.log(container)
       if(container == ""){
         alert("There is no account by such credintials");
-      }else{
+      }
+      else{
         this.home.path=container;
         LoginComponent.globalUsername = username
+        console.log(LoginComponent)
         this.router.navigate(['/home']);
       }
 

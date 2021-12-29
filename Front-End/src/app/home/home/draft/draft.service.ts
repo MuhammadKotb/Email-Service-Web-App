@@ -13,7 +13,7 @@ export class DraftService {
 
   getDraft(loginUsername:string) : Observable<EmailI[]>{
 
-    return this.http.get<EmailI[]>("http://localhost:8080/getDraft?username=" + loginUsername);
+    return this.http.get<EmailI[]>("http://localhost:8080/getDraft?username=" + loginUsername + "&priority=false");
   }
   deleteForever(email:EmailI) : Observable<EmailI[]>{
 

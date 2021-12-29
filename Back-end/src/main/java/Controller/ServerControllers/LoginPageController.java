@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class LoginPageController {
     @PostMapping("/createProfile")
-    String createProfile(@RequestParam(value="encryption") String encryption){
+    String createProfile(@RequestBody String encryption){
         String ret;
         try{
             Database database =  Database.getInstance();

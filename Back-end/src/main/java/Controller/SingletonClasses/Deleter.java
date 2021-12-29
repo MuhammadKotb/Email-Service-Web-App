@@ -1,9 +1,8 @@
 package Controller.SingletonClasses;
 
 import Controller.DataContainerI;
-import Controller.Email.EmailI;
+import Controller.Profile.Elements.Email.EmailI;
 import Controller.Profile.Elements.Contacts.ContactI;
-import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
 
 import java.io.File;
@@ -58,7 +57,6 @@ public class Deleter {
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
-
     }
     public void deleteEmailDataDraft(EmailI email, ProfileI profile) throws Exception{
         if(profile.getDraft().getEmailbyID(email.getEmailID()) == null){
@@ -68,13 +66,12 @@ public class Deleter {
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
-
     }
     public void deleteEmailDataTrash(EmailI email, ProfileI profile) throws Exception{
         if(profile.getTrash().getEmailbyID(email.getEmailID()) == null){
             throw new Exception("NO SUCH EMAIL TO DELETE");
         }
-        File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat(email.getEmailID()).concat(".json"));
+        File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
@@ -97,6 +94,16 @@ public class Deleter {
             throw new Exception("COULD NOT DELETE FOLDER");
         }
         profile.removeFolderbyName(folderName);
+    }
+
+    public void deleteEmailProfileFolder(ProfileI profile, String folderName, EmailI email) throws Exception{
+        if(profile.getProfileFolderbyName(folderName).getEmailbyID(email.getEmailID()) == null){
+            throw new Exception("NO SUCH EMAIL TO DELETE");
+        }
+        File file = new File(profile.getProfileFolderbyName(folderName).getFolderDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
+        if(!file.delete()){
+            throw new Exception("COULD NOT DELETE EMAIL");
+        }
     }
 
     public void deleteContact(ContactI contact, ProfileI profile) throws Exception{

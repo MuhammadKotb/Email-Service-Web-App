@@ -12,7 +12,7 @@ public class EmailsSorter implements EmailsSorterI {
         this.ascending = ascending;
     }
     private static ArrayList<String> priorities = new ArrayList<>(
-            Arrays.asList("crucial", "important", "non-essential", "skippable")
+            Arrays.asList("urgent", "important", "standard", "skippable")
     );
 
     public ArrayList<EmailI> sort(ArrayList<EmailI> emails, String target) throws Exception{
