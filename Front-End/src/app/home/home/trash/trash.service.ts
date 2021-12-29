@@ -19,13 +19,13 @@ export class TrashService {
 
   restore(email:EmailI) : Observable<EmailI>{
 
-    return this.http.post<EmailI>("http://localhost:8080/restore" , email);
+    return this.http.post<EmailI>("http://localhost:8080/restore" ,{body: email});
 
   }
 
   deleteForever(email:EmailI) : Observable<EmailI[]>{
 
-    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever", email);
+    return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever", {body:email});
 
   }
 
