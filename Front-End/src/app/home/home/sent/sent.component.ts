@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
   import { Component, OnInit } from '@angular/core';
   import { LoginComponent } from 'src/app/login/login/login.component';
   import { EmailI, HomeComponent } from '../home.component'
@@ -17,14 +18,14 @@ import { TrashComponent } from '../trash/trash.component';
     styleUrls: ['./sent.component.css']
   })
   export class SentComponent implements OnInit {
-    public static listOfEmails : EmailI[] 
-    private viewArray : string[][] = []; 
+    public static listOfEmails : EmailI[]
+    private viewArray : string[][] = [];
     private listPreSize : number
     private iterationsNum : number
     private listOfButtons : NodeList
 
 
-    constructor(private serveMe: SentService) { 
+    constructor(private serveMe: SentService, private router:Router) {
       SentComponent.listOfEmails = [];
       filtered = false;
       this.listPreSize = this.viewArray.length
@@ -100,7 +101,7 @@ import { TrashComponent } from '../trash/trash.component';
 
   }
   parseArray(){
-    
+
     this.viewArray = [];
     for (let email=0; email < SentComponent.listOfEmails.length;email++){
       console.log("IN FOR LOOP");
@@ -217,8 +218,10 @@ searchSent(input : EmailI[]){
     try{
       const buttonNum = parseInt(e.target.id)
       this.serveMe.movetoTrash(SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-        location.reload()
-        this.ngOnInit()
+        this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+          this.router.navigate(["/home/sent"])
+
+        })
       })
     }catch (error){
       console.log(error)
@@ -277,6 +280,6 @@ searchSent(input : EmailI[]){
         document.getElementById("mybody")?.appendChild(node);
     }
   }
-  
+
 
 }

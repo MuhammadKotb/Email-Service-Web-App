@@ -23,7 +23,7 @@ export class DraftComponent implements OnInit {
   private listOfButtons : NodeList
 
 
-  constructor(private router : Router, private serveMe1: DraftService) { 
+  constructor(private router : Router, private serveMe1: DraftService) {
     DraftComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -165,8 +165,10 @@ deleteClicked(e: any){
   try{
     const buttonNum = parseInt(e.target.id)
     this.serveMe1.deleteForever(DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-      location.reload()
-      this.ngOnInit()
+      this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+        this.router.navigate(["/home/draft"])
+
+      })
     })
   }catch (error){
     console.log(error)

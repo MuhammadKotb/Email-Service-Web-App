@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { EmailI, HomeComponent } from '../home.component'
 import { InboxService } from './inbox.service';
@@ -22,7 +23,7 @@ export class InboxComponent implements OnInit {
   private listOfButtons : NodeList
 
 
-  constructor(private serveMe: InboxService) {
+  constructor(private serveMe: InboxService, private router:Router) {
     InboxComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -95,7 +96,7 @@ export class InboxComponent implements OnInit {
 parseArray(){
   console.log("In PARSE")
   console.log(InboxComponent.listOfEmails)
-  this.viewArray = [] 
+  this.viewArray = []
 
   for (let email=0; email < InboxComponent.listOfEmails.length;email++){
     console.log("In Loop")
@@ -273,8 +274,10 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
       try{
         const buttonNum = parseInt(e.target.id)
         this.serveMe.movetoTrash(InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-          location.reload()
-          this.ngOnInit()
+          this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+            this.router.navigate(["/home/inbox"])
+
+          })
         })
       }catch (error){
         console.log(error)
