@@ -85,6 +85,7 @@ export class TrashComponent implements OnInit {
       console.log(TrashComponent.listOfEmails);
       this.listPreSize  = this.viewArray.length
       this.parseArray()
+
       this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
       this.listOfButtons = document.querySelectorAll("td  > button")
       this.checkClick()
@@ -117,6 +118,31 @@ checkClick(){
     
   }
 }
+sortTrash(input : EmailI[]){
+  TrashComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+filterTrash(input : EmailI[]){
+  TrashComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+searchTrash(input : EmailI[]){
+  TrashComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+
 
 deleteClicked(e: any){
   try{

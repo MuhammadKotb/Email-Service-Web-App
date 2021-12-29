@@ -86,8 +86,10 @@ export class DraftComponent implements OnInit {
     this.serveMe1.getDraft(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
       DraftComponent.listOfEmails = data;
        console.log(DraftComponent.listOfEmails);
+
        this.listPreSize = this.viewArray.length
        this.parseArray()
+
        this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
        this.listOfButtons = document.querySelectorAll("td  > button")
        this.checkClick()});
@@ -111,6 +113,31 @@ checkClick(){
     }
     
   }
+}
+
+sortDraft(input : EmailI[]){
+  DraftComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+filterDraft(input : EmailI[]){
+  DraftComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+searchDraft(input : EmailI[]){
+  DraftComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
 }
 
 

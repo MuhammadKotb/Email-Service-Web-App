@@ -107,8 +107,41 @@ parseArray(){
   }
 }
 
-test(){
-  console.log("casdasdasdasdsd");
+sortInbox(input : EmailI[]){
+  
+  InboxComponent.listOfEmails = input;
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+  
+}
+filterInbox(input : EmailI[]){
+  
+  InboxComponent.listOfEmails = input;
+  if(input.length != 0){
+    this.parseArray();
+  }
+  else{
+    this.viewArray = [];
+  }
+  this.listPreSize = this.viewArray.length;
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+  
+}
+
+searchInbox(input : EmailI[]){
+  
+  InboxComponent.listOfEmails = input;
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+  
 }
 
 

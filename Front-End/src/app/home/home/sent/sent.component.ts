@@ -1,6 +1,6 @@
   import { Component, OnInit } from '@angular/core';
   import { LoginComponent } from 'src/app/login/login/login.component';
-  import { EmailI } from '../home.component'
+  import { EmailI, HomeComponent } from '../home.component'
   import { InboxComponent } from '../inbox/inbox.component';
   import { InboxService } from '../inbox/inbox.service';
   import $ from "jquery"
@@ -25,7 +25,8 @@
       SentComponent.listOfEmails = []
       this.viewArray = []
       this.listPreSize = this.viewArray.length
-      this.iterationsNum = 4
+      this.iterationsNum = 4;
+      HomeComponent.pageIndicator = "Sent";
     }
 
     ngOnInit(): void {
@@ -84,6 +85,7 @@
          console.log(SentComponent.listOfEmails);
          this.listPreSize  = this.viewArray.length;
          this.parseArray();
+
          this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
          this.listOfButtons = document.querySelectorAll("td  > button");
          this.checkClick();});
@@ -107,6 +109,30 @@
       }
       
     }
+}
+sortSent(input : EmailI[]){
+  SentComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+filterSent(input : EmailI[]){
+  SentComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+searchSent(input : EmailI[]){
+  SentComponent.listOfEmails = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
 }
 
 

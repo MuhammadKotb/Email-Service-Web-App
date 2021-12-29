@@ -59,8 +59,10 @@ export class ContactsComponent implements OnInit {
     ContactsComponent.listOfContacts.push(w)
 
   // this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
+  
   this.listPreSize = this.viewArray.length
-    this.parseArray()
+  this.parseArray()
+
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
      this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
@@ -108,6 +110,31 @@ checkClick(){
     
   }
 }
+sortContacts(input : ContactI[]){
+  ContactsComponent.listOfContacts = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+filterContacts(input : ContactI[]){
+  ContactsComponent.listOfContacts = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+searchContacts(input : ContactI[]){
+  ContactsComponent.listOfContacts = input
+  this.parseArray();
+  this.listPreSize = this.viewArray.length;
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+  this.listOfButtons = document.querySelectorAll("td  > button");
+  this.checkClick();
+}
+
 
 
     deleteClicked(e: any){

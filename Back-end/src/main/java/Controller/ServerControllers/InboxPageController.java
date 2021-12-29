@@ -79,9 +79,11 @@ public class InboxPageController {
         try{
             Database database = Database.getInstance();
             EmailsCriteriaI searcher = new EmailsSearchingCustomizedCriteria(target);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             return searcher.meetCriteria(database.getProfilebyUsername("", username).getInbox().getEmails());
         }
         catch (Exception e){
+
             System.out.println(e.getMessage());
             return null;
         }

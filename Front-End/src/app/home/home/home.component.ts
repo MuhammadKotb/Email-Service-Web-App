@@ -32,8 +32,7 @@ export interface EmailI{
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild(InboxComponent) inbox: InboxComponent;
-  constructor(private router:Router, private serveMe1: HomeService) { }
+  constructor(private router:Router, private serveMe1: HomeService, private inbox : InboxComponent, private sent : SentComponent, private trash : TrashComponent, private draft : DraftComponent, private contacts : ContactsComponent) { }
 
   public static globalFilterOption: string = ""
   public static globalFilterText: string = ""
@@ -46,6 +45,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.router.navigate(['/home/inbox']);
+    
 
   }
 
@@ -57,22 +57,23 @@ export class HomeComponent implements OnInit {
 
     if(HomeComponent.pageIndicator == "Trash"){
       console.log("Trash Filtered")
-      this.serveMe1.filterTrash(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {TrashComponent.listOfEmails = data; console.log(TrashComponent.listOfEmails);})
+      this.serveMe1.filterTrash(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {this.trash.filterTrash(data);console.log(TrashComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Draft"){
       console.log("Draft Filtered")
-      this.serveMe1.filterDraft(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {DraftComponent.listOfEmails = data; console.log(DraftComponent.listOfEmails);})
+      this.serveMe1.filterDraft(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {this.draft.filterDraft(data);console.log(DraftComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Sent"){
+      this.switchToInbox();
       console.log("Sent Filtered")
-      this.serveMe1.filterSent(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);})
+      this.serveMe1.filterSent(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {this.sent.filterSent(data);console.log(SentComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Inbox"){
       console.log("Inbox Filtered")
-      this.serveMe1.filterInbox(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {InboxComponent.listOfEmails = data; console.log(InboxComponent.listOfEmails);})
+      this.serveMe1.filterInbox(LoginComponent.globalUsername, HomeComponent.globalFilterOption, HomeComponent.globalFilterText).subscribe((data : EmailI[])=> {this.inbox.filterInbox(data);console.log(InboxComponent.listOfEmails);})
     }
 
     console.log(HomeComponent.globalFilterOption)
@@ -97,27 +98,29 @@ export class HomeComponent implements OnInit {
 
     if(HomeComponent.pageIndicator == "Trash"){
       console.log("Trash Sorted")
-      this.serveMe1.sortTrash(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {TrashComponent.listOfEmails = data; console.log(TrashComponent.listOfEmails);})
+      this.serveMe1.sortTrash(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {this.trash.sortTrash(data);console.log(TrashComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Draft"){
       console.log("Draft Sorted")
-      this.serveMe1.sortDraft(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {DraftComponent.listOfEmails = data; console.log(DraftComponent.listOfEmails);})
+      this.serveMe1.sortDraft(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {this.draft.sortDraft(data);console.log(DraftComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Sent"){
       console.log("Sent Sorted")
-      this.serveMe1.sortSent(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);})
+      this.serveMe1.sortSent(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {this.sent.sortSent(data);console.log(SentComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Inbox"){
       console.log("Inbox Sorted")
-      this.serveMe1.sortInbox(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {InboxComponent.listOfEmails = data; console.log(InboxComponent.listOfEmails); this.inbox.test()})
+      
+
+      this.serveMe1.sortInbox(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : EmailI[])=> {this.inbox.sortInbox(data); console.log(InboxComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Contacts"){
       console.log("Contacts Sorted")
-      this.serveMe1.sortContacts(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts= data; console.log(ContactsComponent.listOfContacts);})
+      this.serveMe1.sortContacts(LoginComponent.globalUsername, HomeComponent.globalSortOption, HomeComponent.globalSortOrder).subscribe((data : ContactI[])=> {this.contacts.sortContacts(data);console.log(ContactsComponent.listOfContacts);})
     }
 
     console.log(HomeComponent.globalSortOption)
@@ -130,27 +133,27 @@ export class HomeComponent implements OnInit {
 
     if(HomeComponent.pageIndicator == "Trash"){
       console.log("Trash Searched")
-      this.serveMe1.searchTrash(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {TrashComponent.listOfEmails = data; console.log(TrashComponent.listOfEmails);})
+      this.serveMe1.searchTrash(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {this.trash.searchTrash(data);console.log(TrashComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Draft"){
       console.log("Draft Searched")
-      this.serveMe1.searchDraft(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {DraftComponent.listOfEmails = data; console.log(DraftComponent.listOfEmails);})
+      this.serveMe1.searchDraft(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {this.draft.searchDraft(data);console.log(DraftComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Sent"){
       console.log("Sent Searched")
-      this.serveMe1.searchSent(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);})
+      this.serveMe1.searchSent(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {this.sent.searchSent(data);console.log(SentComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Inbox"){
       console.log("Inbox Searched")
-      this.serveMe1.searchInbox(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {InboxComponent.listOfEmails = data; console.log(InboxComponent.listOfEmails);})
+      this.serveMe1.searchInbox(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : EmailI[])=> {console.log(data);this.inbox.searchInbox(data);console.log(InboxComponent.listOfEmails);})
     }
 
     else if (HomeComponent.pageIndicator == "Contacts"){
       console.log("Contacts Searched")
-      this.serveMe1.searchContacts(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts= data; console.log(ContactsComponent.listOfContacts);})
+      this.serveMe1.searchContacts(LoginComponent.globalUsername, HomeComponent.globalSearchText).subscribe((data : ContactI[])=> {this.contacts.searchContacts(data);console.log(ContactsComponent.listOfContacts);})
     }
 
     console.log(HomeComponent.globalSearchText)
