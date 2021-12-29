@@ -20,7 +20,7 @@ public class Email implements EmailI {
     private String emailID;
 
     private String emailType;
-    ArrayList<Attachment> attachments = null;
+    private ArrayList<Attachment> attachments = null;
 
 
     @Override
