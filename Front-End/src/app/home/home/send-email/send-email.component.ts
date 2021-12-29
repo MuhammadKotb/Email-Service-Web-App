@@ -15,15 +15,15 @@ import { SendEmailService } from './send-email.service';
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-  private listOfReceivers : string[] 
+  private listOfReceivers : string[]
   private listPreSize : number
   private iterationsNum : number
   private emailToBeSent : EmailI
-  private Attachment: AttachmentI 
+  private Attachment: AttachmentI
   private fileObject = new FormData
   private listOfButtons : NodeList
 
-  constructor(private placer : InboxComponent  , private serveMe:SendEmailService) { 
+  constructor(private placer : InboxComponent  , private serveMe:SendEmailService) {
     this.listOfReceivers = []
     this.listPreSize = 0
     this.iterationsNum = 2
@@ -91,10 +91,23 @@ export class SendEmailComponent implements OnInit {
     console.log(this.emailToBeSent.receiversUsernames)
    //ATTACHMENT TO DO
     console.log("before Send")
-   this.serveMe.sendEmail(this.emailToBeSent).subscribe((data: string)=> {
-     alert(data)
-     })
+    this.serveMe.sendEmail(this.emailToBeSent).subscribe((data: string)=> {
+      alert(data)
+    })
     console.log("After Send")
+  }
+  movetoDraft(){
+    var e = (<HTMLSelectElement>document.getElementById("priority_select"))
+    this.emailToBeSent.priority = e.options[e.selectedIndex].text
+    this.emailToBeSent.body = (<HTMLInputElement>document.getElementById("message")).value
+    this.emailToBeSent.subject = (<HTMLInputElement>document.getElementById("subject")).value
+    this.emailToBeSent.receiversUsernames = this.listOfReceivers
+    this.emailToBeSent.senderUsername =  this.emailToBeSent.owner =  LoginComponent.globalUsername
+    this.serveMe.movetoDraft(this.emailToBeSent).subscribe((data:String)=>{
+        console.log(data)
+        this.ngOnInit()
+    });
+    console.log("lol")
   }
 
   clear(){

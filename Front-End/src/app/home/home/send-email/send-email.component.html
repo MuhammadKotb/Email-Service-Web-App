@@ -35,7 +35,7 @@
         <label for = "attachment">Select an attachment:</label>
         <input type="file" id="attachment" multiple (change) = "getAttachment($event.target)">
     </div>
-    
+
     <div id = "Message">
         <label for = "message">Enter Your Message:</label>
         <textarea id = "message" rows = "10" cols = "75"></textarea>
@@ -43,6 +43,9 @@
     <div>
         <button type="button" (click)="sendEmail()" >Send E-mail</button>
     </div>
-    
+    <div>
+      <button type="button" (click)="movetoDraft()" >Move to Draft</button>
+    </div>
+
 
 </form>
