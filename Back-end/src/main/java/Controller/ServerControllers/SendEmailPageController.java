@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import Controller.SingletonClasses.Handlers.FirstHandler;
 
@@ -18,7 +19,7 @@ import Controller.SingletonClasses.Handlers.FirstHandler;
 public class SendEmailPageController {
     Attachment attachment = new Attachment();
 
-    @PostMapping("/sendEmail")
+    /*@PostMapping("/sendEmail")
     String sendEmail(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("SendEmail", email, "");
@@ -28,17 +29,23 @@ public class SendEmailPageController {
             System.out.println(e.getMessage());
             return null;
         }
-    }
+    }*/
 
-    @PostMapping("/attachment")
-    void attachment(@RequestParam("file") MultipartFile file, @RequestBody Email email){
+    @PostMapping("/sendEmail")
+    void attachment(@RequestParam(value = "email") String email, @RequestParam("file") MultipartFile file){
         try{
-            this.attachment.setEncoded(file.getBytes());
-            this.attachment.setType(file.getContentType());
-            this.attachment.setName(file.getOriginalFilename());
             ObjectMapper map = new ObjectMapper();
-            map.writeValue(new File("lol4.json"), attachment);
-            System.out.println(file.getSize());
+            EmailI newEmail = map.readValue(email, Email.class);
+            newEmail.setAttachments(new ArrayList<Attachment>());
+            Attachment attachment = new Attachment();
+            attachment.setEncoded(file.getBytes());
+            attachment.setName(file.getOriginalFilename());
+            attachment.setType(file.getContentType());
+
+            newEmail.addAttachment(attachment);
+            System.out.println(attachment.getName());
+            FirstHandler.getInstance().handle("SendEmail", newEmail, "");
+
         }
         catch (Exception e){
             System.out.println(e.getMessage());

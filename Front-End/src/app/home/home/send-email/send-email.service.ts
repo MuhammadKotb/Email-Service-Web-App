@@ -11,9 +11,9 @@ export class SendEmailService {
 
   constructor(private http : HttpClient) { }
 
-  sendEmail(email:EmailI) : Observable<string>{
+  sendEmail(email:EmailI, formData : FormData) : Observable<string>{
 
-    return this.http.post<string>("http://localhost:8080/sendEmail" , email);
+    return this.http.post<string>("http://localhost:8080/sendEmail?email=" + encodeURIComponent(JSON.stringify(email)), formData);
   }
   movetoDraft(email:EmailI) : Observable<String>{
 

@@ -22,6 +22,9 @@ export class SendEmailComponent implements OnInit {
   private Attachment: AttachmentI
   private fileObject = new FormData
   private listOfButtons : NodeList
+  private files : File[] = [];
+  private form = new FormData();
+
 
   constructor(private placer : InboxComponent  , private serveMe:SendEmailService) {
     this.listOfReceivers = []
@@ -67,9 +70,9 @@ export class SendEmailComponent implements OnInit {
   getAttachment(input : any){
     var files: File[]
     files = input.files
-    for(let i = 0; i <files.length; i++){
-      this.fileObject.append("file", files[i])
-    }
+
+    this.form.append("file", files[0]);
+    console.log(files);
 
   }
 
@@ -89,9 +92,9 @@ export class SendEmailComponent implements OnInit {
     console.log(this.emailToBeSent.senderUsername)
     console.log(this.emailToBeSent.owner)
     console.log(this.emailToBeSent.receiversUsernames)
-   //ATTACHMENT TO DO
+    
     console.log("before Send")
-    this.serveMe.sendEmail(this.emailToBeSent).subscribe((data: string)=> {
+    this.serveMe.sendEmail(this.emailToBeSent, this.form).subscribe((data: string)=> {
       alert(data)
     })
     console.log("After Send")
