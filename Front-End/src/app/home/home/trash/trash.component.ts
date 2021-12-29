@@ -185,7 +185,7 @@ deleteClicked(e: any){
     try{
       const buttonNum = parseInt(e.target.id)
       console.log("RESTORE", buttonNum)
-      console.log("RESTORE", TrashComponent.listOfEmails[Math.abs((buttonNum-1)/2)]);
+      console.log("RESTORE", TrashComponent.listOfEmails[Math.abs((buttonNum)/2)]);
       this.serveMe1.restore(TrashComponent.listOfEmails[(buttonNum)/2]).subscribe((data : EmailI[])=> {
         this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
           this.router.navigate(["/home/trash"])
