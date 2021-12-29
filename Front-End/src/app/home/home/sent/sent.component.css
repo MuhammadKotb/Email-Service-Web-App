@@ -30,6 +30,7 @@ button{
   
 
 .email-popup {
+    word-wrap: break-word;
     position:absolute;
     top: 0px;
     left:300px;

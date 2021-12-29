@@ -78,6 +78,7 @@ public class TrashPageController {
     @PostMapping("/restore")
     ArrayList<EmailI> restore(@RequestBody Email email){
         try{
+            System.out.println("OWNER CONTOLEER " + email.getOwner());
             FirstHandler.getInstance().handle("Restore", email, "");
             return null;
         }

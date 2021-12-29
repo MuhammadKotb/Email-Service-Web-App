@@ -215,7 +215,7 @@ searchSent(input : EmailI[]){
                 break;
                 
       }
-      if(i != 5){
+      if(i != 4){
         node.appendChild(textNode)
       }
       else{

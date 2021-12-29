@@ -95,6 +95,7 @@ export class TrashComponent implements OnInit {
 
 }
 parseArray(){
+  this.viewArray = [];
   for (let email=0; email < TrashComponent.listOfEmails.length;email++){
     this.viewArray[email] = []
     let isSent = TrashComponent.listOfEmails[email].emailType
@@ -116,6 +117,8 @@ checkClick(){
     }else{
       this.listOfButtons[i].addEventListener("click",$.proxy(this.restoreClicked,this));
     }
+    console.log(this.listOfButtons);
+    console.log(TrashComponent.listOfEmails)
 
   }
 }
@@ -155,8 +158,7 @@ searchTrash(input : EmailI[]){
   console.log(this.viewArray.length);
   if(input.length == 0){
     this.viewArray = [];
-  }
-
+}
 
   this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
@@ -168,6 +170,8 @@ searchTrash(input : EmailI[]){
 deleteClicked(e: any){
   try{
     const buttonNum = parseInt(e.target.id)
+    console.log("DELETE", buttonNum)
+
     console.log(TrashComponent.listOfEmails[(buttonNum-1)/2])
     this.serveMe1.deleteForever(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
       this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
@@ -182,7 +186,9 @@ deleteClicked(e: any){
   restoreClicked(e: any){
     try{
       const buttonNum = parseInt(e.target.id)
-      this.serveMe1.restore(TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI)=> {
+      console.log("RESTORE", buttonNum)
+      console.log("RESTORE", TrashComponent.listOfEmails[Math.abs((buttonNum-1)/2)]);
+      this.serveMe1.restore(TrashComponent.listOfEmails[(buttonNum)/2]).subscribe((data : EmailI[])=> {
         this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
           this.router.navigate(["/home/trash"])
         })
