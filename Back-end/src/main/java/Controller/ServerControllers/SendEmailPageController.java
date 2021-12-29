@@ -52,12 +52,14 @@ public class SendEmailPageController {
     }
 
     @PostMapping("/movetoDraft")
-    void movetoDraft(@RequestParam(value = "email") EmailI email){
+    String movetoDraft(@RequestBody Email email){
         try {
             FirstHandler.getInstance().handle("MovetoDraft",email, "");
+            return "MOVED TO DRAFT SUCCESSFULLY";
+
         }catch (Exception e){
             System.out.println(e.getMessage());
-
+            return e.getMessage();
         }
     }
 }

@@ -4,6 +4,7 @@ import Controller.EmailsFilter.EmailsCriteriaI;
 import Controller.EmailsFilter.EmailsFilteringCustomizedCriteria;
 import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
+import Controller.Profile.Elements.ProfileFolderI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 import Controller.SingletonClasses.Deleter;
@@ -13,6 +14,7 @@ import Controller.Sorter.EmailsSorterI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -37,21 +39,31 @@ public class UserFoldersPageController {
             return null;
         }
     }
-
-    @PostMapping("/addUserFolder")
-    String addUserFolder(@RequestParam(value="foldername") String folderName, @RequestParam("username") String username){
+    @GetMapping("/getFolders")
+    ArrayList<ProfileFolderI> getAllFolders(@RequestParam(value = "username") String username){
         try{
-            Creator.getInstance().createProfileFolder(folderName, Database.getInstance().getProfilebyUsername("", username));
-            return "CREATED FOLDER SUCCESSFULLY";
+            return Database.getInstance().getProfilebyUsername("", username).getFolders();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
+        }
+    }
+
+    @PostMapping("/addFolder")
+    ArrayList<ProfileFolderI> addUserFolder(@RequestParam("username") String username, @RequestParam(value="foldername") String folderName){
+        try{
+            Creator.getInstance().createProfileFolder(folderName, Database.getInstance().getProfilebyUsername("", username));
+            return Database.getInstance().getProfilebyUsername("", username).getFolders();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
     @DeleteMapping("/removeUserFolder")
-    String removeUserFolder(@RequestParam(value = "foldername") String foldername, @RequestParam("username") String username){
+    String removeUserFolder(@RequestParam("username") String username, @RequestParam(value = "foldername") String foldername){
         try{
             Deleter.getInstance().deleteProfileFolder(Database.getInstance().getProfilebyUsername("", username), foldername);
             return "REMOVED FOLDER SUCCESSFULLY";
@@ -62,7 +74,7 @@ public class UserFoldersPageController {
         }
     }
     @PostMapping("/moveToFolder")
-    String moveToFolder(@RequestBody Email email, @RequestParam(value = "usernane") String username, @RequestParam(value = "foldername") String folderName){
+    String moveToFolder(@RequestBody Email email, @RequestParam(value = "username") String username, @RequestParam(value = "foldername") String folderName){
         try{
             FirstHandler.getInstance().handle("MoveToFolder", email, folderName);
             return "MOVED TO FOLDER SUCCESSFULLY";
@@ -73,14 +85,14 @@ public class UserFoldersPageController {
         }
     }
     @PostMapping("/moveToTrash")
-    String moveToTrash(@RequestBody Email email, @RequestParam(value = "foldername") String folderName){
+    ArrayList<EmailI> movetoTrash(@RequestBody Email email, @RequestParam(value = "foldername") String folderName){
         try{
-            FirstHandler.getInstance().handle("MovetoTrash", email, folderName);
-            return "MOVED TO TRASH SUCCESSFULLY";
+            FirstHandler.getInstance().handle("MovetoTrash",email, "");
+            return Database.getInstance().getProfilebyUsername("", email.getOwner()).getProfileFolderbyName(folderName).getEmails();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
         }
     }
 

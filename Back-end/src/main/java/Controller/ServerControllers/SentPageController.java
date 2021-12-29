@@ -18,14 +18,14 @@ import java.util.PriorityQueue;
 @CrossOrigin(origins = "http://localhost:4200")
 public class SentPageController {
     @PostMapping("/movetoTrashSent")
-    String movetoTrash(@RequestBody Email email){
+    ArrayList<EmailI> movetoTrash(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("MovetoTrash",email, "");
-            return "MOVED TO TRASH SUCCESSFULLY";
+            return Database.getInstance().getProfilebyUsername("", email.getOwner()).getSent().getEmails();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
         }
     }
 

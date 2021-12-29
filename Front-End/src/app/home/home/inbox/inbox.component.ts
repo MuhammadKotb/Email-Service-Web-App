@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmailI, HomeComponent } from '../home.component'
 import { InboxService } from './inbox.service';
 import $ from "jquery"
+import { LoginComponent } from 'src/app/login/login/login.component';
 
 
 @Component({
@@ -14,7 +15,7 @@ import $ from "jquery"
 
 
 export class InboxComponent implements OnInit {
-  private listOfEmails : EmailI[] 
+  public static listOfEmails : EmailI[] 
   private viewArray : string[][] 
   private listPreSize : number
   private iterationsNum : number
@@ -22,7 +23,7 @@ export class InboxComponent implements OnInit {
 
 
   constructor(private serveMe: InboxService) { 
-    this.listOfEmails = []
+    InboxComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 5
@@ -30,83 +31,79 @@ export class InboxComponent implements OnInit {
   }
 
   ngOnInit(): void {    
-    var x : EmailI = {
-      senderUsername: "Hesisenberg",
-      timeSent: "27/9/2001",
-      subject: "3azama",
-      body: "I am not in Danger Skyler. I am the danger !!!!",
-      owner: '',
-      recieverUsername: 'Skyler',
-      emailID: '',
-      emailType: '',
-      priority: 'Crucial'
-    }
-    var y : EmailI = {
-      senderUsername: "Meniem",
-      timeSent: "4/6/2001",
-      subject: "rap",
-      body: "I'm about to go HAM. Hard as a motherfucker, let these niggas know who I am",
-      owner: '',
-      recieverUsername: '',
-      emailID: '',
-      emailType: '',
-      priority: 'Important'
-    }
+    // var x : EmailI = {
+    //   senderUsername: "Hesisenberg",
+    //   timeSent: "27/9/2001",
+    //   subject: "3azama",
+    //   body: "I am not in Danger Skyler. I am the danger !!!!",
+    //   owner: '',
+    //   receiversUsernames: ['Skyler'],
+    //   emailID: '',
+    //   emailType: '',
+    //   priority: 'Crucial'
+    // }
+    // var y : EmailI = {
+    //   senderUsername: "Meniem",
+    //   timeSent: "4/6/2001",
+    //   subject: "rap",
+    //   body: "I'm about to go HAM. Hard as a motherfucker, let these niggas know who I am",
+    //   owner: '',
+    //   receiversUsernames: [''],
+    //   emailID: '',
+    //   emailType: '',
+    //   priority: 'Important'
+    // }
     
-    var z : EmailI = {
-      senderUsername: "Qotb",
-      timeSent: "هيخو",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recieverUsername: '',
-      emailID: '',
-      emailType: '',
-      priority: 'standard'
-    }
-    var w : EmailI = {
-      senderUsername: "Deffo",
-      timeSent: "لول",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recieverUsername: '',
-      emailID: '',
-      emailType: '',
-      priority: 'Skippable'
-    }
+    // var z : EmailI = {
+    //   senderUsername: "Qotb",
+    //   timeSent: "هيخو",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: [''],
+    //   emailID: '',
+    //   emailType: '',
+    //   priority: 'standard'
+    // }
+    // var w : EmailI = {
+    //   senderUsername: "Deffo",
+    //   timeSent: "لول",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: [''],
+    //   emailID: '',
+    //   emailType: '',
+    //   priority: 'Skippable'
+    // }
 
-    var q : EmailI = {
-      senderUsername: "Ahmed",
-      timeSent: "23/12/21",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recieverUsername: '',
-      emailID: '',
-      emailType: '',
-      priority: 'Important'
-    }
-
-    this.listOfEmails.push(x)
-    this.listOfEmails.push(y)
-    this.listOfEmails.push(z)
-    this.listOfEmails.push(w)
-    // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {this.listOfEmails = data; console.log(this.listOfEmails);});
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-    this.listOfButtons = document.querySelectorAll("td  > button")
-    this.checkClick() 
+    // InboxComponent.listOfEmails.push(x)
+    // InboxComponent.listOfEmails.push(y)
+    // InboxComponent.listOfEmails.push(z)
+    // InboxComponent.listOfEmails.push(w)
+    console.log("ng on Init called")
+    this.serveMe.getInbox(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+      InboxComponent.listOfEmails = data;
+      console.log(InboxComponent.listOfEmails);
+      this.listPreSize = this.viewArray.length;
+      this.parseArray();
+      this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+      this.listOfButtons = document.querySelectorAll("td  > button");
+      this.checkClick();});
 }
   
 parseArray(){
-  for (let email=0; email < this.listOfEmails.length;email++){
+  console.log("In PARSE")
+  console.log(InboxComponent.listOfEmails)
+  for (let email=0; email < InboxComponent.listOfEmails.length;email++){
+    console.log("In Loop")
     this.viewArray[email] = [] 
-    this.viewArray[email][0] = this.listOfEmails[email].senderUsername
-    this.viewArray[email][1] = this.listOfEmails[email].timeSent
-    this.viewArray[email][2] = this.listOfEmails[email].subject
-    this.viewArray[email][3] = this.listOfEmails[email].priority
+    this.viewArray[email][0] = InboxComponent.listOfEmails[email].senderUsername
+    this.viewArray[email][1] = InboxComponent.listOfEmails[email].timeSentString
+    this.viewArray[email][2] = InboxComponent.listOfEmails[email].subject
+    this.viewArray[email][3] = InboxComponent.listOfEmails[email].priority
+    console.log("View Array")
+    console.log(this.viewArray)
   }
 }
 
@@ -200,7 +197,7 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
             case 0 : node.id = "sender"
                      break
             case 1 : node.id = "date"
-                     textNode = document.createTextNode(email.timeSent)
+                     textNode = document.createTextNode(email.timeSentString)
                      destinationNode = document.getElementById("date-container")
                      break
             case 2 : node.id = "subject"
@@ -230,23 +227,27 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        this.serveMe.delete(this.serveMe.loginUsername,this.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-            this.listOfEmails = data; 
-            console.log(this.listOfEmails);
+        this.serveMe.movetoTrash(InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+            console.log("In")
+            console.log(data)
+            InboxComponent.listOfEmails = data; 
+            console.log(InboxComponent.listOfEmails);
             this.listPreSize = this.viewArray.length
+            alert(this.viewArray.length)
             this.parseArray()
             this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-        })
+            this.listOfButtons = document.querySelectorAll("td  > button");
+            this.checkClick();})
       }catch (error){
         console.log(error)
       }
     }
       showClicked(e: any){
         try{
-          console.log(this.listOfEmails)
+          console.log(InboxComponent.listOfEmails)
           const buttonNum = parseInt(e.target.id)
-          console.log(this.listOfEmails[0])
-          this.show(this.listOfEmails[buttonNum/2]);
+          console.log(InboxComponent.listOfEmails[0])
+          this.show(InboxComponent.listOfEmails[buttonNum/2]);
         }catch (error){
           console.log(error)
         }
@@ -261,9 +262,9 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 
 //       if (i%2){
 //         this.listOfButtons[i].addEventListener("click", e =>{
-//           this.serveMe.delete(this.serveMe.loginUsername,this.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
-//             this.listOfEmails = data; 
-//             console.log(this.listOfEmails);
+//           this.serveMe.delete(this.serveMe.loginUsername,InboxComponent.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
+//             InboxComponent.listOfEmails = data; 
+//             console.log(InboxComponent.listOfEmails);
 //             this.listPreSize = this.viewArray.length
 //             this.parseArray()
 //             this.place(this.viewArray,this.iterationsNum,this.listPreSize)
@@ -272,8 +273,8 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
 //       }else{
 //         this.listOfButtons[i].addEventListener("click", e =>{
 //           console.log(i)
-//           console.log(this.listOfEmails[i/2])
-//           this.show(this.listOfEmails[i/2]);
+//           console.log(InboxComponent.listOfEmails[i/2])
+//           this.show(InboxComponent.listOfEmails[i/2]);
 //         })
         
 //       }

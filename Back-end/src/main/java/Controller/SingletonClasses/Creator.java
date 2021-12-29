@@ -15,8 +15,11 @@ import Controller.Profile.Profile;
 import Controller.Profile.ProfileI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Creator {
 
@@ -113,27 +116,33 @@ public class Creator {
         map.writeValue(file, profile);
     }
 
-    public EmailI createEmailDataInbox(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Inbox", email.getAttachments(), email.getPriority());
+    public EmailI createEmailDataInbox(EmailI email, ProfileI profile, String ID, int receiverIndex) throws Exception{
+        EmailI inboxEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), new ArrayList<String>(Collections.singleton(email.getReceiversUsernames().get(receiverIndex))), "Inbox", email.getAttachments(), email.getPriority());
         File file = new File(profile.getInbox().getInboxDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE INBOX EMAIL FILE");
         }
         inboxEmail.setEmailID(ID);
+        if(receiverIndex != 0){
+            inboxEmail.setOwner(email.getReceiversUsernames().get(receiverIndex));
+        }
+        inboxEmail.setEmailType("Inbox");
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, inboxEmail);
         return inboxEmail;
     }
     public EmailI createEmailDataSent(EmailI email, ProfileI profile, String ID) throws Exception{
-        EmailI SentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Sent", email.getAttachments(), email.getPriority());
+        EmailI sentEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Sent", email.getAttachments(), email.getPriority());
         File file = new File(profile.getSent().getSentDataContainer().getDataContainerPath().concat("/").concat(ID).concat(".json"));
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE Sent EMAIL FILE");
         }
-        SentEmail.setEmailID(ID);
+        sentEmail.setEmailID(ID);
+        sentEmail.setOwner(email.getOwner());
+        sentEmail.setEmailType("Sent");
         ObjectMapper map = new ObjectMapper();
-        map.writeValue(file, SentEmail);
-        return SentEmail;
+        map.writeValue(file, sentEmail);
+        return sentEmail;
     }
     public EmailI createEmailDataDraft(EmailI email, ProfileI profile, String ID) throws Exception{
         EmailI draftEmail = new Email(email.getSubject(), email.getBody(), email.getSenderUsername(), email.getReceiversUsernames(), "Draft", email.getAttachments(), email.getPriority());
@@ -142,8 +151,10 @@ public class Creator {
             throw new Exception("COULD NOT CREATE TRASH EMAIL FILE");
         }
         draftEmail.setEmailID(ID);
+        draftEmail.setOwner(email.getOwner());
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, draftEmail);
+        Database.getInstance().getProfilebyUsername("", email.getOwner()).getDraft().addEmail(draftEmail);
         return draftEmail;
     }
     public EmailI createEmailDataTrash(EmailI email, ProfileI profile, String ID) throws Exception{
@@ -154,6 +165,7 @@ public class Creator {
         }
         trashEmail.setEmailID(ID);
         trashEmail.setOwner(email.getOwner());
+        trashEmail.setEmailType(email.getEmailType());
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, trashEmail);
         return trashEmail;
@@ -168,8 +180,9 @@ public class Creator {
         if(!file.createNewFile()){
             throw new Exception("COULD NOT CREATE FOLDER EMAIL FILE");
         }
+        emailFolder.setOwner(email.getOwner());
         emailFolder.setEmailID(ID);
-        email.setOwner(email.getOwner());
+        emailFolder.setEmailType(folderName);
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, emailFolder);
         return emailFolder;
@@ -183,11 +196,6 @@ public class Creator {
         ObjectMapper map = new ObjectMapper();
         map.writeValue(file, contact);
     }
-
-
-
-
-
 
 
 }

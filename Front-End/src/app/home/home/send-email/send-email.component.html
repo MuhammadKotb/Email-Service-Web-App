@@ -6,7 +6,7 @@
         <select id = "priority_select">
             <option value="urgent">Urgent</option>
             <option value="important">Important</option>
-            <option value="non-essential">Non-Essential</option>
+            <option value="standard">Standard</option>
             <option value="skippable">Skippable</option>
         </select>
     </div>
@@ -17,13 +17,12 @@
         <table id = "Receiver_table">
             <thead>
                 <tr>
-                    <th>Receiver</th>
-                    <th>Number</th>
+                    <th>Receivers</th>
                 </tr>
             </thead>
             <tbody id = "mybody">
             </tbody>
-            <button type="button"(click) = "getMessage()">Clear List</button>
+            <button type="button"(click) = "clear()">Clear List</button>
         </table>
     </div>
 
@@ -42,7 +41,7 @@
         <textarea id = "message" rows = "10" cols = "75"></textarea>
     </div>
     <div>
-        <button type="submit">Send E-mail</button>
+        <button type="button" (click)="sendEmail()" >Send E-mail</button>
     </div>
     
 

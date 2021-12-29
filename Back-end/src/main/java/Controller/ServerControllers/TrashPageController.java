@@ -3,14 +3,13 @@ package Controller.ServerControllers;
 import Controller.EmailsFilter.EmailsCriteriaI;
 import Controller.EmailsFilter.EmailsFilteringCustomizedCriteria;
 import Controller.EmailsFilter.EmailsSearchingCustomizedCriteria;
+import Controller.Profile.Elements.Email.Email;
 import Controller.Profile.Elements.Email.EmailI;
 import Controller.SingletonClasses.Database;
+import Controller.SingletonClasses.Handlers.FifthHandler;
 import Controller.Sorter.EmailsSorter;
 import Controller.Sorter.EmailsSorterI;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -63,6 +62,28 @@ public class TrashPageController {
             Database database = Database.getInstance();
             EmailsCriteriaI searcher = new EmailsSearchingCustomizedCriteria(target);
             return searcher.meetCriteria(database.getProfilebyUsername("", username).getTrash().getEmails());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @DeleteMapping("/deleteForever")
+    ArrayList<EmailI> deleteForever(@RequestBody Email email){
+        try{
+            FifthHandler.getInstance().handle("DeleteForever", email, "");
+            return null;
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @PostMapping("/restore")
+    ArrayList<EmailI> resotore(@RequestBody Email email){
+        try{
+            FifthHandler.getInstance().handle("Restore", email, "");
+            return null;
         }
         catch (Exception e){
             System.out.println(e.getMessage());

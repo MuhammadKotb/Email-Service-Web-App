@@ -19,7 +19,7 @@ public class ProfileSent implements ProfileSentI {
     private ArrayList<EmailI> emails;
 
     private static ArrayList<String> priorities = new ArrayList<>(
-            Arrays.asList("crucial", "important", "non-essential", "skippable")
+            Arrays.asList("urgent", "important", "standard", "skippable")
     );
 
     public ProfileSent(DataContainerI SentDataContainer) throws Exception{

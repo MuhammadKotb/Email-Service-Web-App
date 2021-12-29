@@ -18,7 +18,7 @@ public class ProfileDraft implements ProfileDraftI {
     private ArrayList<EmailI> emails;
     private PriorityQueue<EmailI> emailsPrioritized;
     private static ArrayList<String> priorities = new ArrayList<>(
-            Arrays.asList("crucial", "important", "non-essential", "skippable")
+            Arrays.asList("urgent", "important", "standard", "skippable")
     );
 
     public ProfileDraft(DataContainerI draftDataContainer) throws Exception{

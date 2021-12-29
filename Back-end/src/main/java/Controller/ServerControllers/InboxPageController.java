@@ -19,14 +19,14 @@ import java.util.Arrays;
 public class InboxPageController {
 
     @PostMapping("/movetoTrashInbox")
-    String movetoTrash(@RequestBody Email email){
+    ArrayList<EmailI> movetoTrash(@RequestBody Email email){
         try{
-            FirstHandler.getInstance().handle("MovetoTrash", email, "");
-            return "MOVED TO TRASH SUCCESSFULLY";
+            FirstHandler.getInstance().handle("MovetoTrash",email, "");
+            return Database.getInstance().getProfilebyUsername("", email.getOwner()).getInbox().getEmails();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return null;
         }
     }
 
@@ -73,6 +73,7 @@ public class InboxPageController {
             return null;
         }
     }
+
     @GetMapping("/searchInbox")
     ArrayList<EmailI> searchInbox(@RequestParam(value = "username") String username, @RequestParam(value = "target") String target){
         try{

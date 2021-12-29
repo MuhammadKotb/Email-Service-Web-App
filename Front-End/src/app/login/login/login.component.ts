@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,private server: LoginService, private home :HomeComponent) { }
 
-  public static globalUsername: string = ""
+  public static globalUsername: string 
 
   ngOnInit(): void {
   }
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
       console.log(container)
       if(container == "CREATED DataContainer SUCCESSFULLY"){
         LoginComponent.globalUsername = username
+        console.log(LoginComponent.globalUsername)
         this.router.navigate(['/home']);
       }else {
         alert("This username has already used")
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
       }else{
         this.home.path=container;
         LoginComponent.globalUsername = username
+        console.log(LoginComponent)
         this.router.navigate(['/home']);
       }
 

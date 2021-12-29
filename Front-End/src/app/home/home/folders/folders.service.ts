@@ -19,13 +19,23 @@ export class FolderService {
     return this.http.get<FoldersI[]>("http://localhost:8080/getFolders?username=" + loginUsername);
   }
   
-  deleteFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
+  removeUserFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
 
-    return this.http.delete<FoldersI[]>("http://localhost:8080/deleteFolder?username=" + loginUsername + "&folder=" + folderName);
+    return this.http.delete<FoldersI[]>("http://localhost:8080/removeUserFolder?username=" + loginUsername + "&folder=" + folderName);
   }
 
-  addFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
+  addUserFolder(loginUsername:string,folderName:string) : Observable<FoldersI[]>{
 
-    return this.http.post<FoldersI[]>("http://localhost:8080/addFolder?username=" + loginUsername,folderName);
+    return this.http.post<FoldersI[]>("http://localhost:8080/addFolder?username=" + loginUsername, folderName);
   }
+
+  getFolder(loginUsername:string, folderName:string,): Observable <EmailI[]>{
+    return this.http.get<EmailI[]>("http://localhost:8080/getFolder?username=" + loginUsername + "&foldername=" + folderName)
+  }
+
+  movetoTrash(folderName:string, email:EmailI) : Observable<EmailI[]>{
+
+    return this.http.post<EmailI[]>("http://localhost:8080/movetoTrashFolder?foldername=" + folderName, email);
+  }
+
 }

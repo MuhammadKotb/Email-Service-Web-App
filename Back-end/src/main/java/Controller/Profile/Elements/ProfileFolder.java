@@ -18,7 +18,7 @@ public class ProfileFolder implements ProfileFolderI {
     private PriorityQueue<EmailI> emailsPrioritized;
 
     private static ArrayList<String> priorities = new ArrayList<>(
-            Arrays.asList("crucial", "important", "non-essential", "skippable")
+            Arrays.asList("urgent", "important", "standard", "skippable")
     );
 
     public ProfileFolder(DataContainerI folderDataContainer, String name) throws Exception{

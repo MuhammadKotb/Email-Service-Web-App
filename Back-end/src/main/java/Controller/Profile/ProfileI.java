@@ -22,11 +22,13 @@ public interface ProfileI {
     String getPassWord();
     String getEncryption();
     DataContainerI getDataContainer();
+    ArrayList<ProfileFolderI> getFolders();
 
     void setUsername(String username);
     void setPassWord(String passWord);
     void setEncryption(String encryption);
     void setDataContainer(DataContainerI dataContainer);
+    void setFolders(ArrayList<ProfileFolderI> folders);
 
     ProfileTrashI getTrash();
     ProfileInboxI getInbox();

@@ -8,6 +8,10 @@
     width:1511px;
 }
 
+.tool_bar button{
+    margin-left:5px;
+}
+
 .tool_bar div{
     padding:10px;
     right: 0.5em;

@@ -11,7 +11,7 @@ import java.util.UUID;
 public class FourthHandler implements HandlerI{
 
     private final String concern = "MoveToFolder";
-    private HandlerI successor = null;
+    private HandlerI successor = FifthHandler.getInstance();
     private static FourthHandler instance = null;
 
     private FourthHandler(){}

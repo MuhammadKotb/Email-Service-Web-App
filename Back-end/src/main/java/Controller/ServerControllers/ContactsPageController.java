@@ -46,7 +46,7 @@ public class ContactsPageController {
         }
     }
 
-    @PostMapping("/editContact")
+    /*@PostMapping("/editContact")
     void editContact(@RequestParam(value = "username") String username,@RequestParam(value = "oldContact") ContactI oldContact, @RequestParam(value = "newContact") ContactI newContact){
         try {
             Database database = Database.getInstance();
@@ -56,10 +56,10 @@ public class ContactsPageController {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 
     @DeleteMapping("/removeContact")
-    String removeContact(@RequestParam(value = "contactUsername") String contactUsername, @RequestParam(value = "username") String username){
+    String removeContact(@RequestParam(value = "contactusername") String contactUsername, @RequestParam(value = "username") String username){
         try {
             Database database = Database.getInstance();
             Deleter.getInstance().deleteContact(database.getProfilebyUsername("", username).getContacts().getContact(contactUsername), database.getProfilebyUsername("", username));

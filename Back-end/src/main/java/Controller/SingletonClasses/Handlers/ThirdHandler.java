@@ -5,6 +5,7 @@ import Controller.Profile.ProfileI;
 import Controller.SingletonClasses.Creator;
 import Controller.SingletonClasses.Database;
 
+import java.util.UUID;
 
 
 public class ThirdHandler implements HandlerI {
@@ -30,8 +31,9 @@ public class ThirdHandler implements HandlerI {
                 throw new Exception("THERE IS NO PROFILE BY THIS USERNAME");
             }
             ProfileI owner = database.getProfilebyUsername("", email.getOwner());
-            Creator.getInstance().createEmailDataDraft(email, owner, email.getEmailID());
-            owner.getDraft().addEmail(email);
+            String emailDraftId = UUID.randomUUID().toString();
+            Creator.getInstance().createEmailDataDraft(email, owner, emailDraftId);
+            System.out.println("OWNER" + owner.getUsername());
 
         }else{
             if(this.successor == null){

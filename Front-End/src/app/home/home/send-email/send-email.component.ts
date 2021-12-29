@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AttachmentI, HomeComponent } from '../home.component';
+import { AttachmentI, EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
+import $ from "jquery"
+import { LoginComponent } from 'src/app/login/login/login.component';
+import { SendEmailService } from './send-email.service';
 
-export interface ReceiverI{
-  username: string
-  num: number
-}
+
+
 
 
 @Component({
@@ -14,67 +15,54 @@ export interface ReceiverI{
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-  private listOfReceivers : ReceiverI[] 
-  private receiverCount : number 
-  private viewArray : string[][] 
+  private listOfReceivers : string[] 
   private listPreSize : number
   private iterationsNum : number
-  private priority: string 
-  private subject: string 
+  private emailToBeSent : EmailI
   private Attachment: AttachmentI 
   private fileObject = new FormData
-  private message: string 
+  private listOfButtons : NodeList
 
-  constructor(private placer : InboxComponent  ) { 
+  constructor(private placer : InboxComponent  , private serveMe:SendEmailService) { 
     this.listOfReceivers = []
-    this.receiverCount = 0
-    this.viewArray = []
-    this.listPreSize = this.viewArray.length
-    this.iterationsNum = 0
-    this.priority = ""
-    this.subject = ""
-    this.message = ""
+    this.listPreSize = 0
+    this.iterationsNum = 2
+    this.listOfButtons = document.querySelectorAll("td  > button")
     this.Attachment = {
       encoded: "",
       name: "",
       type: ""
+    }
+    this.emailToBeSent  = {
+      senderUsername: '',
+      timeSentString: '',
+      subject: '',
+      body: '',
+      owner: '',
+      receiversUsernames: [],
+      emailID: '',
+      emailType: '',
+      priority: ''
     }
     HomeComponent.pageIndicator = "Send Email"
   }
 
 
   ngOnInit(): void {
-
+    this.checkClick()
+    console.log(LoginComponent.globalUsername)
   }
 
 
   showReceiver(){
     var receiver_input = (<HTMLInputElement>document.getElementById("receiver")).value
-    var receiver : ReceiverI = {
-      username: receiver_input,
-      num: this.receiverCount
-    }
-    this.listOfReceivers.push(receiver)
-    this.listPreSize = this.viewArray.length
-    this.viewArray.length = 0
-    this.viewArray[0] = []
-    this.viewArray[0][0] = receiver.username
-    this.viewArray[0][1] = ((this.receiverCount++)+1).toString()
-    this.iterationsNum = this.receiverCount
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Delete")
+    this.listPreSize = this.listOfReceivers.length
+    this.listOfReceivers.push(receiver_input)
+    this.place()
+    this.listOfButtons = document.querySelectorAll("td  > button")
+    this.checkClick()
   }
 
-  getPriority(){
-    var e = (<HTMLSelectElement>document.getElementById("priority_select"))
-    this.priority = e.options[e.selectedIndex].text
-
-  }
-
-  getSubject(){
-    this.subject = (<HTMLInputElement>document.getElementById("subject")).value
-    console.log(this.subject)
-
-  }
 
   getAttachment(input : any){
     var files: File[]
@@ -85,21 +73,85 @@ export class SendEmailComponent implements OnInit {
 
   }
 
-  getMessage(){
-    this.message = (<HTMLInputElement>document.getElementById("message")).value
-    console.log(this.message)
-  }
+
 
   sendEmail(){
-
-    
-
+    var e = (<HTMLSelectElement>document.getElementById("priority_select"))
+    this.emailToBeSent.priority = e.options[e.selectedIndex].text
+    this.emailToBeSent.body = (<HTMLInputElement>document.getElementById("message")).value
+    this.emailToBeSent.subject = (<HTMLInputElement>document.getElementById("subject")).value
+    this.emailToBeSent.receiversUsernames = this.listOfReceivers
+    this.emailToBeSent.senderUsername =  this.emailToBeSent.owner =  LoginComponent.globalUsername
+    console.log(this.emailToBeSent.priority)
+    console.log(this.emailToBeSent.body)
+    console.log(this.emailToBeSent.subject)
+    console.log(LoginComponent.globalUsername)
+    console.log(this.emailToBeSent.senderUsername)
+    console.log(this.emailToBeSent.owner)
+    console.log(this.emailToBeSent.receiversUsernames)
+   //ATTACHMENT TO DO
+    console.log("before Send")
+   this.serveMe.sendEmail(this.emailToBeSent).subscribe((data: string)=> {
+     alert(data)
+     })
+    console.log("After Send")
   }
 
+  clear(){
+    this.listPreSize = this.listOfReceivers.length
+    this.listOfReceivers = []
+    this.place()
+  }
 
+  checkClick(){
+    console.log(this.listOfButtons)
+    for (var i =  0 ; i < this.listOfButtons.length ; i++)
+        this.listOfButtons[i].addEventListener("click",$.proxy(this.deleteClicked,this));
+      }
+
+    deleteClicked(e: any){
+      try{
+        const buttonNum = parseInt(e.target.id)
+        this.listPreSize = this.listOfReceivers.length
+        for (var i=buttonNum ; i<this.listOfReceivers.length-1 ; i++)
+          this.listOfReceivers[i] = this.listOfReceivers[i+1]
+        this.listOfReceivers.pop()
+        console.log(this.listOfReceivers)
+        this.place()
+        this.listOfButtons = document.querySelectorAll("td  > button")
+        this.checkClick()
+      }catch (error){
+        console.log(error)
+      }
+    }
+
+    place(){
+      var body = document.getElementById("mybody")
+      for (let i=0;i<this.listPreSize;i++){
+        body?.removeChild(body?.childNodes[0])
+      }
+      console.log(this.listOfReceivers)
+      for (let i=0;i<this.listOfReceivers.length;i++){
+        var node = document.createElement("tr");
+        node.style.width = "300px"
+        node.style.textAlign = "center"
+        node.style.padding = "7px"
+        node.style.margin = "50px"
+        var node2 = document.createElement("td");
+        var textNode = document.createTextNode(this.listOfReceivers[i]);
+        node2.appendChild(textNode);
+        node.appendChild(node2);
+        var node3 = document.createElement("td");
+        var textNode2 = document.createTextNode("Delete");
+        var node4 = document.createElement("button");
+        node4.style.marginRight = "5px"
+        node4.appendChild(textNode2);
+        node4.type = "button";
+        node4.id = i.toString()
+        node3.appendChild(node4);
+        node.appendChild(node3);
+        document.getElementById("mybody")?.appendChild(node);
+    }
+  }
 }
-
-
-
-
 

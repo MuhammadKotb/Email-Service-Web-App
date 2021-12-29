@@ -20,7 +20,7 @@ public class ProfileTrash implements ProfileTrashI {
 
 
     private static ArrayList<String> priorities = new ArrayList<>(
-            Arrays.asList("crucial", "important", "non-essential", "skippable")
+            Arrays.asList("urgent", "important", "standard", "skippable")
     );
 
     public ProfileTrash(DataContainerI trashDataContainer) throws Exception {

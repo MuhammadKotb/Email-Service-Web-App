@@ -12,6 +12,11 @@ export class TrashService {
 
   constructor(private http : HttpClient) { }
 
+  getTrash(loginUsername:string) : Observable<EmailI[]>{
+
+    return this.http.get<EmailI[]>("http://localhost:8080/getTrash?username=" + loginUsername + "&priority=false");
+  }
+
   restore(loginUsername:string,email:EmailI) : Observable<EmailI>{
 
     return this.http.post<EmailI>("http://localhost:8080/restore?username=" + loginUsername, email);
@@ -23,7 +28,5 @@ export class TrashService {
     return this.http.delete<EmailI[]>("http://localhost:8080/deleteForever?username=" + loginUsername, email);
 
   }
-
-  
   
 }

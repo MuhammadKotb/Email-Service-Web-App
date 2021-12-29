@@ -23,3 +23,15 @@ th,td{
 button{
     margin-right: 5px;
 }
+
+#refresh {
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 80px;
+    height: 30px;
+    font-size: unset;
+    font-family: cursive;
+    border-radius: 10px;
+    border-color: black;
+    background-color: darkgoldenrod;
+  }

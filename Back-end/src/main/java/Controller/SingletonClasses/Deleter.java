@@ -57,7 +57,6 @@ public class Deleter {
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
-
     }
     public void deleteEmailDataDraft(EmailI email, ProfileI profile) throws Exception{
         if(profile.getDraft().getEmailbyID(email.getEmailID()) == null){
@@ -67,13 +66,12 @@ public class Deleter {
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }
-
     }
     public void deleteEmailDataTrash(EmailI email, ProfileI profile) throws Exception{
         if(profile.getTrash().getEmailbyID(email.getEmailID()) == null){
             throw new Exception("NO SUCH EMAIL TO DELETE");
         }
-        File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat(email.getEmailID()).concat(".json"));
+        File file = new File(profile.getTrash().getTrashDataContainer().getDataContainerPath().concat("/").concat(email.getEmailID()).concat(".json"));
         if(!file.delete()){
             throw new Exception("COULD NOT DELETE EMAIL");
         }

@@ -2,9 +2,9 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InboxComponent } from '../inbox/inbox.component';
 import { EmailI, HomeComponent } from '../home.component';
-import { InboxService } from '../inbox/inbox.service';
 import { FolderService } from './folders.service';
-import { LoginComponent } from 'src/app/login/login/login.component';
+import $ from "jquery"
+
 
 export interface FoldersI{
   name: string
@@ -73,14 +73,13 @@ export class FoldersComponent implements OnInit{
       name: folder_input,
       listOfEmails: []
     }
-    this.serveMe.deleteFolder(this.serveMe.loginUsername,folder.name).subscribe((data : FoldersI[])=> {this.listOfFolders = data;});
+    // this.serveMe.addFolder(this.serveMe.loginUsername,folder.name).subscribe((data : FoldersI[])=> {this.listOfFolders = data;});
     this.listPreSize = this.viewArray.length
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
-    while (1){
-      console.log(1)
-      this.checkClick()
-    }
+    
+    this.checkClick()
+  
   }
 
   checkClick(){
@@ -97,13 +96,13 @@ export class FoldersComponent implements OnInit{
 
 deleteClicked(e: any){
   try{
-    const buttonNum = parseInt(e.target.id)
-      this.serveMe.deleteFolder(this.serveMe.loginUsername,this.listOfFolders[(buttonNum-1)/2].name).subscribe((data : FoldersI[])=> {
-      this.listOfFolders = data;
-      this.listPreSize = this.viewArray.length
-      this.parseArray()
-      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
-    });
+    // const buttonNum = parseInt(e.target.id)
+    //   this.serveMe.deleteFolder(this.serveMe.loginUsername,this.listOfFolders[(buttonNum-1)/2].name).subscribe((data : FoldersI[])=> {
+    //   this.listOfFolders = data;
+    //   this.listPreSize = this.viewArray.length
+    //   this.parseArray()
+    //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
+    // });
   }catch (error){
     console.log(error)
   }
