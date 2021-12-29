@@ -17,9 +17,8 @@ import Controller.SingletonClasses.Handlers.FirstHandler;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class SendEmailPageController {
-    Attachment attachment = new Attachment();
 
-    /*@PostMapping("/sendEmail")
+    @PostMapping("/sendEmail")
     String sendEmail(@RequestBody Email email){
         try{
             FirstHandler.getInstance().handle("SendEmail", email, "");
@@ -29,22 +28,30 @@ public class SendEmailPageController {
             System.out.println(e.getMessage());
             return null;
         }
-    }*/
+    }
 
-    @PostMapping("/sendEmail")
-    void attachment(@RequestParam(value = "email") String email, @RequestParam("file") MultipartFile file){
+    @PostMapping("/sendEmailAttachments")
+    void attachment(@RequestParam(value = "email") String email, @RequestParam("file") MultipartFile[] files){
         try{
             ObjectMapper map = new ObjectMapper();
             EmailI newEmail = map.readValue(email, Email.class);
             newEmail.setAttachments(new ArrayList<Attachment>());
-            Attachment attachment = new Attachment();
-            attachment.setEncoded(file.getBytes());
-            attachment.setName(file.getOriginalFilename());
-            attachment.setType(file.getContentType());
+            if(files != null){
+                for(int i = 0; i < files.length; i++){
+                    Attachment attachment = new Attachment();
+                    attachment.setEncoded(files[i].getBytes());
+                    System.out.println(files[i].getOriginalFilename());
+                    attachment.setName(files[i].getOriginalFilename());
+                    System.out.println(files[i].getSize());
 
-            newEmail.addAttachment(attachment);
-            System.out.println(attachment.getName());
+                    attachment.setType(files[i].getContentType());
+                    newEmail.addAttachment(attachment);
+                    System.out.println(attachment.getName());
+                }
+            }
+
             FirstHandler.getInstance().handle("SendEmail", newEmail, "");
+
 
         }
         catch (Exception e){
@@ -53,10 +60,6 @@ public class SendEmailPageController {
     }
 
 
-    @GetMapping("/getAttachment")
-    Attachment getAttachment(){
-        return this.attachment;
-    }
 
     @PostMapping("/movetoDraft")
     String movetoDraft(@RequestBody Email email){

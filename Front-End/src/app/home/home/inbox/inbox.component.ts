@@ -232,6 +232,7 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
                    break
           case 4 : document.getElementById("message-container")?.removeChild(document.getElementById("message-container")?.childNodes[1])
                    break
+                
         }
         var emailContents = document.querySelectorAll("div.email-container > div");
         for (var i = 0; i<emailContents.length; i++){
@@ -258,8 +259,10 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
                     node.id = "message"
                     textNode = document.createTextNode(email.body)
                     destinationNode = document.getElementById("message-container")
-
                     break
+            case 5 : 
+                    node.id = "attachment"
+                    
           }
           node.appendChild(textNode)
           destinationNode?.appendChild(node)
