@@ -300,7 +300,9 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
+        console.log(InboxComponent.listOfEmails);
         this.serveMe.movetoTrash(InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+
           this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
             this.router.navigate(["/home/inbox"])
 
