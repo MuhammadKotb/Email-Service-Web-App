@@ -6,6 +6,7 @@ import $ from "jquery"
 import { LoginComponent } from 'src/app/login/login/login.component';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { FoldersComponent } from '../folders/folders.component';
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class InboxComponent implements OnInit {
 
 
   constructor(private serveMe: InboxService, private router:Router) {
+    SendEmailComponent.emailToBeSent=null;
     InboxComponent.listOfEmails = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 5

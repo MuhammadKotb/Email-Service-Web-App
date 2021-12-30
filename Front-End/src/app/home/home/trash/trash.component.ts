@@ -8,6 +8,7 @@ import { TrashService } from './trash.service';
 import { HomeComponent } from '../home.component';
 import { inject } from '@angular/core/testing';
 import $ from "jquery"
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class TrashComponent implements OnInit {
   private listOfButtons : NodeList
 
   constructor(private serveMe1: TrashService, private router:Router) {
+    SendEmailComponent.emailToBeSent=null;
     TrashComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
