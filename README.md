@@ -13,7 +13,7 @@
 > - Thirdly: you run the Angular project and on localhost:4200 and the Spring Boot project on localhost:8080.
 ## Design Patterns and UML Class Diagram
 ### Table of Used Design Patterns
-|       **Design Patterns**       |
+|       **`Design Patterns`**     |
 | :-----------------------------: |
 |         Singelton Pattern       |
 |         Builder Pattern         |
@@ -40,7 +40,7 @@ behavioral and two fundamentals design patterns as follow:
 > + Interface and Delegation design pattern used in applying the 
 > previous design patterns.
 ## UML Class Diagram
-![image](https://drive.google.com/file/d/1yrE3eHK_nPGCbyu7UzTbtd1MgudPkVFr)
+![image](https://drive.google.com/drive/u/0/my-drive?lfhs=2)
 + Link for higher resolution: `https://miro.com/app/board/uXjVOY1Lgd8=/?invite_link_id=126737987619`
 ## Design Decisions
 + In sorting, we sort only by body, subject, sender, date, priority.
