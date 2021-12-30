@@ -208,9 +208,7 @@ searchSent(input : EmailI[]){
                 textNode = document.createTextNode(email.body)
                 destinationNode = document.getElementById("message-container")
                 break
-        case 4 :
-
-                node.id = "attachment"
+        case 4 :node.id = "attachment"
                 destinationNode = document.getElementById("attachment-container")
 
 

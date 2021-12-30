@@ -40,70 +40,20 @@ export class InboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // var x : EmailI = {
-    //   senderUsername: "Hesisenberg",
-    //   timeSent: "27/9/2001",
-    //   subject: "3azama",
-    //   body: "I am not in Danger Skyler. I am the danger !!!!",
-    //   owner: '',
-    //   receiversUsernames: ['Skyler'],
-    //   emailID: '',
-    //   emailType: '',
-    //   priority: 'Crucial'
-    // }
-    // var y : EmailI = {
-    //   senderUsername: "Meniem",
-    //   timeSent: "4/6/2001",
-    //   subject: "rap",
-    //   body: "I'm about to go HAM. Hard as a motherfucker, let these niggas know who I am",
-    //   owner: '',
-    //   receiversUsernames: [''],
-    //   emailID: '',
-    //   emailType: '',
-    //   priority: 'Important'
-    // }
-
-    // var z : EmailI = {
-    //   senderUsername: "Qotb",
-    //   timeSent: "هيخو",
-    //   subject: "birthday",
-    //   body: '',
-    //   owner: '',
-    //   receiversUsernames: [''],
-    //   emailID: '',
-    //   emailType: '',
-    //   priority: 'standard'
-    // }
-    // var w : EmailI = {
-    //   senderUsername: "Deffo",
-    //   timeSent: "لول",
-    //   subject: "birthday",
-    //   body: '',
-    //   owner: '',
-    //   receiversUsernames: [''],
-    //   emailID: '',
-    //   emailType: '',
-    //   priority: 'Skippable'
-    // }
-
-    // InboxComponent.listOfEmails.push(x)
-    // InboxComponent.listOfEmails.push(y)
-    // InboxComponent.listOfEmails.push(z)
-    // InboxComponent.listOfEmails.push(w)
-      console.log("ng on Init called")
-      this.date_priority = ((<HTMLInputElement>document.getElementById("date-priority")).checked).toString()
-      console.log(this.date_priority)
-      this.serveMe.getInbox(LoginComponent.globalUsername, this.date_priority).subscribe((data : EmailI[])=> {
-      InboxComponent.listOfEmails = data;
-      console.log(InboxComponent.listOfEmails);
-      this.listPreSize = this.viewArray.length;
-      this.parseArray();
-      this.place(this.viewArray,this.iterationsNum,this.listPreSize);
-      this.listOfButtons = document.querySelectorAll("td  > button");
-      this.listOfCheckboxes = document.querySelectorAll("td > input")
-      this.checkClick();
-      this.getMoveOptions();
-    });
+    console.log("ng on Init called")
+    this.date_priority = ((<HTMLInputElement>document.getElementById("date-priority")).checked).toString()
+    console.log(this.date_priority)
+    this.serveMe.getInbox(LoginComponent.globalUsername, this.date_priority).subscribe((data : EmailI[])=> {
+    InboxComponent.listOfEmails = data;
+    console.log(InboxComponent.listOfEmails);
+    this.listPreSize = this.viewArray.length;
+    this.parseArray();
+    this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+    this.listOfButtons = document.querySelectorAll("td  > button");
+    this.listOfCheckboxes = document.querySelectorAll("td > input")
+    this.checkClick();
+    this.getMoveOptions();
+  });
 }
 
 parseArray(){
@@ -192,17 +142,19 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
               if (j!=iterationsNum-1){
                 var textNode = document.createTextNode(viewArray[i][j]);
                 node2.appendChild(textNode);
-              }else{
-                if (btnName!="Delete"){
-                  var node3 = document.createElement("button");
-                  node3.style.marginRight = "5px"
-                  var textNode = document.createTextNode(btnName);
-                  node3.appendChild(textNode);
-                  node3.type = "button";
-                  node3.id = (buttonCount).toString()
-                  node2.appendChild(node3);
-                  buttonCount++
+                if (btnName=="Send Email" && j==1){
+                  node2.className = "addEmail"
+                  node2.id = i.toString()
                 }
+              }else{
+                var node3 = document.createElement("button");
+                node3.style.marginRight = "5px"
+                var textNode = document.createTextNode(btnName);
+                node3.appendChild(textNode);
+                node3.type = "button";
+                node3.id = (buttonCount).toString()
+                node2.appendChild(node3);
+                buttonCount++
                 var textNode2 = document.createTextNode("Delete");
                 var node4 = document.createElement("button");
                 node4.style.marginRight = "5px"
@@ -211,13 +163,14 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
                 node4.id = (buttonCount).toString()
                 node2.appendChild(node4);
                 buttonCount++
-
-                var node5 = document.createElement("input");
-                node5.type = "checkbox"
-                node5.id = (checkboxCount).toString()
-                node5.style.marginRight = "5px"
-                node2.appendChild(node5)
-                checkboxCount++
+                if (btnName!="Send Email" && btnName!="Open"){
+                  var node5 = document.createElement("input");
+                  node5.type = "checkbox"
+                  node5.id = (checkboxCount).toString()
+                  node5.style.marginRight = "5px"
+                  node2.appendChild(node5)
+                  checkboxCount++
+                }
               }
               node.appendChild(node2);
           }
@@ -298,7 +251,8 @@ getMoveOptions(){
           case 4 : document.getElementById("message-container")?.removeChild(document.getElementById("message-container")?.childNodes[1])
                    break
           case 5 : document.getElementById("attachment-container")?.removeChild(document.getElementById("attachment-container")?.childNodes[1])
-                   break
+                   break;
+          
         }
         var emailContents = document.querySelectorAll("div.email-container > div");
         for (var i = 0; i<emailContents.length; i++){
@@ -321,42 +275,39 @@ getMoveOptions(){
                     textNode = document.createTextNode(email.priority)
                     destinationNode = document.getElementById("priority-container")
                     break
-            case 4 :
-                    node.id = "message"
+            case 4 : node.id = "message"
                     textNode = document.createTextNode(email.body)
                     destinationNode = document.getElementById("message-container")
-
                     break
-            case 5 :
-                    node.id = "attachment"
+
+            case 5 : node.id = "attachment"
                     destinationNode = document.getElementById("attachment-container")
-                    break
-          }
-          if(i != 5){
-            node.appendChild(textNode)
-          }
-          else{
-            for(let i = 0; i < email.attachments.length; i++){
-              var a = document.createElement("a");
-              a.href = "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].encoded);
-              a.download = email.attachments[i].name;
-              var btn = document.createElement("button");
-              btn.style.width = "150px";
-              btn.style.height = "40px";
-              btn.style.whiteSpace = "normal";
-              btn.style.wordWrap = "break-word";
-              btn.innerHTML = email.attachments[i].name;
-              a.appendChild(btn);
-              node.appendChild(a)
+                    break;
             }
+            if(i != 5){
+              node.appendChild(textNode)
+            }
+            else{
+              for(let i = 0; i < email.attachments.length; i++){
+                var a = document.createElement("a");
+                a.href = "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].encoded);
+                a.download = email.attachments[i].name;
+                var btn = document.createElement("button");
+                btn.style.width = "150px";
+                btn.style.height = "40px";
+                btn.style.whiteSpace = "normal";
+                btn.style.wordWrap = "break-word";
+                btn.innerHTML = email.attachments[i].name;
+                a.appendChild(btn);
+                node.appendChild(a)
+              }
+            }
+            destinationNode?.appendChild(node)
+      
           }
-          node.appendChild(textNode)
-          destinationNode?.appendChild(node)
-
-        }
-
-
-        (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
+      
+      
+          (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
       }
 
     deleteClicked(e: any){
@@ -385,29 +336,3 @@ getMoveOptions(){
 
 }
 
-
-
-  // checkClick(){
-//     for (var i =  0 ; i < this.listOfButtons.length ; i++){
-
-//       if (i%2){
-//         this.listOfButtons[i].addEventListener("click", e =>{
-//           this.serveMe.delete(this.serveMe.loginUsername,InboxComponent.listOfEmails[(i-1)/2]).subscribe((data : EmailI[])=> {
-//             InboxComponent.listOfEmails = data;
-//             console.log(InboxComponent.listOfEmails);
-//             this.listPreSize = this.viewArray.length
-//             this.parseArray()
-//             this.place(this.viewArray,this.iterationsNum,this.listPreSize)
-//           });
-//         })
-//       }else{
-//         this.listOfButtons[i].addEventListener("click", e =>{
-//           console.log(i)
-//           console.log(InboxComponent.listOfEmails[i/2])
-//           this.show(InboxComponent.listOfEmails[i/2]);
-//         })
-
-//       }
-
-//     }
-// }

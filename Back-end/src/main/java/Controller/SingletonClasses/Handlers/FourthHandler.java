@@ -37,7 +37,6 @@ public class FourthHandler implements HandlerI{
             if(email.getEmailType().equals("Inbox")){
                 owner.getProfileFolderbyName(folderName).addEmail(Creator.getInstance().createEmailDataProfileFolder(email, owner, folderName, ID));
 
-
             }
             if(email.getEmailType().equals("Sent")){
                 owner.getProfileFolderbyName(folderName).addEmail(Creator.getInstance().createEmailDataProfileFolder(email, owner, folderName, ID));
