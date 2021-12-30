@@ -5,6 +5,7 @@ import { EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 import { ContactService } from './contacts.service';
 import $ from "jquery"
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
 export interface ContactI{
@@ -33,6 +34,7 @@ export class ContactsComponent implements OnInit {
   private listOfButtons : NodeList
 
   constructor(private router : Router, private serveMe1: ContactService) {
+    SendEmailComponent.emailToBeSent=null;
     ContactsComponent.listOfContacts = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -174,14 +176,28 @@ searchContacts(input : ContactI[]){
         console.log(error)
       }
     }
-      sendEmailClicked(e: any){
-        try{
-          this.router.navigate(['/home/sendEmail']);
-
-        }catch (error){
-          console.log(error)
+    sendEmailClicked(e: any){
+      try{
+        const buttonNum = parseInt(e.target.id)
+        SendEmailComponent.emailToBeSent  = {
+          senderUsername: '',
+          timeSentString: '',
+          subject: '',
+          body: '',
+          owner: '',
+          receiversUsernames: [],
+          emailID: '',
+          emailType: '',
+          priority: '',
+          attachments: []
         }
+        SendEmailComponent.emailToBeSent.receiversUsernames.push(ContactsComponent.listOfContacts[buttonNum/2].username)
+        this.router.navigate(['/home/sendEmail'])
+
+      }catch (error){
+        console.log(error)
       }
+    }
       place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
         var body = document.getElementById("mybody")
         var buttonCount = 0

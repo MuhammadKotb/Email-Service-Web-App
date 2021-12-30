@@ -8,7 +8,7 @@ import { TrashService } from '../trash/trash.service';
 import $ from "jquery"
 import { DraftService } from './draft.service';
 import { registerLocaleData } from '@angular/common';
-
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 @Component({
   selector: 'app-draft',
@@ -24,6 +24,7 @@ export class DraftComponent implements OnInit {
 
 
   constructor(private router : Router, private serveMe1: DraftService) {
+    SendEmailComponent.emailToBeSent=null;
     DraftComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -172,19 +173,20 @@ deleteClicked(e: any){
     console.log(error)
   }
 }
-    editClicked(e: any){
-      try{
-        console.log(DraftComponent.listOfEmails)
-        const buttonNum = parseInt(e.target.id)
-        this.showInSendEmail()
-      }catch (error){
-        console.log(error)
-      }
-    }
+editClicked(e: any){
+  try{
+    console.log(DraftComponent.listOfEmails)
+    const buttonNum = parseInt(e.target.id)
+    this.showInSendEmail(DraftComponent.listOfEmails[buttonNum/2])
+  }catch (error){
+    console.log(error)
+  }
+}
 
-    showInSendEmail(){
-      this.router.navigate(['/home/sendEmail']);
-    }
+showInSendEmail(email:EmailI){
+  SendEmailComponent.emailToBeSent = email
+  this.router.navigate(['/home/sendEmail']);
+}
 
     place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
       var body = document.getElementById("mybody")

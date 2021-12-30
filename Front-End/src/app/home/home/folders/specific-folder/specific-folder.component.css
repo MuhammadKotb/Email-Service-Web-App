@@ -31,12 +31,12 @@ button{
 
 .email-popup {
     position:absolute;
-    top: 110px;
-    left:100px;
+    top: 0px;
+    left:-100px;
     border: 3px solid #500d0d;
     z-index: 9;
-    width: 700px;
-    height: 450px;
+    width: 900px;
+    height: 550px;
     background-color: #2D4263;
     font-family: cursive;
     color:rgb(217, 235, 235);
@@ -44,14 +44,14 @@ button{
 
 
 .email-container {
-    width:98%;
-    height: 90%;
+    width:70%;
+    height: 50%;
     padding: 5px;
     background-color: #2D4263;
 }
 
 .email-container div{
-    width:100%;
+    width:70%;
     margin-bottom: 5px;
     display:flex;
     flex-direction: row;

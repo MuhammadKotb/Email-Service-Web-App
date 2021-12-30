@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   import $ from "jquery"
   import { SentService } from './sent.service';
 import { TrashComponent } from '../trash/trash.component';
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
   let filtered : boolean = false;
@@ -26,6 +27,7 @@ import { TrashComponent } from '../trash/trash.component';
 
 
     constructor(private serveMe: SentService, private router:Router) {
+      SendEmailComponent.emailToBeSent=null;
       SentComponent.listOfEmails = [];
       filtered = false;
       this.listPreSize = this.viewArray.length
@@ -182,7 +184,7 @@ searchSent(input : EmailI[]){
                break
       case 4 : document.getElementById("attachment-container")?.removeChild(document.getElementById("attachment-container")?.childNodes[1])
               break;
-            
+
     }
     var emailContents = document.querySelectorAll("div.email-container > div");
     for (var i = 0; i<emailContents.length; i++){
@@ -206,14 +208,14 @@ searchSent(input : EmailI[]){
                 textNode = document.createTextNode(email.body)
                 destinationNode = document.getElementById("message-container")
                 break
-        case 4 : 
+        case 4 :
 
                 node.id = "attachment"
                 destinationNode = document.getElementById("attachment-container")
 
-                
+
                 break;
-                
+
       }
       if(i != 4){
         node.appendChild(textNode)
