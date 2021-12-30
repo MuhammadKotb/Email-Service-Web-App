@@ -13,6 +13,7 @@
 > - Thirdly: you run the Angular project and on localhost:4200 and the Spring Boot project on localhost:8080.
 ## Design Patterns and UML Class Diagram
 ### Table of Used Design Patterns
+|       **Design Patterns**       |
 | :-----------------------------: |
 |         Singelton Pattern       |
 |         Builder Pattern         |
@@ -38,10 +39,10 @@ behavioral and two fundamentals design patterns as follow:
 > but without any previous knowledge.
 > + Interface and Delegation design pattern used in applying the 
 > previous design patterns.
-### UML Class Diagram
-![image](https://drive.google.com/file/d/1yrE3eHK_nPGCbyu7UzTbtd1MgudPkVFr/view?usp=sharing)
+## UML Class Diagram
+![image](https://drive.google.com/file/d/1yrE3eHK_nPGCbyu7UzTbtd1MgudPkVFr)
 + Link for higher resolution: `https://miro.com/app/board/uXjVOY1Lgd8=/?invite_link_id=126737987619`
-### Design Decisions
+## Design Decisions
 + In sorting, we sort only by body, subject, sender, date, priority.
 + Move to trash can only be applied only in the inbox and sent folders.
 + Delete forever can only be applied in the draft and trash folders.
