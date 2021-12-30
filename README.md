@@ -1,4 +1,4 @@
-# ***<span style="color:#526564">Email</span><span style="color:#1B268F">Service</span>***
+# Email Server and Client
 ## Table of Contents
 - [Setup](#Setup)
 - [Design Patterns and UML Class Diagram](#Design-Patterns-and-UML-Class-Diagram)
@@ -9,7 +9,7 @@
 - [Testing](#Testing)
 - [Features](#Features)
 ## Setup
-> - First of all: you must install the `Front-End` folder, using npm install just because node modules may be missing. 
+> - First of all: you must install the `Front-End` folder which contains angular project, using npm install just because node modules may be missing. 
 > - Secondly: Spring Boot folder is straight forward just open the pom file using any IDE.
 > - Thirdly: you run the Angular project and on localhost:4200 and the Spring Boot project on localhost:8080.
 ## Design Patterns and UML Class Diagram
@@ -51,7 +51,7 @@ behavioral and two fundamentals design patterns as follow:
 + In contacts sorting we sort only by username.
 + When open the inbox folder and choose get emails by priority, refresh button must be clicked
 ## Testing
-Unit testing is applied to test some features in the back like filtering, searching and sorting
+Unit testing is applied to test some features in the back like filtering, searching and sorting using `junit` and `mockito`
 ## Features
 1. Filtering emails.
 1. Searching emails and contacts.
