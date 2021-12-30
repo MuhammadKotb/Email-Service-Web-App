@@ -4,10 +4,10 @@
     <div id = "Priority">
         <label for = "priority_select">Choose Your priority:</label>
         <select id = "priority_select">
-            <option value="urgent">Urgent</option>
-            <option value="important">Important</option>
-            <option value="non-essential">Non-Essential</option>
-            <option value="skippable">Skippable</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Important">Important</option>
+            <option value="Standard">Standard</option>
+            <option value="Skippable">Skippable</option>
         </select>
     </div>
     <div id = "Receiver">
@@ -41,7 +41,7 @@
         <textarea id = "message" rows = "10" cols = "75"></textarea>
     </div>
     <div>
-        <button type="button" >Send E-mail</button>
+        <button type="button" (click)="sendEmail()" >Send E-mail</button>
     </div>
     
 

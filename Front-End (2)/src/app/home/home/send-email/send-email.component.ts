@@ -3,6 +3,8 @@ import { AttachmentI, EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 import $ from "jquery"
 import { LoginComponent } from 'src/app/login/login/login.component';
+import { SendEmailService } from './send-email.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -17,40 +19,60 @@ export class SendEmailComponent implements OnInit {
   private listOfReceivers : string[] 
   private listPreSize : number
   private iterationsNum : number
-  private emailToBeSent : EmailI
-  private Attachment: AttachmentI 
+  public static emailToBeSent : EmailI 
+  private attachments: AttachmentI[]
   private fileObject = new FormData
   private listOfButtons : NodeList
+  private files : File[] = [];
+  private form  = new FormData();
 
-  constructor(private placer : InboxComponent  ) { 
+  constructor(private placer : InboxComponent  , private serveMe:SendEmailService, private router:Router) { 
+
     this.listOfReceivers = []
     this.listPreSize = 0
     this.iterationsNum = 2
     this.listOfButtons = document.querySelectorAll("td  > button")
-    this.Attachment = {
-      encoded: "",
-      name: "",
-      type: ""
-    }
-    this.emailToBeSent  = {
-      senderUsername: '',
-      timeSent: '',
-      subject: '',
-      body: '',
-      owner: '',
-      recievers: [],
-      emailID: '',
-      emailType: '',
-      priority: ''
-    }
+    this.attachments = []
+    if (SendEmailComponent.emailToBeSent==null){
+      SendEmailComponent.emailToBeSent  = {
+          senderUsername: '',
+          timeSentString: '',
+          subject: '',
+          body: '',
+          owner: '',
+          receiversUsernames: [],
+          emailID: '',
+          emailType: '',
+          priority: ''
+        }
+      }
     HomeComponent.pageIndicator = "Send Email"
   }
 
 
   ngOnInit(): void {
+    this.map()
     this.checkClick()
+    console.log(LoginComponent.globalUsername)
   }
 
+  map(){
+    $("#priority_select").val(SendEmailComponent.emailToBeSent.priority)
+    for (var i=0;i<SendEmailComponent.emailToBeSent?.receiversUsernames.length;i++){
+      this.listPreSize = this.listOfReceivers.length
+      this.listOfReceivers.push(SendEmailComponent.emailToBeSent?.receiversUsernames[i]);
+      this.place()
+    }
+    console.log(this.listOfReceivers);
+    (<HTMLInputElement>document.getElementById("subject")).value = SendEmailComponent.emailToBeSent?.subject;
+    (<HTMLInputElement>document.getElementById("messge")).value = SendEmailComponent.emailToBeSent?.body;
+    this.listOfButtons = document.querySelectorAll("td  > button")
+    this.checkClick()
+
+   
+  }
+
+    // var e = (<HTMLSelectElement>document.getElementById("priority_select"))
 
   showReceiver(){
     var receiver_input = (<HTMLInputElement>document.getElementById("receiver")).value
@@ -75,13 +97,24 @@ export class SendEmailComponent implements OnInit {
 
   sendEmail(){
     var e = (<HTMLSelectElement>document.getElementById("priority_select"))
-    this.emailToBeSent.priority = e.options[e.selectedIndex].text
-    this.emailToBeSent.body = (<HTMLInputElement>document.getElementById("message")).value
-    this.emailToBeSent.subject = (<HTMLInputElement>document.getElementById("subject")).value
-    this.emailToBeSent.recievers = this.listOfReceivers
-    this.emailToBeSent.senderUsername =  this.emailToBeSent.owner =  LoginComponent.globalUsername
+    SendEmailComponent.emailToBeSent.priority = e.options[e.selectedIndex].text
+    SendEmailComponent.emailToBeSent.body = (<HTMLInputElement>document.getElementById("message")).value
+    SendEmailComponent.emailToBeSent.subject = (<HTMLInputElement>document.getElementById("subject")).value
+    SendEmailComponent.emailToBeSent.receiversUsernames = this.listOfReceivers
+    SendEmailComponent.emailToBeSent.senderUsername =  SendEmailComponent.emailToBeSent.owner =  LoginComponent.globalUsername
+    console.log(SendEmailComponent.emailToBeSent.priority)
+    console.log(SendEmailComponent.emailToBeSent.body)
+    console.log(SendEmailComponent.emailToBeSent.subject)
+    console.log(LoginComponent.globalUsername)
+    console.log(SendEmailComponent.emailToBeSent.senderUsername)
+    console.log(SendEmailComponent.emailToBeSent.owner)
+    console.log(SendEmailComponent.emailToBeSent.receiversUsernames)
    //ATTACHMENT TO DO
-    
+    console.log("before Send")
+   this.serveMe.sendEmail(SendEmailComponent.emailToBeSent).subscribe((data: string)=> {
+     alert(data)
+     })
+    console.log("After Send")
   }
 
   clear(){

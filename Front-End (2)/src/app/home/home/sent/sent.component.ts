@@ -4,6 +4,8 @@
   import { InboxComponent } from '../inbox/inbox.component';
   import { InboxService } from '../inbox/inbox.service';
   import $ from "jquery"
+  import { SentService } from './sent.service';
+import { Router } from '@angular/router';
 
 
 
@@ -20,7 +22,7 @@
     private listOfButtons : NodeList
 
 
-    constructor(private serveMe: InboxService, private placer : InboxComponent  ) { 
+    constructor(private serveMe: SentService, private placer : InboxComponent, private router : Router  ) { 
       SentComponent.listOfEmails = []
       this.viewArray = []
       this.listPreSize = this.viewArray.length
@@ -28,70 +30,72 @@
     }
 
     ngOnInit(): void {
-      var x : EmailI = {
-        senderUsername: 'vfsf',
-        timeSent: "27/9/2001",
-        subject: "birthday",
-        body: 'vfvsv',
-        owner: '',
-        recievers: ["Joe"],
-        emailID: '',
-        emailType: '',
-        priority: 'Urgent'
-      }
-      var y : EmailI = {
-        senderUsername: '',
-        timeSent: "4/6/2001",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["Meniem"],
-        emailID: '',
-        emailType: '',
-        priority: 'Important'
-      }
-      var Z : EmailI = {
-        senderUsername: '',
-        timeSent: "هيخو",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["otb"],
-        emailID: '',
-        emailType: '',
-        priority: 'Non-essential'
-      }
-      var w : EmailI = {
-        senderUsername: '',
-        timeSent: "لول",
-        subject: "birthday",
-        body: '',
-        owner: '',
-        recievers: ["deffo"],
-        emailID: '',
-        emailType: '',
-        priority: 'Skipable'
-      }
+      // var x : EmailI = {
+      //   senderUsername: 'vfsf',
+      //   timeSentString: "27/9/2001",
+      //   subject: "birthday",
+      //   body: 'vfvsv',
+      //   owner: '',
+      //   receiversUsernames: ["Joe"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Urgent'
+      // }
+      // var y : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "4/6/2001",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["Meniem"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Important'
+      // }
+      // var Z : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "هيخو",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["otb"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Non-essential'
+      // }
+      // var w : EmailI = {
+      //   senderUsername: '',
+      //   timeSentString: "لول",
+      //   subject: "birthday",
+      //   body: '',
+      //   owner: '',
+      //   receiversUsernames: ["deffo"],
+      //   emailID: '',
+      //   emailType: '',
+      //   priority: 'Skipable'
+      // }
 
-      SentComponent.listOfEmails.push(x)
-      SentComponent.listOfEmails.push(y)
-      SentComponent.listOfEmails.push(Z)
-      SentComponent.listOfEmails.push(w)
+      // SentComponent.listOfEmails.push(x)
+      // SentComponent.listOfEmails.push(y)
+      // SentComponent.listOfEmails.push(Z)
+      // SentComponent.listOfEmails.push(w)
 
-      // this.serveMe?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {SentComponent.listOfEmails = data; console.log(SentComponent.listOfEmails);});
-      this.listPreSize  = this.viewArray.length
+      this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+        SentComponent.listOfEmails = data;
+         console.log(SentComponent.listOfEmails);
+         this.listPreSize  = this.viewArray.length;
+         this.parseArray();
+         this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize);
+         this.listOfButtons = document.querySelectorAll("td  > button");
+         this.checkClick();
+      });
 
-      this.parseArray()
-      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-      this.listOfButtons = document.querySelectorAll("td  > button")
-
-      this.checkClick()
   }
   parseArray(){
     for (let email=0; email < SentComponent.listOfEmails.length;email++){
       this.viewArray[email] = [] 
-      this.viewArray[email][0] = SentComponent.listOfEmails[email].recievers.toString()
-      this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSent
+      this.viewArray[email][0] = SentComponent.listOfEmails[email].receiversUsernames.toString()
+      this.viewArray[email][1] = SentComponent.listOfEmails[email].timeSentString
       this.viewArray[email][2] = SentComponent.listOfEmails[email].subject
     }
   }
@@ -135,7 +139,7 @@
           case 0 : node.id = "sender"
                   break
           case 1 : node.id = "date"
-                  textNode = document.createTextNode(email.timeSent)
+                  textNode = document.createTextNode(email.timeSentString)
                   destinationNode = document.getElementById("date-container")
                   break
           case 2 : node.id = "subject"
@@ -156,14 +160,14 @@
   }
   deleteClicked(e: any){
     try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe?.delete(this.serveMe.loginUsername,SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     SentComponent.listOfEmails = data; 
-    //     console.log(SentComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
-    //   })
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe?.movetoTrash(SentComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        SentComponent.listOfEmails = data; 
+        console.log(SentComponent.listOfEmails)
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize)
+      })
     }catch (error){
       console.log(error)
     }

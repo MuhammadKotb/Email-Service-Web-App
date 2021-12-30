@@ -3,8 +3,8 @@
 <form class = "form">
     <label for = "username">Enter Username:</label>
     <input type ="text" id = "username">
-    <label for="phone">Enter Phone Number:</label>
-    <input type="tel" id="phone" pattern="[0-9]{11}"> 
+    <label for="email">Enter E-mail:</label>
+    <input type="text" id="email"> 
     <button type ="button" (click)="addContact()">Add Contact</button>
 </form>
 
@@ -19,3 +19,14 @@
     <tbody id="mybody">
     </tbody>
 </table>
+<div class="email-popup" id = "email-popup">
+    <button type="button" id = "close" (click) = "closeEmailPopup()">Close</button>
+    <button type="button" id = "addNewEmail" (click) = "addNewEmail()">Add Emails</button>
+    <div class="email-container" id= "email-container">
+    </div>
+</div>
+<div id="lol">
+<input type="text" id="emails">
+<button type="button" id = "submit" (click) = "emailAdded()">Submit</button>
+</div>
+

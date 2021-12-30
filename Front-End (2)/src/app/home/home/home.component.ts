@@ -18,10 +18,10 @@ export interface EmailI{
   body : string;
   owner : string;
   senderUsername: string;
-  recievers: string[];
+  receiversUsernames: string[];
   emailID: string;
   emailType: string;
-  timeSent: string;
+  timeSentString: string;
   priority: string;
 }
 
@@ -160,6 +160,7 @@ export class HomeComponent implements OnInit {
     
   }
   switchToSendEmail(){
+    var email = "lol"
     this.router.navigate(['/home/sendEmail']);
   }
   switchToSent(){

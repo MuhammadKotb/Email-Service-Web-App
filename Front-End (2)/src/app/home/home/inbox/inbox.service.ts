@@ -11,15 +11,14 @@ export class InboxService {
 
   constructor(private http : HttpClient) { }
 
-  getEmails(loginUsername:string) : Observable<EmailI[]>{
+  getInbox(loginUsername:string) : Observable<EmailI[]>{
 
-    return this.http.get<EmailI[]>("http://localhost:8080/getEmails?username=" + loginUsername);
+    return this.http.get<EmailI[]>("http://localhost:8080/getInbox?username=" + loginUsername + "&priority=false");
   }
-  delete(loginUsername:string,email:EmailI) : Observable<EmailI[]>{
+  movetoTrash(email:EmailI) : Observable<EmailI[]>{
 
-    return this.http.delete<EmailI[]>("http://localhost:8080/delete?username=" + loginUsername, email);
+    return this.http.post<EmailI[]>("http://localhost:8080/movetoTrashInbox", email);
   }
-
 
   
   

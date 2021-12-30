@@ -4,6 +4,7 @@ import { InboxComponent } from '../inbox/inbox.component';
 import { EmailI, HomeComponent } from '../home.component';
 import { FolderService } from './folders.service';
 import $ from "jquery"
+import { LoginComponent } from 'src/app/login/login/login.component';
 
 
 export interface FoldersI{
@@ -49,7 +50,7 @@ export class FoldersComponent implements OnInit{
     this.listOfFolders.push(y)
     console.log(this.listOfButtons)
 
-  // this.serveMe?.getFolders(LoginComponent.globalUsername).subscribe((data : FoldersI[])=> {this.listOfFolders = data; console.log(this.listOfFolders);});
+  this.serveMe?.getFolders(LoginComponent.globalUsername).subscribe((data : FoldersI[])=> {this.listOfFolders = data; console.log(this.listOfFolders);});
     this.listPreSize = this.viewArray.length
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
@@ -73,14 +74,13 @@ export class FoldersComponent implements OnInit{
       name: folder_input,
       listOfEmails: []
     }
-    this.serveMe.deleteFolder(this.serveMe.loginUsername,folder.name).subscribe((data : FoldersI[])=> {this.listOfFolders = data;});
+    this.serveMe.addUserFolder(this.serveMe.loginUsername,folder.name).subscribe((data : FoldersI[])=> {this.listOfFolders = data;});
     this.listPreSize = this.viewArray.length
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
-    while (1){
-      console.log(1)
-      this.checkClick()
-    }
+    
+    this.checkClick()
+  
   }
 
   checkClick(){
@@ -97,19 +97,20 @@ export class FoldersComponent implements OnInit{
 
 deleteClicked(e: any){
   try{
-    // const buttonNum = parseInt(e.target.id)
-    //   this.serveMe.deleteFolder(this.serveMe.loginUsername,this.listOfFolders[(buttonNum-1)/2].name).subscribe((data : FoldersI[])=> {
-    //   this.listOfFolders = data;
-    //   this.listPreSize = this.viewArray.length
-    //   this.parseArray()
-    //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
-    // });
+    const buttonNum = parseInt(e.target.id)
+      this.serveMe.removeUserFolder(this.serveMe.loginUsername,this.listOfFolders[(buttonNum-1)/2].name).subscribe((data : FoldersI[])=> {
+      this.listOfFolders = data;
+      this.listPreSize = this.viewArray.length
+      this.parseArray()
+      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Open")
+    });
   }catch (error){
     console.log(error)
   }
 }
   openClicked(e: any){
     try{
+      
         this.router.navigate(['home/folders/specificFolder']);
     }catch (error){
       console.log(error)

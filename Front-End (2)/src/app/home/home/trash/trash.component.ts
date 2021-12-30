@@ -7,6 +7,7 @@ import { TrashService } from './trash.service';
 import { HomeComponent } from '../home.component';
 import { inject } from '@angular/core/testing';
 import $ from "jquery"
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class TrashComponent implements OnInit {
   private iterationsNum : number
   private listOfButtons : NodeList
 
-  constructor(private serveMe1: InboxService, private serveMe2: TrashService, private placer : InboxComponent  ) { 
+  constructor(private serveMe: TrashService, private placer : InboxComponent) { 
     TrashComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -30,62 +31,66 @@ export class TrashComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var x : EmailI = {
-      senderUsername: 'Joe',
-      timeSent: "27/9/2001",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recievers: ["Meniem", "Ray"],
-      emailID: '',
-      emailType: 'Recieved',
-      priority: 'Urgent'
-    }
-    var y : EmailI = {
-      senderUsername: 'Meniem',
-      timeSent: "4/6/2001",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recievers: ["Deffo", "Joe"],
-      emailID: '',
-      emailType: 'Recieved',
-      priority: 'Important'
-    }
-    var Z : EmailI = {
-      senderUsername: "otb",
-      timeSent: "هيخو",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recievers: ["Meniem", "Joe"],
-      emailID: '',
-      emailType: 'Sent',
-      priority: 'Non-essential'
-    }
-    var w : EmailI = {
-      senderUsername: "deffo",
-      timeSent: "لول",
-      subject: "birthday",
-      body: '',
-      owner: '',
-      recievers: ["Otb", "Meniem"],
-      emailID: '',
-      emailType: 'Sent',
-      priority: 'Skipable'
-    }
+    // var x : EmailI = {
+    //   senderUsername: 'Joe',
+    //   timeSentString: "27/9/2001",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: ["Meniem", "Ray"],
+    //   emailID: '',
+    //   emailType: 'Recieved',
+    //   priority: 'Urgent'
+    // }
+    // var y : EmailI = {
+    //   senderUsername: 'Meniem',
+    //   timeSentString: "4/6/2001",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: ["Deffo", "Joe"],
+    //   emailID: '',
+    //   emailType: 'Recieved',
+    //   priority: 'Important'
+    // }
+    // var Z : EmailI = {
+    //   senderUsername: "otb",
+    //   timeSentString: "هيخو",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: ["Meniem", "Joe"],
+    //   emailID: '',
+    //   emailType: 'Sent',
+    //   priority: 'Non-essential'
+    // }
+    // var w : EmailI = {
+    //   senderUsername: "deffo",
+    //   timeSentString: "لول",
+    //   subject: "birthday",
+    //   body: '',
+    //   owner: '',
+    //   receiversUsernames: ["Otb", "Meniem"],
+    //   emailID: '',
+    //   emailType: 'Sent',
+    //   priority: 'Skipable'
+    // }
 
-    TrashComponent.listOfEmails.push(x)
-    TrashComponent.listOfEmails.push(y)
-    TrashComponent.listOfEmails.push(Z)
-    TrashComponent.listOfEmails.push(w)
+    // TrashComponent.listOfEmails.push(x)
+    // TrashComponent.listOfEmails.push(y)
+    // TrashComponent.listOfEmails.push(Z)
+    // TrashComponent.listOfEmails.push(w)
 
-    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {TrashComponent.listOfEmails = data; console.log(TrashComponent.listOfEmails);});
-    this.listPreSize  = this.viewArray.length
-
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
-    this.listOfButtons = document.querySelectorAll("td  > button")
+    this.serveMe.getTrash(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+      TrashComponent.listOfEmails = data;
+      console.log(TrashComponent.listOfEmails);
+      this.listPreSize  = this.viewArray.length
+      this.parseArray()
+      this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+      this.listOfButtons = document.querySelectorAll("td  > button")
+      this.checkClick()
+    });
+    
 
 }
 parseArray(){
@@ -96,8 +101,8 @@ parseArray(){
     if (isSent == "Sent" || isSent == "sent")
       this.viewArray[email][1] = TrashComponent.listOfEmails[email].senderUsername
     else
-      this.viewArray[email][1] = TrashComponent.listOfEmails[email].recievers.toString()
-    this.viewArray[email][2] = TrashComponent.listOfEmails[email].timeSent
+      this.viewArray[email][1] = TrashComponent.listOfEmails[email].receiversUsernames.toString()
+    this.viewArray[email][2] = TrashComponent.listOfEmails[email].timeSentString
     this.viewArray[email][3] = TrashComponent.listOfEmails[email].subject
 
   }
@@ -116,26 +121,25 @@ checkClick(){
 
 deleteClicked(e: any){
   try{
-  //   const buttonNum = parseInt(e.target.id)
-  //     this.serveMe1?.delete(this.serveMe1.loginUsername,TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-  //       TrashComponent.listOfEmails = data; 
-  //       console.log(TrashComponent.listOfEmails);
-  //   this.listPreSize = this.viewArray.length
-  //   this.parseArray()
-  //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
-  // });
+    const buttonNum = parseInt(e.target.id)
+      this.serveMe?.deleteForever(this.serveMe.loginUsername,TrashComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        TrashComponent.listOfEmails = data; 
+        console.log(TrashComponent.listOfEmails);
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Restore")
+  });
   }catch (error){
     console.log(error)
   }
 }
   restoreClicked(e: any){
     try{
-      // const buttonNum = parseInt(e.target.id)
-      // this.serveMe2?.restore(this.serveMe2.loginUsername,TrashComponent.listOfEmails[buttonNum/2]).subscribe((data : EmailI)=> {var email = data; console.log(TrashComponent.listOfEmails);
-      //     });
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe?.restore(this.serveMe.loginUsername,TrashComponent.listOfEmails[buttonNum/2]).subscribe((data : EmailI)=> {var email = data; console.log(TrashComponent.listOfEmails);
+          });
     }catch (error){
       console.log(error)
     }
   }
-
 }

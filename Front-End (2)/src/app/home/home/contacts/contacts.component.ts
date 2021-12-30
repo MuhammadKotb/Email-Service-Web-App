@@ -23,6 +23,7 @@ export class ContactsComponent implements OnInit {
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
+  private listOfClickableTDs : NodeList
 
   constructor(private router : Router, private serveMe1: ContactService, private placer : InboxComponent  ) { 
     ContactsComponent.listOfContacts = []
@@ -58,12 +59,15 @@ export class ContactsComponent implements OnInit {
     ContactsComponent.listOfContacts.push(z)
     ContactsComponent.listOfContacts.push(w)
 
-  // this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
+  this.serveMe1.getContacts(LoginComponent.globalUsername).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data; console.log(ContactsComponent.listOfContacts);});
   this.listPreSize = this.viewArray.length
     this.parseArray()
     this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")   
      this.listOfButtons = document.querySelectorAll("td  > button")
+     this.listOfClickableTDs = document.querySelectorAll("td.addEmail")
+     console.log(this.listOfClickableTDs)
     this.checkClick()
+    this.checkAddEmail()
 }
 parseArray(){
   for (let contact=0; contact < ContactsComponent.listOfContacts.length;contact++){
@@ -76,7 +80,9 @@ parseArray(){
 addContact(){
 
   var username_input = (<HTMLInputElement>document.getElementById("username")).value
-  var email_input = (<HTMLInputElement>document.getElementById("phone")).value
+  var email_input = (<HTMLInputElement>document.getElementById("email")).value
+  console.log(username_input)
+  console.log(email_input)
   var contact : ContactI = {
     username: username_input,
     additionalEmails: [email_input]
@@ -89,6 +95,7 @@ addContact(){
   this.viewArray[0][0] = contact.username
   this.viewArray[0][1] = ContactsComponent.listOfContacts[0].additionalEmails[0]
   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+  this.serveMe1.addContact(LoginComponent.globalUsername,contact).subscribe((data : ContactI[])=> {ContactsComponent.listOfContacts = data;});
 
 }
 
@@ -108,13 +115,13 @@ checkClick(){
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        // this.serveMe1?.deleteContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : ContactI[])=> {
-        //   ContactsComponent.listOfContacts = data;
-        //   console.log(ContactsComponent.listOfContacts)
-        //   this.listPreSize = this.viewArray.length
-        //   this.parseArray()
-        //   this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
-        // });
+        this.serveMe1?.removeContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[(buttonNum-1)/2].username).subscribe((data : ContactI[])=> {
+          ContactsComponent.listOfContacts = data;
+          console.log(ContactsComponent.listOfContacts)
+          this.listPreSize = this.viewArray.length
+          this.parseArray()
+          this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+        });
       }catch (error){
         console.log(error)
       }
@@ -127,4 +134,52 @@ checkClick(){
           console.log(error)
         }
       }
+
+    checkAddEmail(){
+      for (var i =  0 ; i < this.listOfClickableTDs.length ; i++){
+        this.listOfClickableTDs[i].addEventListener("mouseenter",$.proxy(this.hoverMe,this));
+        this.listOfClickableTDs[i].addEventListener("mouseleave",$.proxy(this.unhoverMe,this));
+        this.listOfClickableTDs[i].addEventListener("click",$.proxy(this.TDclicked,this));
+
+         }
   }
+    hoverMe(e : any){
+      e.target.style.backgroundColor = "blue";
+    }
+
+    unhoverMe(e : any){
+      e.target.style.backgroundColor = "yellow";
+    }
+
+    TDclicked(e : any){
+      var id = parseInt(e.target.id)
+      this.show(ContactsComponent.listOfContacts[id].additionalEmails)
+    }
+
+    closeEmailPopup(){
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
+  } 
+      
+    show(emailList : string[]){
+      $("#email-container").text(this.emailsToString(emailList));
+
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
+  }
+
+  emailsToString(emailList : string[]){
+    var acc : string  = ""
+    for (var i=0;i<emailList.length;i++){
+      acc += emailList[i] += "\n"
+    }
+    return acc
+
+}
+
+closeAddEmail(){
+  
+}addNewEmail(){
+
+  (<HTMLElement>document.getElementById("lol")).style.display = "block";
+
+}
+}

@@ -6,6 +6,8 @@ import { InboxComponent } from '../inbox/inbox.component';
 import {InboxService } from '../inbox/inbox.service';
 import { TrashService } from '../trash/trash.service';
 import $ from "jquery"
+import { DraftService } from './draft.service';
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class DraftComponent implements OnInit {
   private listOfButtons : NodeList
 
 
-  constructor(private router : Router, private serveMe1: InboxService, private serveMe2 : TrashService, private placer : InboxComponent  ) { 
+  constructor(private router : Router, private serveMe: DraftService, private placer : InboxComponent  ) { 
     DraftComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -34,44 +36,44 @@ export class DraftComponent implements OnInit {
   ngOnInit(): void {
     var x : EmailI = {
       senderUsername: '',
-      timeSent: "27/9/2001",
+      timeSentString: "27/9/2001",
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["Joe"],
+      receiversUsernames: ["Joe"],
       emailID: '',
       emailType: '',
       priority: 'Urgent'
     }
     var y : EmailI = {
       senderUsername: '',
-      timeSent: "4/6/2001",
+      timeSentString: "4/6/2001",
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["Meniem"],
+      receiversUsernames: ["Meniem"],
       emailID: '',
       emailType: '',
       priority: 'Important'
     }
     var Z : EmailI = {
       senderUsername: '',
-      timeSent: "هيخو",
+      timeSentString: "هيخو",
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["otb"],
+      receiversUsernames: ["otb"],
       emailID: '',
       emailType: '',
       priority: 'Non-essential'
     }
     var w : EmailI = {
       senderUsername: '',
-      timeSent: "لول",
+      timeSentString: "لول",
       subject: "birthday",
       body: '',
       owner: '',
-      recievers: ["deffo"],
+      receiversUsernames: ["deffo"],
       emailID: '',
       emailType: '',
       priority: 'Skipable'
@@ -82,18 +84,22 @@ export class DraftComponent implements OnInit {
     DraftComponent.listOfEmails.push(Z)
     DraftComponent.listOfEmails.push(w)
 
-    // this.serveMe1?.getEmails(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {DraftComponent.listOfEmails = data; console.log(DraftComponent.listOfEmails);});
-    this.listPreSize = this.viewArray.length
-    this.parseArray()
-    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-    this.listOfButtons = document.querySelectorAll("td  > button")
-    this.checkClick()
+    // this.serveMe.getDraft(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+    //   DraftComponent.listOfEmails = data;
+      //  console.log(DraftComponent.listOfEmails);
+       this.listPreSize = this.viewArray.length
+       this.parseArray()
+       this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+       this.listOfButtons = document.querySelectorAll("td  > button")
+       this.checkClick()
+      
+      // });
 }
 parseArray(){
   for (let email=0; email < DraftComponent.listOfEmails.length;email++){
     this.viewArray[email] = [] 
-    this.viewArray[email][0] = DraftComponent.listOfEmails[email].recievers.toString()
-    this.viewArray[email][1] = DraftComponent.listOfEmails[email].timeSent
+    this.viewArray[email][0] = DraftComponent.listOfEmails[email].receiversUsernames.toString()
+    this.viewArray[email][1] = DraftComponent.listOfEmails[email].timeSentString
     this.viewArray[email][2] = DraftComponent.listOfEmails[email].subject
   }
 }
@@ -113,14 +119,14 @@ checkClick(){
 
   deleteClicked(e: any){
     try{
-    //   const buttonNum = parseInt(e.target.id)
-    //   this.serveMe2?.deleteForever(this.serveMe2.loginUsername,DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-    //     DraftComponent.listOfEmails = data;
-    //      console.log(DraftComponent.listOfEmails)
-    // this.listPreSize = this.viewArray.length
-    // this.parseArray()
-    // this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-  // });
+      const buttonNum = parseInt(e.target.id)
+      this.serveMe?.deleteForever(DraftComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
+        DraftComponent.listOfEmails = data;
+         console.log(DraftComponent.listOfEmails)
+    this.listPreSize = this.viewArray.length
+    this.parseArray()
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+  });
     }catch (error){
       console.log(error)
     }
@@ -129,13 +135,15 @@ checkClick(){
       try{
         console.log(DraftComponent.listOfEmails)
         const buttonNum = parseInt(e.target.id)
-        this.showInSendEmail()
+        this.showInSendEmail(DraftComponent.listOfEmails[buttonNum/2])
       }catch (error){
         console.log(error)
       }
     }
 
-    showInSendEmail(){
+    showInSendEmail(email:EmailI){
+      SendEmailComponent.emailToBeSent = email
+      alert(SendEmailComponent.emailToBeSent.priority)
       this.router.navigate(['/home/sendEmail']);
     }
 
