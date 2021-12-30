@@ -1,11 +1,11 @@
 import { Router } from '@angular/router';
-  import { Component, OnInit } from '@angular/core';
-  import { LoginComponent } from 'src/app/login/login/login.component';
-  import { EmailI, HomeComponent } from '../home.component'
-  import { InboxComponent } from '../inbox/inbox.component';
-  import { InboxService } from '../inbox/inbox.service';
-  import $ from "jquery"
-  import { SentService } from './sent.service';
+import { Component, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/login/login/login.component';
+import { EmailI, HomeComponent } from '../home.component'
+import { InboxComponent } from '../inbox/inbox.component';
+import { InboxService } from '../inbox/inbox.service';
+import $ from "jquery"
+import { SentService } from './sent.service';
 import { TrashComponent } from '../trash/trash.component';
 import { SendEmailComponent } from '../send-email/send-email.component';
 
@@ -18,6 +18,7 @@ import { SendEmailComponent } from '../send-email/send-email.component';
     templateUrl: './sent.component.html',
     styleUrls: ['./sent.component.css']
   })
+
   export class SentComponent implements OnInit {
     public static listOfEmails : EmailI[]
     private viewArray : string[][] = [];
@@ -36,66 +37,16 @@ import { SendEmailComponent } from '../send-email/send-email.component';
     }
 
     ngOnInit(): void {
-      // var x : EmailI = {
-      //   senderUsername: 'vfsf',
-      //   timeSentString: "27/9/2001",
-      //   subject: "birthday",
-      //   body: 'vfvsv',
-      //   owner: '',
-      //   receiversUsernames: ["Joe"],
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Urgent'
-      // }
-      // var y : EmailI = {
-      //   senderUsername: '',
-      //   timeSentString: "4/6/2001",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   receiversUsernames: ["Meniem"],
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Important'
-      // }
-      // var Z : EmailI = {
-      //   senderUsername: '',
-      //   timeSentString: "هيخو",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   receiversUsernames: ["otb"],
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Non-essential'
-      // }
-      // var w : EmailI = {
-      //   senderUsername: '',
-      //   timeSentString: "لول",
-      //   subject: "birthday",
-      //   body: '',
-      //   owner: '',
-      //   receiversUsernames: ["deffo"],
-      //   emailID: '',
-      //   emailType: '',
-      //   priority: 'Skipable'
-      // }
+    
+    this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+        SentComponent.listOfEmails = data;
+        console.log(SentComponent.listOfEmails);
+        this.listPreSize  = this.viewArray.length;
+        this.parseArray();
 
-      // SentComponent.listOfEmails.push(x)
-      // SentComponent.listOfEmails.push(y)
-      // SentComponent.listOfEmails.push(Z)
-      // SentComponent.listOfEmails.push(w)
-
-
-      this.serveMe?.getSent(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
-          SentComponent.listOfEmails = data;
-          console.log(SentComponent.listOfEmails);
-          this.listPreSize  = this.viewArray.length;
-          this.parseArray();
-
-          this.place(this.viewArray,this.iterationsNum,this.listPreSize);
-          this.listOfButtons = document.querySelectorAll("td  > button");
-          this.checkClick();});
+        this.place(this.viewArray,this.iterationsNum,this.listPreSize);
+        this.listOfButtons = document.querySelectorAll("td  > button");
+        this.checkClick();});
 
   }
   parseArray(){
@@ -306,6 +257,4 @@ searchSent(input : EmailI[]){
         document.getElementById("mybody")?.appendChild(node);
     }
   }
-
-
 }
