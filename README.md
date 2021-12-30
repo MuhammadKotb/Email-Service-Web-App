@@ -40,7 +40,7 @@ behavioral and two fundamentals design patterns as follow:
 > + Interface and Delegation design pattern used in applying the 
 > previous design patterns.
 ## UML Class Diagram
-![image](https://drive.google.com/drive/u/0/my-drive?lfhs=2)
+![image](https://raw.githubusercontent.com/MuhammadElkotb/Email-Service-Web-App/main/UML%20Diagram.jpg?token=AROV7J5FGTKFSFQR2SYXKO3B24AFQ)
 + Link for higher resolution: `https://miro.com/app/board/uXjVOY1Lgd8=/?invite_link_id=126737987619`
 ## Design Decisions
 + In sorting, we sort only by body, subject, sender, date, priority.
