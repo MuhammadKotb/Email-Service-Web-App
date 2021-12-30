@@ -27,9 +27,9 @@ export class InboxComponent implements OnInit {
   private listOfCheckedBoxes: number[]
   private date_priority: string
 
+
   constructor(private serveMe: InboxService, private router:Router) {
     InboxComponent.listOfEmails = []
-    this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 5
     HomeComponent.pageIndicator = "Inbox"
@@ -98,7 +98,10 @@ export class InboxComponent implements OnInit {
       this.parseArray();
       this.place(this.viewArray,this.iterationsNum,this.listPreSize);
       this.listOfButtons = document.querySelectorAll("td  > button");
-      this.checkClick();});
+      this.listOfCheckboxes = document.querySelectorAll("td > input")
+      this.checkClick();
+      this.getMoveOptions();
+    });
 }
 
 parseArray(){
@@ -124,6 +127,7 @@ sortInbox(input : EmailI[]){
   this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
+  this.listOfCheckboxes = document.querySelectorAll("td > input")
   this.checkClick();
 }
 filterInbox(input : EmailI[]){
@@ -141,8 +145,10 @@ filterInbox(input : EmailI[]){
 
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
+  this.listOfCheckboxes = document.querySelectorAll("td > input")
   this.checkClick();
 }
+
 searchInbox(input : EmailI[]){
   console.log(input.length)
   this.listPreSize = InboxComponent.listOfEmails.length;
@@ -159,6 +165,7 @@ searchInbox(input : EmailI[]){
   this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
+  this.listOfCheckboxes = document.querySelectorAll("td > input")
   this.checkClick();
 }
 
@@ -167,6 +174,7 @@ searchInbox(input : EmailI[]){
 place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
         var body = document.getElementById("mybody")
         var buttonCount = 0
+        var checkboxCount = 0
         for (let i=0;i<listPreSize;i++){
           body?.removeChild(body?.childNodes[0])
         }
@@ -201,6 +209,13 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
                 node4.id = (buttonCount).toString()
                 node2.appendChild(node4);
                 buttonCount++
+
+                var node5 = document.createElement("input");
+                node5.type = "checkbox"
+                node5.id = (checkboxCount).toString()
+                node5.style.marginRight = "5px"
+                node2.appendChild(node5)
+                checkboxCount++
               }
               node.appendChild(node2);
           }
@@ -217,13 +232,12 @@ place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName:
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.showClicked,this));
       }
-
     }
 }
 
 checkBox(){
   for (var i = 0; i < this.listOfCheckboxes.length; i++){
-    
+
       if((this.listOfCheckboxes[i]).checked){
         this.listOfCheckedBoxes.push(i)
       }
@@ -232,6 +246,7 @@ checkBox(){
       }
   }
 }
+
 bulkMove(){
   var e = (<HTMLSelectElement>document.getElementById("move_options"))
   var folderOption = e.options[e.selectedIndex].value
@@ -242,7 +257,7 @@ bulkMove(){
       console.log("I sent an E-mail to Back")
     });
   }
-  
+
 
 
 
@@ -280,9 +295,6 @@ getMoveOptions(){
                    break
           case 4 : document.getElementById("message-container")?.removeChild(document.getElementById("message-container")?.childNodes[1])
                    break
-          case 5 : document.getElementById("attachment-container")?.removeChild(document.getElementById("attachment-container")?.childNodes[1])
-                  break;
-                
         }
         var emailContents = document.querySelectorAll("div.email-container > div");
         for (var i = 0; i<emailContents.length; i++){
@@ -309,48 +321,22 @@ getMoveOptions(){
                     node.id = "message"
                     textNode = document.createTextNode(email.body)
                     destinationNode = document.getElementById("message-container")
+
                     break
-            case 5 : 
-
-                    node.id = "attachment"
-                    destinationNode = document.getElementById("attachment-container")
-
-                    
-                    break;
-                    
           }
-          if(i != 5){
-            node.appendChild(textNode)
-          }
-          else{
-            for(let i = 0; i < email.attachments.length; i++){
-              var a = document.createElement("a");
-              a.href = "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].encoded);
-              a.download = email.attachments[i].name;
-              var btn = document.createElement("button");
-              btn.style.width = "150px";
-              btn.style.height = "40px";
-              btn.style.whiteSpace = "normal";
-              btn.style.wordWrap = "break-word";
-              btn.innerHTML = email.attachments[i].name;
-              a.appendChild(btn);
-              node.appendChild(a)
-            }
-          }
+          node.appendChild(textNode)
           destinationNode?.appendChild(node)
 
         }
 
 
         (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
-    }
+      }
 
     deleteClicked(e: any){
       try{
         const buttonNum = parseInt(e.target.id)
-        console.log(InboxComponent.listOfEmails);
         this.serveMe.movetoTrash(InboxComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
-
           this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
             this.router.navigate(["/home/inbox"])
 

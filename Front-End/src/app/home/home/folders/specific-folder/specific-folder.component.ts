@@ -20,7 +20,7 @@ export class SpecificFolderComponent implements OnInit {
   private listOfButtons : NodeList
   public folderOpened : string
 
-  constructor(private serveMe: SpecificFolderService, private router:Router) { 
+  constructor(private serveMe: SpecificFolderService, private router:Router) {
     HomeComponent.pageIndicator = "Specific Folder"
     this.folderOpened = FoldersComponent.folderOpened
     SpecificFolderComponent.listOfEmails = [];
@@ -33,7 +33,7 @@ export class SpecificFolderComponent implements OnInit {
   ngOnInit(): void {
 
     console.log("ng on Init called")
-      this.serveMe.getFolder(LoginComponent.globalUsername, this.folderOpened).subscribe((data : EmailI[])=> {
+    this.serveMe.getFolder(LoginComponent.globalUsername, this.folderOpened).subscribe((data : EmailI[])=> {
       SpecificFolderComponent.listOfEmails = data;
       console.log(SpecificFolderComponent.listOfEmails);
       this.listPreSize = this.viewArray.length;
@@ -41,14 +41,15 @@ export class SpecificFolderComponent implements OnInit {
       this.place(this.viewArray,this.iterationsNum,this.listPreSize);
       this.listOfButtons = document.querySelectorAll("#folder-mybody td  > button");
       console.log(this.listOfButtons)
-      this.checkClick();});
+      this.checkClick();
+    });
   }
 
   parseArray(){
     console.log("In PARSE")
     console.log(SpecificFolderComponent.listOfEmails)
     this.viewArray = []
-  
+
     for (let email=0; email < SpecificFolderComponent.listOfEmails.length;email++){
       console.log("In Loop")
       this.viewArray[email] = []
@@ -129,7 +130,7 @@ deleteClicked(e: any){
     const buttonNum = parseInt(e.target.id)
     this.serveMe.movetoTrash(this.folderOpened, SpecificFolderComponent.listOfEmails[(buttonNum-1)/2]).subscribe((data : EmailI[])=> {
       this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
-        this.router.navigate(["/home/folders/specificFolder"])
+        this.router.navigate(["/home/folders"])
 
       })
     })
