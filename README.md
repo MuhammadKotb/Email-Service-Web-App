@@ -39,7 +39,7 @@ behavioral and two fundamentals design patterns as follow:
 > but without any previous knowledge.
 > + Interface and Delegation design pattern used in applying the 
 > previous design patterns.
-## UML Class Diagram
+### UML Class Diagram
 ![image](https://raw.githubusercontent.com/MuhammadElkotb/Email-Service-Web-App/main/UML%20Diagram.jpg?token=AROV7J5FGTKFSFQR2SYXKO3B24AFQ)
 + Link for higher resolution: `https://miro.com/app/board/uXjVOY1Lgd8=/?invite_link_id=126737987619`
 ## Design Decisions
@@ -49,3 +49,13 @@ behavioral and two fundamentals design patterns as follow:
 + Inbox emails only can be copied to user folders.
 + In contacts sorting we sort only by username.
 + When open the inbox folder and choose get emails by priority, refresh button must be clicked
+## Features
+1. Filtering emails.
+2. Searching emails and contacts.
+3. Sorting emails and contacts.
+4. Move to draft.
+5. Delete forever.
+6. Bulk move.
+7. Get emails by priority.
+8. Edit emails in draft folder by direct the user to send email with the same attributes.
+9. Add custom user folders
