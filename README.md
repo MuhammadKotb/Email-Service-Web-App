@@ -51,11 +51,11 @@ behavioral and two fundamentals design patterns as follow:
 + When open the inbox folder and choose get emails by priority, refresh button must be clicked
 ## Features
 1. Filtering emails.
-2. Searching emails and contacts.
-3. Sorting emails and contacts.
-4. Move to draft.
-5. Delete forever.
-6. Bulk move.
-7. Get emails by priority.
-8. Edit emails in draft folder by direct the user to send email with the same attributes.
-9. Add custom user folders
+1. Searching emails and contacts.
+1. Sorting emails and contacts.
+1. Move to draft.
+1. Delete forever.
+1. Bulk move.
+1. Get emails by priority.
+1. Edit emails in draft folder by direct the user to send email with the same attributes.
+1. Add custom user folders
