@@ -6,6 +6,7 @@
     - [Design Patterns Explaination](#Design-Patterns-Explaination)
     - [UML Class Diagram](#UML-Class-Diagram)
 - [Design Decisions](#Design-Decisions)
+- [Testing](#Testing)
 - [Features](#Features)
 ## Setup
 > - First of all: you must install the `Front-End` folder, using npm install just because node modules may be missing. 
@@ -49,6 +50,8 @@ behavioral and two fundamentals design patterns as follow:
 + Inbox emails only can be copied to user folders.
 + In contacts sorting we sort only by username.
 + When open the inbox folder and choose get emails by priority, refresh button must be clicked
+## Testing
+>* Unit testing is applied to test some features in the back like filtering, searching and sorting
 ## Features
 1. Filtering emails.
 1. Searching emails and contacts.
@@ -58,4 +61,7 @@ behavioral and two fundamentals design patterns as follow:
 1. Bulk move.
 1. Get emails by priority.
 1. Edit emails in draft folder by direct the user to send email with the same attributes.
-1. Add custom user folders
+1. Send emails to any contact you want your in contacts page.
+1. Add custom user folders.
+1. Send emails with attachments
+1. view attachement and download them to your local machine.
