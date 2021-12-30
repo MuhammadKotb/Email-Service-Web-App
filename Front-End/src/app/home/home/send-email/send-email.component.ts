@@ -105,7 +105,15 @@ export class SendEmailComponent implements OnInit {
 
   sendEmail(){
     var e = (<HTMLSelectElement>document.getElementById("priority_select"))
-    SendEmailComponent.emailToBeSent.priority = e.options[e.selectedIndex].text
+    try{
+      SendEmailComponent.emailToBeSent.priority = e.options[e.selectedIndex].text
+
+    }
+    catch(e){
+      SendEmailComponent.emailToBeSent.priority = "Standard"
+
+    }
+  
     SendEmailComponent.emailToBeSent.body = (<HTMLInputElement>document.getElementById("message")).value
     SendEmailComponent.emailToBeSent.subject = (<HTMLInputElement>document.getElementById("subject")).value
     SendEmailComponent.emailToBeSent.receiversUsernames = this.listOfReceivers
