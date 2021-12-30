@@ -350,6 +350,7 @@ getMoveOptions(){
               node.appendChild(a)
             }
           }
+          node.appendChild(textNode)
           destinationNode?.appendChild(node)
 
         }
