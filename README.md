@@ -1,4 +1,4 @@
-# ***<span style="color:#FFC800">Email</span><span style="color:#1B268F">Service</span>***
+# ***<span style="color:#526564">Email</span><span style="color:#1B268F">Service</span>***
 ## Table of Contents
 - [Setup](#Setup)
 - [Design Patterns and UML Class Diagram](#Design-Patterns-and-UML-Class-Diagram)
@@ -51,7 +51,7 @@ behavioral and two fundamentals design patterns as follow:
 + In contacts sorting we sort only by username.
 + When open the inbox folder and choose get emails by priority, refresh button must be clicked
 ## Testing
->* Unit testing is applied to test some features in the back like filtering, searching and sorting
+Unit testing is applied to test some features in the back like filtering, searching and sorting
 ## Features
 1. Filtering emails.
 1. Searching emails and contacts.
