@@ -165,6 +165,8 @@ show(email:EmailI){
              break
     case 4 : document.getElementById("message-container")?.removeChild(document.getElementById("message-container")?.childNodes[1])
              break
+    case 5 : document.getElementById("attachment-container")?.removeChild(document.getElementById("attachment-container")?.childNodes[1])
+             break
   }
   var emailContents = document.querySelectorAll("div.email-container > div");
   for (var i = 0; i<emailContents.length; i++){
@@ -193,8 +195,29 @@ show(email:EmailI){
               destinationNode = document.getElementById("message-container")
 
               break
+      case 5 :
+              node.id = "attachment"
+              destinationNode = document.getElementById("attachment-container")
+              break
     }
-    node.appendChild(textNode)
+    if(i != 5){
+      node.appendChild(textNode)
+    }
+    else{
+      for(let i = 0; i < email.attachments.length; i++){
+        var a = document.createElement("a");
+        a.href = "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].encoded);
+        a.download = email.attachments[i].name;
+        var btn = document.createElement("button");
+        btn.style.width = "150px";
+        btn.style.height = "40px";
+        btn.style.whiteSpace = "normal";
+        btn.style.wordWrap = "break-word";
+        btn.innerHTML = email.attachments[i].name;
+        a.appendChild(btn);
+        node.appendChild(a)
+      }
+    }
     destinationNode?.appendChild(node)
 
   }

@@ -6,6 +6,7 @@ import { InboxComponent } from '../inbox/inbox.component';
 import { ContactService } from './contacts.service';
 import $ from "jquery"
 import { SendEmailComponent } from '../send-email/send-email.component';
+import { SelectorMatcher } from '@angular/compiler';
 
 
 export interface ContactI{
@@ -143,6 +144,8 @@ filterContacts(input : ContactI[]){
   console.log("INPUT LENGTH ", input.length)
   ContactsComponent.listOfContacts = input
   console.log("COMP LENGTH ", ContactsComponent.listOfContacts.length);
+
+  this.parseArray();
   console.log(this.viewArray.length);
   if(input.length == 0){
     this.viewArray = [];
@@ -243,7 +246,8 @@ searchContacts(input : ContactI[]){
     show(emailList : string[]){
       console.log(emailList)
       const emailsTable = document.getElementById("email-table")
-      for (var i=0;i<this.trsCreatedTillNow;i++){
+      var savedTrs = this.trsCreatedTillNow
+      for (var i=0;i<savedTrs;i++){
         this.trsCreatedTillNow--
         emailsTable?.removeChild(emailsTable.childNodes[0])
       }
