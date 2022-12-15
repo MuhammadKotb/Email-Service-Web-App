@@ -56,14 +56,14 @@ a controller to manage all the business logic and data manipulation and a view r
 Unit testing is applied to test some features in the back like filtering, searching and sorting using `junit` and `mockito`
 ## Features
 1. Filtering emails.
-1. Searching emails and contacts.
-1. Sorting emails and contacts.
-1. Move to draft.
-1. Delete forever.
-1. Bulk move.
-1. Get emails by priority.
-1. Edit emails in draft folder by direct the user to send email with the same attributes.
-1. Send emails to any contact you want your in contacts page.
-1. Add custom user folders.
-1. Send emails with attachments
-1. view attachement and download them to your local machine.
+2. Searching emails and contacts.
+3. Sorting emails and contacts.
+4. Move to draft.
+5. Delete forever.
+6. Bulk move.
+7. Get emails by priority.
+8. Edit emails in draft folder by direct the user to send email with the same attributes.
+9. Send emails to any contact you want your in contacts page.
+10. Add custom user folders.
+11. Send emails with attachments
+12. view attachement and download them to your local machine.
