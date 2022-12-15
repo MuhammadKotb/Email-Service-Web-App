@@ -47,6 +47,7 @@ public class UserFoldersPageController {
 
     @PostMapping("/addFolder")
     ArrayList<ProfileFolderI> addUserFolder(@RequestParam("username") String username, @RequestBody String folderName){
+
         try{
             Creator.getInstance().createProfileFolder(folderName, Database.getInstance().getProfilebyUsername("", username));
             return Database.getInstance().getProfilebyUsername("", username).getFolders();
@@ -82,7 +83,7 @@ public class UserFoldersPageController {
     @PostMapping("/moveToTrashFolder")
     ArrayList<EmailI> movetoTrash(@RequestBody Email email, @RequestParam(value = "foldername") String folderName){
         try{
-            FirstHandler.getInstance().handle("MovetoTrash",email, "");
+            FirstHandler.getInstance().handle("MovetoTrash",email, folderName);
             return Database.getInstance().getProfilebyUsername("", email.getOwner()).getProfileFolderbyName(folderName).getEmails();
         }
         catch (Exception e){

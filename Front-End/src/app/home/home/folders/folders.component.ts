@@ -5,6 +5,7 @@ import { EmailI, HomeComponent } from '../home.component';
 import { FolderService } from './folders.service';
 import $ from "jquery"
 import { LoginComponent } from 'src/app/login/login/login.component';
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 
 export interface FoldersI{
@@ -18,14 +19,15 @@ export interface FoldersI{
   styleUrls: ['./folders.component.css']
 })
 export class FoldersComponent implements OnInit{
-  public static listOfFolders : FoldersI[] 
-  private viewArray : string[][] 
+  public static listOfFolders : FoldersI[]
+  private viewArray : string[][]
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
   public static folderOpened : string
 
-  constructor(private router:Router,private serveMe: FolderService,private placer : InboxComponent ) { 
+  constructor(private router:Router,private serveMe: FolderService,private placer : InboxComponent ) {
+    SendEmailComponent.emailToBeSent=null;
     FoldersComponent.listOfFolders = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -62,9 +64,9 @@ export class FoldersComponent implements OnInit{
     this.listOfButtons = document.querySelectorAll("td  > button")
     this.checkClick()
     });
-    
-      
-    
+
+
+
   }
 
 
@@ -87,7 +89,7 @@ export class FoldersComponent implements OnInit{
 
       })
     });
-  
+
   }
 
   checkClick(){
@@ -98,7 +100,7 @@ export class FoldersComponent implements OnInit{
       }else{
         this.listOfButtons[i].addEventListener("click",$.proxy(this.openClicked,this));
       }
-      
+
     }
 }
 

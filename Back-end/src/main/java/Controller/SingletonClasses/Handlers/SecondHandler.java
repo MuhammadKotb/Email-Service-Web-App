@@ -55,10 +55,10 @@ public class SecondHandler implements HandlerI{
             }
             if(folderName != ""){
                 System.out.println("INSIDE INBOX MOVE TO TRASH");
-                Creator.getInstance().createEmailDataProfileFolder(email, owner, folderName, email.getEmailID());
+
                 Deleter.getInstance().deleteEmailProfileFolder(owner, folderName, email);
                 owner.getProfileFolderbyName(folderName).removeEmailbyID(email.getEmailID());
-                owner.getTrash().addEmail(email);
+
             }
 
         }else{

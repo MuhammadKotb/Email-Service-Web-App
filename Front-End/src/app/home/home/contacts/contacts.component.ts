@@ -5,6 +5,8 @@ import { EmailI, HomeComponent } from '../home.component';
 import { InboxComponent } from '../inbox/inbox.component';
 import { ContactService } from './contacts.service';
 import $ from "jquery"
+import { SendEmailComponent } from '../send-email/send-email.component';
+import { SelectorMatcher } from '@angular/compiler';
 
 
 export interface ContactI{
@@ -31,12 +33,17 @@ export class ContactsComponent implements OnInit {
   private listPreSize : number
   private iterationsNum : number
   private listOfButtons : NodeList
+  private listOfClickableTDs : NodeList
+  private id: number;
+  private trsCreatedTillNow : number
 
-  constructor(private router : Router, private serveMe1: ContactService) {
+  constructor(private placer: InboxComponent, private router : Router, private serveMe1: ContactService) {
+    SendEmailComponent.emailToBeSent=null;
     ContactsComponent.listOfContacts = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
     this.iterationsNum = 3
+    this.trsCreatedTillNow = 0
     HomeComponent.pageIndicator = "Contacts"
 
   }
@@ -72,9 +79,13 @@ export class ContactsComponent implements OnInit {
     console.log(ContactsComponent.listOfContacts);
     this.listPreSize = this.viewArray.length
     this.parseArray()
-    this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+    this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
     this.listOfButtons = document.querySelectorAll("td  > button")
+    this.listOfClickableTDs = document.querySelectorAll("td.addEmail")
+    console.log(this.listOfClickableTDs)
     this.checkClick()
+    this.checkAddEmail()
+
     });
 
 
@@ -118,11 +129,15 @@ checkClick(){
 sortContacts(input : ContactI[]){
   this.listPreSize = ContactsComponent.listOfContacts.length;
   ContactsComponent.listOfContacts = input
-  this.parseArray();
-  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
-  this.listOfButtons = document.querySelectorAll("td  > button");
-  this.checkClick();
+  this.parseArray()
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+  this.listOfButtons = document.querySelectorAll("td  > button")
+  this.listOfClickableTDs = document.querySelectorAll("td.addEmail")
+  console.log(this.listOfClickableTDs)
+  this.checkClick()
+  this.checkAddEmail()
 }
+
 filterContacts(input : ContactI[]){
   console.log(input.length)
   this.listPreSize = ContactsComponent.listOfContacts.length;
@@ -135,10 +150,13 @@ filterContacts(input : ContactI[]){
   if(input.length == 0){
     this.viewArray = [];
   }
-
-  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
-  this.listOfButtons = document.querySelectorAll("td  > button");
-  this.checkClick();
+  this.parseArray();
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+  this.listOfButtons = document.querySelectorAll("td  > button")
+  this.listOfClickableTDs = document.querySelectorAll("td.addEmail")
+  console.log(this.listOfClickableTDs)
+  this.checkClick()
+  this.checkAddEmail()
 }
 searchContacts(input : ContactI[]){
   console.log(input.length)
@@ -154,9 +172,12 @@ searchContacts(input : ContactI[]){
   }
 
   this.parseArray();
-  this.place(this.viewArray,this.iterationsNum,this.listPreSize);
-  this.listOfButtons = document.querySelectorAll("td  > button");
-  this.checkClick();
+  this.placer.place(this.viewArray,this.iterationsNum,this.listPreSize,"Send Email")
+  this.listOfButtons = document.querySelectorAll("td  > button")
+  this.listOfClickableTDs = document.querySelectorAll("td.addEmail")
+  console.log(this.listOfClickableTDs)
+  this.checkClick()
+  this.checkAddEmail()
 }
 
 
@@ -174,56 +195,83 @@ searchContacts(input : ContactI[]){
         console.log(error)
       }
     }
-      sendEmailClicked(e: any){
-        try{
-          this.router.navigate(['/home/sendEmail']);
+    sendEmailClicked(e: any){
+      try{
+        const buttonNum = parseInt(e.target.id)
+        SendEmailComponent.emailToBeSent  = {
+          senderUsername: '',
+          timeSentString: '',
+          subject: '',
+          body: '',
+          owner: '',
+          receiversUsernames: [],
+          emailID: '',
+          emailType: '',
+          priority: '',
+          attachments: []
+        }
+        SendEmailComponent.emailToBeSent.receiversUsernames.push(ContactsComponent.listOfContacts[buttonNum/2].username)
+        this.router.navigate(['/home/sendEmail'])
 
-        }catch (error){
-          console.log(error)
-        }
-      }
-      place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
-        var body = document.getElementById("mybody")
-        var buttonCount = 0
-        for (let i=0;i<listPreSize;i++){
-          console.log("REMOVED CHILD");
-          body?.removeChild(body?.childNodes[0])
-        }
-        console.log(viewArray)
-        for (let i=0;i<viewArray.length;i++){
-          var node = document.createElement("tr");
-          node.style.width = "300px"
-          node.style.textAlign = "center"
-          node.style.padding = "7px"
-          node.style.margin = "50px"
-          for (let j=0;j<iterationsNum;j++){
-              var node2 = document.createElement("td");
-              if (j!=iterationsNum-1){
-                var textNode = document.createTextNode(viewArray[i][j]);
-                node2.appendChild(textNode);
-              }else{
-                if (btnName!="Delete"){
-                  var node3 = document.createElement("button");
-                  node3.style.marginRight = "5px"
-                  var textNode = document.createTextNode(btnName);
-                  node3.appendChild(textNode);
-                  node3.type = "button";
-                  node3.id = (buttonCount).toString()
-                  node2.appendChild(node3);
-                  buttonCount++
-                }
-                var textNode2 = document.createTextNode("Delete");
-                var node4 = document.createElement("button");
-                node4.style.marginRight = "5px"
-                node4.appendChild(textNode2);
-                node4.type = "button";
-                node4.id = (buttonCount).toString()
-                node2.appendChild(node4);
-                buttonCount++
-              }
-              node.appendChild(node2);
-          }
-          document.getElementById("mybody")?.appendChild(node);
+      }catch (error){
+        console.log(error)
       }
     }
+     
+    checkAddEmail(){
+      for (var i =  0 ; i < this.listOfClickableTDs.length ; i++){
+        this.listOfClickableTDs[i].addEventListener("mouseenter",$.proxy(this.hoverMe,this));
+        this.listOfClickableTDs[i].addEventListener("mouseleave",$.proxy(this.unhoverMe,this));
+        this.listOfClickableTDs[i].addEventListener("click",$.proxy(this.TDclicked,this));
+
+         }
   }
+    hoverMe(e : any){
+      e.target.style.backgroundColor = "blue";
+    }
+
+    unhoverMe(e : any){
+      e.target.style.backgroundColor = "inherit";
+    }
+
+    TDclicked(e : any){
+      this.id = parseInt(e.target.id)
+      this.show(ContactsComponent.listOfContacts[this.id].emailAddresses)
+    }
+
+    closeEmailPopup(){
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "none";
+    } 
+      
+    show(emailList : string[]){
+      console.log(emailList)
+      const emailsTable = document.getElementById("email-table")
+      var savedTrs = this.trsCreatedTillNow
+      for (var i=0;i<savedTrs;i++){
+        this.trsCreatedTillNow--
+        emailsTable?.removeChild(emailsTable.childNodes[0])
+      }
+      for (var i=0;i<emailList.length;i++){
+        var row = document.createElement("tr");
+        row.id = "tr" + i.toString()
+        emailsTable?.appendChild(row)
+        this.trsCreatedTillNow++
+        $("#" + row.id).text(emailList[i]);
+      }
+      (<HTMLElement>document.getElementById("email-popup")).style.display = "block";
+    }
+
+
+  
+  addNewEmail(){
+    ContactsComponent.listOfContacts[this.id].emailAddresses.push((<HTMLInputElement>document.getElementById("emails")).value)
+    this.serveMe1.removeContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[this.id].username).subscribe((data : string)=> {
+      this.serveMe1.addContact(LoginComponent.globalUsername,ContactsComponent.listOfContacts[this.id]).subscribe((data : string)=> {
+        this.router.navigateByUrl('/home',{skipLocationChange:true}).then(()=>{
+          this.router.navigate(['/home/contacts'])
+        })
+      });
+    });
+    this.show(ContactsComponent.listOfContacts[this.id].emailAddresses)
+  }
+}

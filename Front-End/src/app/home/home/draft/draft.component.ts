@@ -8,7 +8,7 @@ import { TrashService } from '../trash/trash.service';
 import $ from "jquery"
 import { DraftService } from './draft.service';
 import { registerLocaleData } from '@angular/common';
-
+import { SendEmailComponent } from '../send-email/send-email.component';
 
 @Component({
   selector: 'app-draft',
@@ -24,6 +24,7 @@ export class DraftComponent implements OnInit {
 
 
   constructor(private router : Router, private serveMe1: DraftService) {
+    SendEmailComponent.emailToBeSent=null;
     DraftComponent.listOfEmails = []
     this.viewArray = []
     this.listPreSize = this.viewArray.length
@@ -83,16 +84,17 @@ export class DraftComponent implements OnInit {
     // DraftComponent.listOfEmails.push(y)
     // DraftComponent.listOfEmails.push(Z)
     // DraftComponent.listOfEmails.push(w)
-      this.serveMe1.getDraft(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
+
+    this.serveMe1.getDraft(LoginComponent.globalUsername).subscribe((data : EmailI[])=> {
       DraftComponent.listOfEmails = data;
-      console.log(DraftComponent.listOfEmails);
+       console.log(DraftComponent.listOfEmails);
 
-      this.listPreSize = this.viewArray.length
-      this.parseArray()
+       this.listPreSize = this.viewArray.length
+       this.parseArray()
 
-      this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
-      this.listOfButtons = document.querySelectorAll("td  > button")
-      this.checkClick()});
+       this.place(this.viewArray,this.iterationsNum,this.listPreSize,"Edit")
+       this.listOfButtons = document.querySelectorAll("td  > button")
+       this.checkClick()});
 }
 parseArray(){
   this.viewArray = [];
@@ -103,7 +105,6 @@ parseArray(){
     this.viewArray[email][2] = DraftComponent.listOfEmails[email].subject
   }
 }
-
 checkClick(){
   for (var i =  0 ; i < this.listOfButtons.length ; i++){
 
@@ -153,7 +154,6 @@ searchDraft(input : EmailI[]){
     this.viewArray = [];
   }
 
-  this.parseArray();
   this.place(this.viewArray,this.iterationsNum,this.listPreSize);
   this.listOfButtons = document.querySelectorAll("td  > button");
   this.checkClick();
@@ -173,19 +173,20 @@ deleteClicked(e: any){
     console.log(error)
   }
 }
-    editClicked(e: any){
-      try{
-        console.log(DraftComponent.listOfEmails)
-        const buttonNum = parseInt(e.target.id)
-        this.showInSendEmail()
-      }catch (error){
-        console.log(error)
-      }
-    }
+editClicked(e: any){
+  try{
+    console.log(DraftComponent.listOfEmails)
+    const buttonNum = parseInt(e.target.id)
+    this.showInSendEmail(DraftComponent.listOfEmails[buttonNum/2])
+  }catch (error){
+    console.log(error)
+  }
+}
 
-    showInSendEmail(){
-      this.router.navigate(['/home/sendEmail']);
-    }
+showInSendEmail(email:EmailI){
+  SendEmailComponent.emailToBeSent = email
+  this.router.navigate(['/home/sendEmail']);
+}
 
     place(viewArray : string[][],iterationsNum : number,listPreSize: number,btnName: string = "Show"){
       var body = document.getElementById("mybody")

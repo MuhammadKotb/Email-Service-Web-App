@@ -6,6 +6,7 @@
     position: absolute;
     top: 0;
     width:1511px;
+    height: 30%;
 }
 
 .tool_bar button{
@@ -60,7 +61,7 @@
     position:absolute;
     top: 120px;
     left: 5px;
-    height: 620px;
+    height: 2000px;
     width: 1514px;
 }
 
